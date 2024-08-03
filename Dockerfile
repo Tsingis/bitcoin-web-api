@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 
 COPY --from=build /app .
 
-# Use default non-root user
+# Use default non-root user TEST
 USER app
 
 ENTRYPOINT ["dotnet", "App.dll"]
