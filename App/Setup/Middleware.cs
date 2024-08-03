@@ -10,6 +10,7 @@ public static class Middleware
 
         if (env.IsDevelopment())
         {
+            //TEST
             app.UseDeveloperExceptionPage();
         }
 
