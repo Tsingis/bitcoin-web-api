@@ -10,7 +10,7 @@ public static class Middleware
 
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage(); //TEST
         }
 
         app.UseRouting();
