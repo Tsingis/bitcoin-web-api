@@ -40,9 +40,9 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     }
 
     [Fact]
-    public async Task Swagger()
+    public async Task OpenApi()
     {
-        var result = await _fixture.Client.GetAsync("/");
+        var result = await _fixture.Client.GetAsync("/openapi/v1.json");
         result.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
