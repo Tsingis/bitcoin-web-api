@@ -1,14 +1,13 @@
 using System.Globalization;
 using Asp.Versioning;
-using Microsoft.OpenApi.Any;
 using Services;
 
 namespace Api.Setup;
 
 internal static class ApiEndpoints
 {
-    private static readonly OpenApiString ExampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-    private static readonly OpenApiString ExampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+    // private static readonly string ExampleFromDate = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    // private static readonly string ExampleToDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
     public static void ConfigureEndpoints(this WebApplication app)
     {
@@ -93,8 +92,8 @@ internal static class ApiEndpoints
             .WithOpenApi(operation =>
             {
                 operation.Summary = summary;
-                operation.Parameters[0].Example = ExampleFromDate;
-                operation.Parameters[^1].Example = ExampleToDate;
+                // operation.Parameters[0].Example = ExampleFromDate;
+                // operation.Parameters[^1].Example = ExampleToDate;
                 return operation;
             });
     }
