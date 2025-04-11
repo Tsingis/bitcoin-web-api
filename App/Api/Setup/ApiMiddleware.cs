@@ -1,3 +1,5 @@
+using Scalar.AspNetCore;
+
 namespace Api.Setup;
 
 internal static class ApiMiddleware
@@ -13,21 +15,13 @@ internal static class ApiMiddleware
 
         app.UseOutputCache();
 
-        app.UseStaticFiles();
+        app.MapOpenApi();
 
-        app.UseSwagger();
-        app.UseSwaggerUI(opt =>
+        app.MapScalarApiReference(opt =>
         {
-            var descriptions = app.DescribeApiVersions();
-            foreach (var desc in descriptions)
-            {
-                var url = $"/swagger/{desc.GroupName}/swagger.json";
-                var name = desc.GroupName.ToUpperInvariant();
-                opt.SwaggerEndpoint(url, name);
-            }
-            opt.RoutePrefix = string.Empty;
-            var indexPath = Path.Combine(environment.WebRootPath, "swagger-ui", "index.html");
-            opt.IndexStream = () => new FileStream(indexPath, FileMode.Open, FileAccess.Read);
+            opt.Title = "Bitcoin Web API";
+            opt.ShowSidebar = true;
+            opt.DarkMode = true;
         });
 
         app.MapHealthChecks("health");
@@ -41,7 +35,6 @@ internal static class ApiMiddleware
 
         app.Use(async (context, next) =>
         {
-            context.Response.Headers.Append("Content-Security-Policy", "default-src 'self'");
             context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
             context.Response.Headers.Append("X-Frame-Options", "DENY");
             context.Response.Headers.Append("Referrer-Policy", "no-referrer");

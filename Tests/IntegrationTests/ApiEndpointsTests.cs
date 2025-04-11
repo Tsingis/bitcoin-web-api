@@ -63,9 +63,9 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     }
 
     [Fact]
-    public async Task Swagger()
+    public async Task OpenApi()
     {
-        var result = await _fixture.Client.GetAsync("/", cancellationToken: TestContext.Current.CancellationToken);
+        var result = await _fixture.Client.GetAsync("/openapi/v1.json", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
