@@ -15,6 +15,6 @@ API documentation
 
 Tools used:
 
--   .NET 9 SDK
+-   .NET 10 SDK
 -   .NET report generator `dotnet tool install -g dotnet-reportgenerator-globaltool`
 -   Docker

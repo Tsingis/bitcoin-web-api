@@ -1,15 +1,13 @@
-using System.Globalization;
 using System.Net;
 using Asp.Versioning;
-using Microsoft.OpenApi.Any;
 using Services;
 
 namespace Api.Setup;
 
 internal static class ApiEndpoints
 {
-    private static readonly OpenApiString s_exampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-    private static readonly OpenApiString s_exampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+    // private static readonly OpenApiString s_exampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+    // private static readonly OpenApiString s_exampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
 
     public static void ConfigureEndpoints(this WebApplication app)
     {
@@ -42,8 +40,8 @@ internal static class ApiEndpoints
             .WithDescription("Get longest downward trend in days between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Parameters[0].Example = s_exampleFromDate;
-                operation.Parameters[^1].Example = s_exampleToDate;
+                // operation.Parameters[0].Example = s_exampleFromDate;
+                // operation.Parameters[^1].Example = s_exampleToDate;
                 return operation;
             })
             .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
@@ -76,8 +74,8 @@ internal static class ApiEndpoints
             .WithDescription("Get the date with the highest trading volume between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Parameters[0].Example = s_exampleFromDate;
-                operation.Parameters[^1].Example = s_exampleToDate;
+                // operation.Parameters[0].Example = s_exampleFromDate;
+                // operation.Parameters[^1].Example = s_exampleToDate;
                 return operation;
             })
             .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
@@ -110,8 +108,8 @@ internal static class ApiEndpoints
             .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Parameters[0].Example = s_exampleFromDate;
-                operation.Parameters[^1].Example = s_exampleToDate;
+                // operation.Parameters[0].Example = s_exampleFromDate;
+                // operation.Parameters[^1].Example = s_exampleToDate;
                 return operation;
             })
             .Produces<BuyAndSellResponse>((int)HttpStatusCode.OK)
