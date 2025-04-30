@@ -16,12 +16,15 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest"]
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: ./global.json
+          cache: true
       - name: Install Report Generator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
       - name: Restore
