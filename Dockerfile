@@ -6,7 +6,7 @@ COPY App .
 COPY *.props .
 COPY *.config .
 
-RUN dotnet restore ./Api/Api.csproj
+RUN dotnet restore --locked-mode ./Api/Api.csproj
 
 RUN dotnet publish ./Api/Api.csproj -c Release --no-restore -o /app/publish /p:UseAppHost=false
 
