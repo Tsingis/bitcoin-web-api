@@ -49,3 +49,5 @@ jobs:
           registryUrl: ${{ vars.REGISTRY_URL }}
           registryUsername: ${{ secrets.DOCKERHUB_USERNAME }}
           registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
+          targetPort: ${{ vars.CONTAINER_PORT }}
+          environmentVariables: ASPNETCORE_ENVIRONMENT=Production SERVER_URL=${{ vars.SERVER_URL }}
