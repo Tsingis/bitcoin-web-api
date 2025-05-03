@@ -12,7 +12,7 @@ namespace Api.Setup;
 
 internal static class ApiServices
 {
-    public static void ConfigureServices(this IServiceCollection services)
+    public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment environment, IConfiguration configuration)
     {
         services.AddSerilog();
 
@@ -29,7 +29,14 @@ internal static class ApiServices
             opt.SubstituteApiVersionInUrl = true;
         });
 
-        services.AddOpenApi();
+        services.AddOpenApi(opt =>
+        {
+            if (environment.IsProduction())
+            {
+                var server = configuration.GetValue<string>("SERVER_URL")!;
+                opt.AddServer(server);
+            }
+        });
 
         services.AddApiWeaver(opt =>
         {
