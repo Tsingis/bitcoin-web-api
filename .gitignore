@@ -1,4 +1,8 @@
 .env
+.terraform
+*.tfstate*
+*.tfvars
+tfplan
 
 # User-specific files
 *.rsuser
