@@ -33,7 +33,6 @@ on:
         required: false
         type: string
         default: "nuget"
-
 jobs:
   determine-package-type:
     runs-on: ubuntu-latest
@@ -52,7 +51,7 @@ jobs:
 
           if echo "$PR_FILES" | grep -q 'Dockerfile'; then
             package_types=""
-          elif echo "$PR_FILES" | grep -qE '\.(cs|csproj)$'; then
+          elif echo "$PR_FILES" | grep -qE '\.(cs|csproj|props)$'; then
             package_types="nuget"
           fi
 
@@ -77,7 +76,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           logout: true
-      - name: Build
+      - name: Build and/or push
         uses: docker/build-push-action@v6
         with:
           context: .
