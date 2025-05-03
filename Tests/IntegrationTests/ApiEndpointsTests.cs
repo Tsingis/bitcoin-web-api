@@ -8,10 +8,9 @@ using Xunit;
 
 namespace IntegrationTests;
 
-public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
+public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationTestBase(factory)
 {
     private const string BaseUrl = "/api/v1";
-    private readonly ApiFixture _fixture = fixture;
 
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new TheoryData<string?, string?, HttpStatusCode>
@@ -26,7 +25,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
+        var result = await _client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -41,7 +40,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
+        var result = await _client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -56,7 +55,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
+        var result = await _client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -72,7 +71,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task DocsUI(string endpoint)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _fixture.Client.GetAsync(endpoint, cancellationToken: ct);
+        var result = await _client.GetAsync(endpoint, cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
@@ -82,7 +81,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task DocsJson(string endpoint)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _fixture.Client.GetAsync(endpoint, cancellationToken: ct);
+        var result = await _client.GetAsync(endpoint, cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         var data = await result.Content.ReadAsStringAsync(cancellationToken: ct);
@@ -122,7 +121,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task Health()
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _fixture.Client.GetAsync("/health", cancellationToken: ct);
+        var result = await _client.GetAsync("/health", cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }
