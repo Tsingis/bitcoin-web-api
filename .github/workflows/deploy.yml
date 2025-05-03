@@ -19,7 +19,7 @@ jobs:
     with:
       severities: critical
       package-types: ""
-  deploy:
+  render-deploy:
     runs-on: ubuntu-latest
     needs: scan
     steps:
@@ -27,3 +27,25 @@ jobs:
         run: curl "$DEPLOY_URL"
         env:
           DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+  azure-deploy:
+    runs-on: ubuntu-latest
+    needs: scan
+    permissions:
+      id-token: write
+    steps:
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Build and deploy
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          resourceGroup: ${{ vars.RESOURCE_GROUP_NAME}}
+          containerAppEnvironment: ${{ vars.CONTAINER_APP_ENVIRONMENT }}
+          containerAppName: ${{ vars.CONTAINER_APP_NAME}}
+          imageToDeploy: ${{ vars.IMAGE }}
+          registryUrl: ${{ vars.REGISTRY_URL }}
+          registryUsername: ${{ secrets.DOCKERHUB_USERNAME }}
+          registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}

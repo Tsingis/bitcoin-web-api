@@ -65,8 +65,6 @@ jobs:
     if: always()
     permissions:
       pull-requests: write
-    env:
-      IMAGE_TAG: bitcoin-web-api:latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up QEMU
@@ -83,11 +81,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: false
+          push: ${{ github.event_name == 'workflow_call' || github.event_name == 'push' }}
           load: true
           pull: false
           no-cache: false
-          tags: ${{ env.IMAGE_TAG }}
+          tags: ${{ vars.IMAGE }}
         env:
           DOCKER_BUILD_SUMMARY: false
           DOCKER_BUILD_RECORD_UPLOAD: false
@@ -95,7 +93,7 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves,recommendations
-          image: local://${{ env.IMAGE_TAG }}
+          image: local://${{ vars.IMAGE }}
           only-severities: ${{ inputs.severities || 'critical,high' }}
           only-package-types: ${{ needs.determine-package-type.outputs.package-types || inputs.package-types }}
           only-fixed: true
