@@ -1,4 +1,4 @@
-dotnet test -- --coverage --coverage-output-format xml --coverage-output coverage.xml
+dotnet test -c Release --no-restore --no-build -- --coverage --coverage-output-format xml --coverage-output coverage.xml
 
 $coverageFiles = Get-ChildItem -Path "Tests" -Recurse -Filter "coverage.xml"
 
