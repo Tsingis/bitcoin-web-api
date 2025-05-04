@@ -31,11 +31,11 @@ internal static class ApiServices
 
         services.AddOpenApi(opt =>
         {
-            if (environment.IsProduction())
+            opt.AddDocumentTransformer((document, _, _) =>
             {
-                var server = configuration.GetValue<string>("SERVER_URL")!;
-                opt.AddServer(server);
-            }
+                document.Servers = [];
+                return Task.CompletedTask;
+            });
         });
 
         services.AddApiWeaver(opt =>
