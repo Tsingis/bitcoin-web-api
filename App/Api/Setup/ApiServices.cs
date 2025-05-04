@@ -36,14 +36,14 @@ internal static class ApiServices
                 document.Servers = [];
                 return Task.CompletedTask;
             });
+
+            opt.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
         });
 
         services.AddApiWeaver(opt =>
         {
             opt.AddExample<DateOnly, DateOnlyExampleProvider>();
         });
-
-        services.AddSwaggerGen();
 
         services.Configure<JsonOptions>(opt =>
         {

@@ -15,21 +15,20 @@ internal static class ApiMiddleware
 
         app.UseOutputCache();
 
-        app.MapOpenApi("/openapi/{documentName}.json");
+        const string documentName = "/openapi/v1.json";
+        const string apiName = "Bitcoin Web API v1";
 
-        app.UseSwagger(opt =>
-        {
-            opt.RouteTemplate = "swagger/{documentName}/swagger.json";
-        });
+        app.MapOpenApi(documentName);
 
         app.UseSwaggerUI(opt =>
         {
             opt.RoutePrefix = "swagger";
+            opt.SwaggerEndpoint(documentName, apiName);
         });
 
         app.MapScalarApiReference(endpointPrefix: "/scalar", opt =>
         {
-            opt.Title = "Bitcoin Web API";
+            opt.Title = apiName;
             opt.ShowSidebar = true;
             opt.DarkMode = true;
         });

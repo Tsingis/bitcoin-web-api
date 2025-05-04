@@ -76,7 +76,6 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     }
 
     [Theory]
-    [InlineData("/swagger/v1/swagger.json")]
     [InlineData("/openapi/v1.json")]
     public async Task DocsJson(string endpoint)
     {
