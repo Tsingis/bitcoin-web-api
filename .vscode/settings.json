@@ -1,4 +1,5 @@
 {
     "dotnet-test-explorer.testProjectPath": "Tests/*/*Tests.csproj",
-    "dotnet-test-explorer.treeMode": "flat"
+    "dotnet-test-explorer.treeMode": "flat",
+    "dotnet.defaultSolution": "App.slnx"
 }
