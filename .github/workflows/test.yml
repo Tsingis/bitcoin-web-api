@@ -24,7 +24,7 @@ jobs:
         with:
           global-json-file: ./global.json
           cache: true
-          cache-dependency-path: "**/*.csproj"
+          cache-dependency-path: "**/packages.lock.json"
       - name: Install Report Generator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
       - name: Restore
