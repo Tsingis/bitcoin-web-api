@@ -1,9 +1,11 @@
 variable "subscription_id" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "tenant_id" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "rg_name" {
