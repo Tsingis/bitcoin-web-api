@@ -2,6 +2,16 @@
   "version": 2,
   "dependencies": {
     "net9.0": {
+      "MartinCostello.Logging.XUnit.v3": {
+        "type": "Direct",
+        "requested": "[0.5.1, )",
+        "resolved": "0.5.1",
+        "contentHash": "VBh06CBetEzaVJbSajn78sn8HZMnL5ZS7RKL4IGbyYkrw65cq7AueKIUw/oYDxwzd/gw2myBuIUjib5EJnEWgg==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "8.0.1",
+          "xunit.v3.extensibility.core": "1.0.0"
+        }
+      },
       "Microsoft.AspNetCore.Mvc.Testing": {
         "type": "Direct",
         "requested": "[9.0.4, )",

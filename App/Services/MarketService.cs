@@ -21,7 +21,8 @@ public class MarketService(ILogger<MarketService> logger, IMarketClient marketCl
         var prices = data.Select(x => x.Price).ToList();
         var longestDownwardPriceTrend = prices.LongestConsecutiveDecreasingSubset();
         _logger.LogInformation("Longest downward price trend {LongestDownwardPriceTrend} days.", longestDownwardPriceTrend);
-        return longestDownwardPriceTrend;
+        throw new InvalidOperationException("TEST EXCEPTION");
+        // return longestDownwardPriceTrend;
     }
 
     public async Task<(DateOnly Date, decimal Volume)?> GetHighestTradingVolume(DateOnly fromDate, DateOnly toDate)
