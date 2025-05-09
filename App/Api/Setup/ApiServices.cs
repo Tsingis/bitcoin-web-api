@@ -60,11 +60,11 @@ internal static class ApiServices
             opt.AddServerHeader = false;
         });
 
-        services.AddOutputCache(opt =>
-        {
-            opt.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(10);
-            opt.AddBasePolicy(builder => builder.Cache());
-        });
+        // services.AddOutputCache(opt =>
+        // {
+        //     opt.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(10);
+        //     opt.AddBasePolicy(builder => builder.Cache());
+        // });
 
         services.AddHsts(opt =>
         {
