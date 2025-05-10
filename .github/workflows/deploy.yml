@@ -50,4 +50,4 @@ jobs:
           registryUsername: ${{ secrets.DOCKERHUB_USERNAME }}
           registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
           targetPort: ${{ vars.CONTAINER_PORT }}
-          environmentVariables: ASPNETCORE_ENVIRONMENT=Production
+          environmentVariables: ASPNETCORE_ENVIRONMENT=Production KEY_VAULT_NAME=${{ secrets.KEY_VAULT_NAME }}
