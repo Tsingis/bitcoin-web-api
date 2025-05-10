@@ -32,7 +32,7 @@ try
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(config)
             .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
-            .WriteTo.ApplicationInsights(TelemetryConverter.Traces)
+            .WriteTo.ApplicationInsights(config["ApplicationInsightsConnectionString"], TelemetryConverter.Traces)
             .CreateLogger();
     }
 
