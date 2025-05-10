@@ -29,7 +29,7 @@ variable "ca_app_name" {
 }
 
 variable "registry_server" {
-  type = string
+  type    = string
   default = "docker.io"
 }
 
@@ -51,3 +51,9 @@ variable "container_port" {
   type    = number
   default = 8080
 }
+
+variable "environment" {
+  type    = string
+  default = "Production"
+}
+

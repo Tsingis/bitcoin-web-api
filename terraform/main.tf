@@ -64,6 +64,11 @@ resource "azurerm_container_app" "ca_app" {
       cpu    = 0.25
       memory = "0.5Gi"
 
+      env {
+        name  = "ASPNETCORE_ENVIRONMENT"
+        value = var.environment
+      }
+
       liveness_probe {
         transport               = "HTTP"
         port                    = var.container_port
