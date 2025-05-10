@@ -20,6 +20,21 @@ resource "azurerm_log_analytics_workspace" "law" {
   retention_in_days   = 30
 }
 
+resource "azurerm_application_insights" "ai" {
+  name                = var.ai_name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  application_type    = "web"
+  workspace_id        = azurerm_log_analytics_workspace.law.id
+  retention_in_days   = 30
+}
+
+resource "azurerm_key_vault_secret" "ai_connection_string" {
+  name         = "ApplicationInsightsConnectionString"
+  value        = azurerm_application_insights.ai.connection_string
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
 resource "azurerm_container_app_environment" "ca_env" {
   name                       = var.ca_env_name
   location                   = data.azurerm_resource_group.rg.location
