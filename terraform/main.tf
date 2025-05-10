@@ -33,6 +33,10 @@ resource "azurerm_container_app" "ca_app" {
   container_app_environment_id = azurerm_container_app_environment.ca_env.id
   revision_mode                = "Single"
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   ingress {
     external_enabled = true
     target_port      = var.container_port
@@ -89,4 +93,17 @@ resource "azurerm_container_app" "ca_app" {
       concurrent_requests = 10
     }
   }
+}
+
+resource "azurerm_key_vault_access_policy" "ca_app_kv_policy" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = var.tenant_id
+  object_id    = azurerm_container_app.ca_app.identity[0].principal_id
+
+  secret_permissions = [
+    "List",
+    "Get"
+  ]
+
+  depends_on = [azurerm_container_app.ca_app]
 }
