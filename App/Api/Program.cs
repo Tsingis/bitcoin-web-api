@@ -1,3 +1,4 @@
+using System.Globalization;
 using Api.Setup;
 using Azure.Identity;
 using Serilog;
@@ -9,8 +10,11 @@ var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
 
+const string logFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}";
+
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(config)
+    .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
