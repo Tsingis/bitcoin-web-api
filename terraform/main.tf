@@ -43,13 +43,24 @@ resource "azurerm_container_app" "ca_app" {
     }
   }
 
+  registry {
+    server               = var.registry_server
+    username             = var.registry_username
+    password_secret_name = "registry-pwd"
+  }
+
+  secret {
+    name  = "registry-pwd"
+    value = var.registry_password
+  }
+
   template {
     min_replicas = 0
     max_replicas = 1
 
     container {
       name   = var.ca_app_name
-      image  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
+      image  = var.registry_image
       cpu    = 0.25
       memory = "0.5Gi"
 
