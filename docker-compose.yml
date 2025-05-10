@@ -7,10 +7,11 @@ services:
     image: bitcoin-web-api
     container_name: bitcoin-web-api
     ports:
-      - 5000:80
+      - 5000:8080
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_HTTP_PORTS: 80
+      ASPNETCORE_ENVIRONMENT: $ASPNETCORE_ENVIRONMENT
+      ASPNETCORE_HTTP_PORTS: $ASPNETCORE_HTTP_PORTS
+      KEY_VAULT_NAME: $KEY_VAULT_NAME
     user: app
     read_only: true
     privileged: false

@@ -1,5 +1,8 @@
 using Api.Setup;
+using Azure.Identity;
 using Serilog;
+
+DotNetEnv.Env.TraversePath().Load();
 
 var config = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -11,6 +14,14 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME");
+
+if (!string.IsNullOrEmpty(keyVaultName))
+{
+    var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
+    builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+}
 
 builder.Services.ConfigureServices(builder.Environment, builder.Configuration);
 

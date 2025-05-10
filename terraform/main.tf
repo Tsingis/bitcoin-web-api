@@ -69,6 +69,11 @@ resource "azurerm_container_app" "ca_app" {
         value = var.environment
       }
 
+      env {
+        name  = "KEY_VAULT_NAME"
+        value = var.kv_name
+      }
+
       liveness_probe {
         transport               = "HTTP"
         port                    = var.container_port
