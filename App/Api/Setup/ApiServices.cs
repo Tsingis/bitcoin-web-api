@@ -12,7 +12,7 @@ namespace Api.Setup;
 
 internal static class ApiServices
 {
-    public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment environment, IConfiguration configuration)
+    public static void ConfigureServices(this IServiceCollection services)
     {
         services.AddSerilog();
 

@@ -27,7 +27,7 @@ if (!string.IsNullOrEmpty(keyVaultName))
     builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
 }
 
-builder.Services.ConfigureServices(builder.Environment, builder.Configuration);
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
