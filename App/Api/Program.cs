@@ -23,16 +23,16 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
-    if (builder.Environment.IsProduction())
+    var keyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME");
+    if (builder.Environment.IsProduction() && !string.IsNullOrEmpty(keyVaultName))
     {
-        var keyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME");
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
         builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
 
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(config)
+            .ReadFrom.Configuration(builder.Configuration)
             .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
-            .WriteTo.ApplicationInsights(config["ApplicationInsightsConnectionString"], TelemetryConverter.Traces)
+            .WriteTo.ApplicationInsights(builder.Configuration["ApplicationInsights:ConnectionString"], TelemetryConverter.Traces)
             .CreateLogger();
     }
 

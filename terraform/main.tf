@@ -30,7 +30,7 @@ resource "azurerm_application_insights" "ai" {
 }
 
 resource "azurerm_key_vault_secret" "ai_connection_string" {
-  name         = "ApplicationInsightsConnectionString"
+  name         = "ApplicationInsights--ConnectionString"
   value        = azurerm_application_insights.ai.connection_string
   key_vault_id = azurerm_key_vault.kv.id
 }
