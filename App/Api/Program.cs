@@ -15,26 +15,46 @@ const string logFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}]
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(config)
     .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
-    .CreateLogger();
+    .CreateBootstrapLogger();
 
-var builder = WebApplication.CreateBuilder(args);
-
-var keyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME");
-
-if (!string.IsNullOrEmpty(keyVaultName))
+try
 {
-    var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
-    builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+    Log.Information("Starting up the application");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    if (builder.Environment.IsProduction())
+    {
+        var keyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME");
+        var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
+        builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(config)
+            .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
+            .WriteTo.ApplicationInsights(TelemetryConverter.Traces)
+            .CreateLogger();
+    }
+
+    builder.Services.ConfigureServices();
+
+    var app = builder.Build();
+
+    app.ConfigureEndpoints();
+
+    app.ConfigureMiddleware(app.Environment);
+
+    await app.RunAsync();
 }
-
-builder.Services.ConfigureServices();
-
-var app = builder.Build();
-
-app.ConfigureEndpoints();
-
-app.ConfigureMiddleware(app.Environment);
-
-await app.RunAsync();
+catch (Exception ex)
+{
+    const string message = "Application terminated unexpectedly";
+    Log.Fatal(ex, message);
+    throw new InvalidOperationException(message, ex);
+}
+finally
+{
+    await Log.CloseAndFlushAsync();
+}
 
 public partial class Program { } // Reference for tests

@@ -14,6 +14,8 @@ internal static class ApiServices
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
+        services.AddApplicationInsightsTelemetry();
+
         services.AddSerilog();
 
         services.AddEndpointsApiExplorer();
