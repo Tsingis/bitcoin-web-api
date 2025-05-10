@@ -2,6 +2,16 @@ data "azurerm_resource_group" "rg" {
   name = var.rg_name
 }
 
+resource "azurerm_key_vault" "kv" {
+  name                       = var.kv_name
+  location                   = data.azurerm_resource_group.rg.location
+  resource_group_name        = data.azurerm_resource_group.rg.name
+  tenant_id                  = var.tenant_id
+  sku_name                   = "standard"
+  purge_protection_enabled   = true
+  soft_delete_retention_days = 7
+}
+
 resource "azurerm_log_analytics_workspace" "law" {
   name                = var.law_name
   location            = data.azurerm_resource_group.rg.location

@@ -12,6 +12,10 @@ variable "rg_name" {
   type = string
 }
 
+variable "kv_name" {
+  type = string
+}
+
 variable "law_name" {
   type = string
 }
