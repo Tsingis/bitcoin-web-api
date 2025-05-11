@@ -110,15 +110,19 @@ resource "azurerm_container_app" "ca_app" {
   }
 }
 
+data "external" "container_app_identity" {
+  program = ["powershell", "${path.module}/get_identity.ps1", data.azurerm_resource_group.rg.name, azurerm_container_app.ca_app.name]
+
+  depends_on = [azurerm_container_app.ca_app]
+}
+
 resource "azurerm_key_vault_access_policy" "ca_app_kv_policy" {
   key_vault_id = azurerm_key_vault.kv.id
   tenant_id    = var.tenant_id
-  object_id    = azurerm_container_app.ca_app.identity[0].principal_id
+  object_id    = data.external.container_app_identity.result["principal_id"]
 
   secret_permissions = [
     "List",
     "Get"
   ]
-
-  depends_on = [azurerm_container_app.ca_app]
 }
