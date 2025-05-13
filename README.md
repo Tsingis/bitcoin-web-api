@@ -10,8 +10,8 @@ API based on [GoinGecko's public API.](https://www.coingecko.com/en/api/document
 
 API documentation
 
--   Swagger [here](https://bitcoin-web-api.onrender.com/swagger) or [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/swagger)
--   Scalar [here](https://bitcoin-web-api.onrender.com/scalar) or [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/scalar)
+-   Swagger [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/swagger)
+-   Scalar [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/scalar)
 
 Tools used:
 

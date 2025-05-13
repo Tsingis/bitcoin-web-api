@@ -19,15 +19,7 @@ jobs:
     with:
       severities: critical
       package-types: ""
-  render-deploy:
-    runs-on: ubuntu-latest
-    needs: scan
-    steps:
-      - name: Deploy
-        run: curl "$DEPLOY_URL"
-        env:
-          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
-  azure-deploy:
+  deploy:
     runs-on: ubuntu-latest
     needs: scan
     permissions:
