@@ -17,4 +17,6 @@ Tools used:
 
 -   .NET SDK
 -   .NET report generator `dotnet tool install -g dotnet-reportgenerator-globaltool`
+-   Azure
+-   Terraform
 -   Docker
