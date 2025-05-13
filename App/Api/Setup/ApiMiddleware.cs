@@ -13,7 +13,7 @@ internal static class ApiMiddleware
 
         app.UseRouting();
 
-        app.UseOutputCache();
+        // app.UseOutputCache();
 
         const string documentName = "/openapi/v1.json";
         const string apiName = "Bitcoin Web API v1";

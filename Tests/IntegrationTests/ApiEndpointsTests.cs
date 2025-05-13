@@ -24,6 +24,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     [MemberData(nameof(Cases))]
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
+        _factory.SetOutputHelper(TestContext.Current.TestOutputHelper);
         var ct = TestContext.Current.CancellationToken;
         var result = await _client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);

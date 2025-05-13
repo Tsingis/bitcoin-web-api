@@ -33,7 +33,7 @@ jobs:
         run: dotnet build -c Release --no-restore
       - name: Test & collect coverage
         run: |
-          dotnet test -c Release --no-restore --no-build -- \
+          dotnet test -c Release --no-restore --no-build Tests/IntegrationTests/IntegrationTests.csproj -- \
           --coverage --coverage-output-format xml --coverage-output ${{ github.workspace }}/coverage.xml
       - name: Find coverage files and generate report
         run: |
