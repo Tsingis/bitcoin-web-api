@@ -33,6 +33,8 @@ on:
         required: false
         type: string
         default: "nuget"
+  schedule:
+    - cron: "0 0 * * 3"
 jobs:
   determine-package-type:
     runs-on: ubuntu-latest
@@ -93,8 +95,8 @@ jobs:
         with:
           command: cves,recommendations
           image: local://${{ vars.IMAGE }}
-          only-severities: ${{ inputs.severities || 'critical,high' }}
-          only-package-types: ${{ needs.determine-package-type.outputs.package-types || inputs.package-types }}
+          only-severities: ${{ inputs && inputs.severities || 'critical,high' }}
+          only-package-types: ${{ (needs.determine-package-type && needs.determine-package-type.outputs.package-types) || (inputs && inputs.package-types) || '' }}
           only-fixed: true
           summary: true
           format: json
