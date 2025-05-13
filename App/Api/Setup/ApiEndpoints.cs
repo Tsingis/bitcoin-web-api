@@ -35,7 +35,7 @@ internal static class ApiEndpoints
                 }
             })
             .WithDescription("Get longest downward trend in days between given dates")
-            .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
+            .Produces<LongestDownwardTrendResponse>((int)HttpStatusCode.OK)
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.BadRequest)
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
