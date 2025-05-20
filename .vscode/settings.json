@@ -1,6 +1,4 @@
 {
-    "dotnet-test-explorer.testProjectPath": "Tests/*/*Tests.csproj",
-    "dotnet-test-explorer.treeMode": "flat",
-    "dotnet-test-explorer.autoWatch": false,
+    "dotnet.testWindow.useTestingPlatformProtocol": true,
     "dotnet.defaultSolution": "App.slnx"
 }
