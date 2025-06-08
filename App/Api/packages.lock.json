@@ -97,9 +97,9 @@
       },
       "Scalar.AspNetCore": {
         "type": "Direct",
-        "requested": "[2.3.1, )",
-        "resolved": "2.3.1",
-        "contentHash": "x1j9LafJP7kdQnPh31RubohQvE3DTln/+YOVnoPu2LJ9cV9nWiSDyTAyKXUAHvITbYOd8aWSj4WbgcjrJcEsrA=="
+        "requested": "[2.4.13, )",
+        "resolved": "2.4.13",
+        "contentHash": "7EA3SCKM2n7oPJ/yraN5xReXVIaT1rOFA8aasrcLnS1HIwPHJox0IV2Bs/XmFnwgTkSOXtSWjseO3ZhXPNSKnQ=="
       },
       "Serilog": {
         "type": "Direct",
@@ -158,9 +158,9 @@
       },
       "Swashbuckle.AspNetCore.SwaggerUI": {
         "type": "Direct",
-        "requested": "[8.1.2, )",
-        "resolved": "8.1.2",
-        "contentHash": "qsGf333N+sa2XmxqU287HZEP/W1OrPwk2DpXHb0fL2PhXj5fatUv50ExePJb7yiA6kpKLVpGReJD0tj2Kai1CA=="
+        "requested": "[8.1.4, )",
+        "resolved": "8.1.4",
+        "contentHash": "mTn6OwB43ETrN6IgAZd7ojWGhTwBZ98LT3QwbAn6Gg3wJStQV4znU0mWiHaKFlD/+Qhj1uhAUOa52rmd6xmbzg=="
       },
       "Asp.Versioning.Abstractions": {
         "type": "Transitive",
