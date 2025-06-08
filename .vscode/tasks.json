@@ -1,0 +1,54 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run app",
+      "type": "shell",
+      "command": "dotnet run watch --project App/Api/Api.csproj",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "build solution",
+      "type": "shell",
+      "command": "dotnet build",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "clean solution",
+      "type": "shell",
+      "command": "dotnet clean",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "restore solution",
+      "type": "shell",
+      "command": "dotnet restore",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "test solution",
+      "type": "shell",
+      "command": "dotnet test",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "list outdated",
+      "type": "shell",
+      "command": "dotnet list package --outdated",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "list vulnerable",
+      "type": "shell",
+      "command": "dotnet list package --vulnerable --include-transitive",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+  ]
+}
