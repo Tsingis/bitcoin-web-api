@@ -7,7 +7,7 @@ services:
     image: bitcoin-web-api
     container_name: bitcoin-web-api
     ports:
-      - 5000:8080
+      - 8080:8080
     environment:
       ASPNETCORE_ENVIRONMENT: $ASPNETCORE_ENVIRONMENT
       ASPNETCORE_HTTP_PORTS: $ASPNETCORE_HTTP_PORTS
