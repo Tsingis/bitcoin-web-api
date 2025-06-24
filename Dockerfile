@@ -2,9 +2,9 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 
 WORKDIR /app
 
-COPY App .
+COPY src .
 COPY Directory.Build.props .
-COPY NuGet.config .
+COPY nuget.config .
 
 RUN dotnet restore --locked-mode ./Api/Api.csproj
 

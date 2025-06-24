@@ -20,7 +20,7 @@
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <NoWarn>$(NoWarn);CA5394;CA1707</NoWarn>
   </PropertyGroup>
-  <ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
+  <ItemGroup>
     <PackageReference Include="SonarAnalyzer.CSharp">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

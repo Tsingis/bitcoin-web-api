@@ -1,6 +1,6 @@
 dotnet test -c Release --no-restore --no-build -- --coverage --coverage-output-format xml --coverage-output coverage.xml
 
-$coverageFiles = Get-ChildItem -Path "Tests" -Recurse -Filter "coverage.xml"
+$coverageFiles = Get-ChildItem -Path "tests" -Recurse -Filter "coverage.xml"
 
 if ($coverageFiles) {
     $reportFiles = ($coverageFiles | ForEach-Object { $_.FullName }) -join ";"
@@ -11,4 +11,4 @@ if ($coverageFiles) {
     Write-Host "Coverage reports not found."
 }
 
-Get-ChildItem -Path "Tests" -Recurse -Filter "TestResults" | ForEach-Object { Remove-Item -Recurse -Force -Path $_.FullName }
+Get-ChildItem -Path "tests" -Recurse -Filter "TestResults" | ForEach-Object { Remove-Item -Recurse -Force -Path $_.FullName }
