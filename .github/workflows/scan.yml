@@ -1,26 +1,5 @@
 name: scan
 on:
-  pull_request:
-    branches:
-      - master
-    paths:
-      - "src/**"
-      - "Directory.Build.props"
-      - "global.json"
-      - "Dockerfile"
-      - ".github/workflows/scan.yml"
-  workflow_call:
-    inputs:
-      severities:
-        description: "Comma-separated list of severities to scan for: critical, high, medium, low, unspecified"
-        required: true
-        type: string
-        default: critical,high
-      package-types:
-        description: "Comma-separated list of package types to scan for: e.g. apk, nuget or empty for all"
-        required: true
-        type: string
-        default: ""
   workflow_dispatch:
     inputs:
       severities:
@@ -28,42 +7,11 @@ on:
         required: true
         type: string
         default: critical,high
-      package-types:
-        description: "Comma-separated list of package types to scan for: e.g. apk, nuget or empty for all"
-        required: false
-        type: string
-        default: "nuget"
   schedule:
     - cron: "0 0 * * 3"
 jobs:
-  determine-package-type:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    outputs:
-      package-types: ${{ steps.set-output.outputs.package-types }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Determine Package Types
-        id: set-output
-        run: |
-          package_types=""
-          PR_FILES=$(gh pr diff ${{ github.event.pull_request.number }} --name-only)
-
-          echo "Changed files: $PR_FILES"
-
-          if echo "$PR_FILES" | grep -q 'Dockerfile'; then
-            package_types=""
-          elif echo "$PR_FILES" | grep -qE '\.(cs|csproj|props)$'; then
-            package_types="nuget"
-          fi
-
-          echo "package-types=${package_types}" >> $GITHUB_OUTPUT
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   scan:
     runs-on: ubuntu-latest
-    needs: determine-package-type
-    if: always()
     permissions:
       pull-requests: write
     steps:
@@ -78,25 +26,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           logout: true
-      - name: Build and/or push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: ${{ github.event_name == 'workflow_call' || github.event_name == 'push' }}
-          load: true
-          pull: false
-          no-cache: false
-          tags: ${{ vars.IMAGE }}
-        env:
-          DOCKER_BUILD_SUMMARY: false
-          DOCKER_BUILD_RECORD_UPLOAD: false
       - name: Scan
         uses: docker/scout-action@v1
         with:
           command: cves,recommendations
-          image: local://${{ vars.IMAGE }}
+          image: ${{ vars.IMAGE }}
           only-severities: ${{ inputs && inputs.severities || 'critical,high' }}
-          only-package-types: ${{ (needs.determine-package-type && needs.determine-package-type.outputs.package-types) || (inputs && inputs.package-types) || '' }}
           only-fixed: true
           summary: true
           format: json
