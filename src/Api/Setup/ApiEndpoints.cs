@@ -22,7 +22,7 @@ internal static class ApiEndpoints
             {
                 try
                 {
-                    var result = await service.GetLongestDownwardTrend(fromDate, toDate);
+                    var result = await service.GetLongestDownwardTrend(fromDate, toDate).ConfigureAwait(false);
                     if (result is null)
                     {
                         return Results.NoContent();
@@ -46,7 +46,7 @@ internal static class ApiEndpoints
             {
                 try
                 {
-                    var result = await service.GetHighestTradingVolume(fromDate, toDate);
+                    var result = await service.GetHighestTradingVolume(fromDate, toDate).ConfigureAwait(false);
                     if (result is null)
                     {
                         return Results.NoContent();
@@ -74,7 +74,7 @@ internal static class ApiEndpoints
             {
                 try
                 {
-                    var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
+                    var result = await service.GetBestBuyAndSellDates(fromDate, toDate).ConfigureAwait(false);
                     if (result is null)
                     {
                         return Results.NoContent();

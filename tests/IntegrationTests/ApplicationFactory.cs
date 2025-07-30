@@ -12,6 +12,6 @@ public sealed class ApplicationFactory : WebApplicationFactory<Program>, IAsyncL
 
     public new async ValueTask DisposeAsync()
     {
-        await base.DisposeAsync();
+        await base.DisposeAsync().ConfigureAwait(false);
     }
 }

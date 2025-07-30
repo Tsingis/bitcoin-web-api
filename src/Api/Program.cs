@@ -44,7 +44,7 @@ try
 
     app.ConfigureMiddleware(app.Environment);
 
-    await app.RunAsync();
+    await app.RunAsync().ConfigureAwait(false);
 }
 catch (Exception ex)
 {
@@ -54,7 +54,7 @@ catch (Exception ex)
 }
 finally
 {
-    await Log.CloseAndFlushAsync();
+    await Log.CloseAndFlushAsync().ConfigureAwait(false);
 }
 
 public partial class Program { } // Reference for tests

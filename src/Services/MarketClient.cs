@@ -19,14 +19,14 @@ public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpC
         var baseUrl = $"https://api.coingecko.com/api/v3/coins/{Constants.CryptoCurrency}/market_chart/range";
         var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, Constants.Currency);
         var url = QueryHelpers.AddQueryString(baseUrl, parameters);
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
-            var response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
+                var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var marketChart = JsonSerializer.Deserialize<MarketChart>(json, _options);
 
                 if (marketChart is null || marketChart.Prices.IsNullOrEmpty())

@@ -25,7 +25,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -40,7 +40,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -55,7 +55,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -71,7 +71,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     public async Task DocsUI(string endpoint)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(endpoint, cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri(endpoint, UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
@@ -80,7 +80,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     public async Task DocsJson(string endpoint)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(endpoint, cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri(endpoint, UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         var data = await result.Content.ReadAsStringAsync(cancellationToken: ct);
@@ -120,7 +120,7 @@ public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationT
     public async Task Health()
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync("/health", cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri("/health", UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }

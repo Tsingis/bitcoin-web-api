@@ -104,7 +104,9 @@ internal static class ApiServices
             opt.OnRejected = async (context, cancellationToken) =>
             {
                 context.HttpContext.Response.StatusCode = 429;
-                await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", cancellationToken);
+                await context.HttpContext.Response
+                    .WriteAsync("Too many requests. Please try again later.", cancellationToken)
+                    .ConfigureAwait(false);
             };
         });
 

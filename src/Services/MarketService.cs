@@ -11,7 +11,7 @@ public class MarketService(ILogger<MarketService> logger, IMarketClient marketCl
     public async Task<int?> GetLongestDownwardTrend(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting longest downward trend for price from {FromDate} to {ToDate}", fromDate, toDate);
-        var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
+        var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate).ConfigureAwait(false);
 
         if (data is null)
         {
@@ -27,7 +27,7 @@ public class MarketService(ILogger<MarketService> logger, IMarketClient marketCl
     public async Task<(DateOnly Date, decimal Volume)?> GetHighestTradingVolume(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting highest trading volume and date from {FromDate} to {ToDate}", fromDate, toDate);
-        var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
+        var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate).ConfigureAwait(false);
 
         if (data is null)
         {
@@ -53,7 +53,7 @@ public class MarketService(ILogger<MarketService> logger, IMarketClient marketCl
     public async Task<(DateOnly SellDate, DateOnly BuyDate)?> GetBestBuyAndSellDates(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting best buy and sell dates from {FromDate} to {ToDate}", fromDate, toDate);
-        var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
+        var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate).ConfigureAwait(false);
 
         if (data is null)
         {
