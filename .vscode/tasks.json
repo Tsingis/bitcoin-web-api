@@ -1,54 +1,125 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "run app",
-      "type": "shell",
-      "command": "dotnet run watch --project src/Api/Api.csproj",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-    {
-      "label": "build solution",
-      "type": "shell",
-      "command": "dotnet build",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-    {
-      "label": "clean solution",
-      "type": "shell",
-      "command": "dotnet clean",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-    {
-      "label": "restore solution",
-      "type": "shell",
-      "command": "dotnet restore",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-    {
-      "label": "test solution",
-      "type": "shell",
-      "command": "dotnet test",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-    {
-      "label": "list outdated",
-      "type": "shell",
-      "command": "dotnet list package --outdated",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-    {
-      "label": "list vulnerable",
-      "type": "shell",
-      "command": "dotnet list package --vulnerable --include-transitive",
-      "problemMatcher": "$msCompile",
-      "group": "build"
-    },
-  ]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run terminal",
+            "type": "shell",
+            "command": "dotnet run watch --project src/Api/Api.csproj",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "run docker",
+            "type": "shell",
+            "command": "docker compose up --build",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "run app",
+            "type": "shell",
+            "command": "dotnet run watch --project src/Api/Api.csproj",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "build solution",
+            "type": "shell",
+            "command": "dotnet build",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "clean solution",
+            "type": "shell",
+            "command": "dotnet clean",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "restore solution",
+            "type": "shell",
+            "command": "dotnet restore",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "run tests",
+            "type": "shell",
+            "command": "dotnet test",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "list outdated",
+            "type": "shell",
+            "command": "dotnet list package --outdated",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "list vulnerable",
+            "type": "shell",
+            "command": "dotnet list package --vulnerable --include-transitive",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "show coverage",
+            "type": "shell",
+            "command": "./coverage.ps1",
+            "problemMatcher": "$msCompile",
+            "dependsOn": ["build solution"],
+            "presentation": {
+                "close": true,
+                "reveal": "always"
+            },
+            "options": {
+                "shell": {
+                    "executable": "powershell.exe"
+                }
+            },
+            "group": "build"
+        },
+        {
+            "label": "terraform init",
+            "type": "shell",
+            "command": "terraform init",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/terraform"
+            },
+            "group": "build"
+        },
+        {
+            "label": "terraform format",
+            "type": "shell",
+            "command": "terraform fmt",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/terraform"
+            },
+            "group": "build"
+        },
+        {
+            "label": "terraform plan",
+            "type": "shell",
+            "command": "terraform plan -out=tfplan",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/terraform"
+            },
+            "group": "build"
+        },
+        {
+            "label": "terraform apply",
+            "type": "shell",
+            "command": "terraform apply tfplan",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/terraform"
+            },
+            "group": "build"
+        },
+    ]
 }
