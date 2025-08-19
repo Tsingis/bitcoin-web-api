@@ -1,5 +1,6 @@
 using System.Net;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Services;
 
 namespace Api.Setup;
@@ -18,82 +19,93 @@ internal static class ApiEndpoints
             .WithApiVersionSet(apiVersionSet);
 
         group.MapGet("/longestdownwardtrend",
-            async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
+            async Task<Results<Ok<LongestDownwardTrendResponse>, NoContent,
+                BadRequest, StatusCodeHttpResult, ProblemHttpResult>>
+            (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
                 {
                     var result = await service.GetLongestDownwardTrend(fromDate, toDate).ConfigureAwait(false);
+
                     if (result is null)
                     {
-                        return Results.NoContent();
+                        return TypedResults.NoContent();
                     }
-                    return Results.Ok(new LongestDownwardTrendResponse(result.Value));
+
+                    return TypedResults.Ok(new LongestDownwardTrendResponse(result.Value));
                 }
-                catch (HttpRequestException ex)
+                catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    return Results.Problem(statusCode: (int?)ex.StatusCode);
+                    return TypedResults.StatusCode((int)HttpStatusCode.TooManyRequests);
+                }
+                catch (HttpRequestException)
+                {
+                    return TypedResults.Problem(statusCode: (int)HttpStatusCode.InternalServerError);
                 }
             })
             .WithDescription("Get longest downward trend in days between given dates")
-            .Produces<LongestDownwardTrendResponse>((int)HttpStatusCode.OK)
-            .Produces((int)HttpStatusCode.NotFound)
-            .Produces((int)HttpStatusCode.BadRequest)
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
         group.MapGet("/highestradingvolume",
-            async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
+            async Task<Results<Ok<HighestTradingVolumeResponse>, NoContent,
+                BadRequest, StatusCodeHttpResult, ProblemHttpResult>>
+            (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
                 {
                     var result = await service.GetHighestTradingVolume(fromDate, toDate).ConfigureAwait(false);
                     if (result is null)
                     {
-                        return Results.NoContent();
+                        return TypedResults.NoContent();
                     }
-                    return Results.Ok(new HighestTradingVolumeResponse
+                    return TypedResults.Ok(new HighestTradingVolumeResponse
                     (
                         result.Value.Date,
                         result.Value.Volume
                     ));
                 }
-                catch (HttpRequestException ex)
+                catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    return Results.Problem(statusCode: (int?)ex.StatusCode);
+                    return TypedResults.StatusCode((int)HttpStatusCode.TooManyRequests);
+                }
+                catch (HttpRequestException)
+                {
+                    return TypedResults.Problem(statusCode: (int)HttpStatusCode.InternalServerError);
                 }
             })
             .WithDescription("Get the date with the highest trading volume between given dates")
-            .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
-            .Produces((int)HttpStatusCode.NotFound)
-            .Produces((int)HttpStatusCode.BadRequest)
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
         group.MapGet("/buyandsell",
-            async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
+            async Task<Results<Ok<BuyAndSellResponse>, NoContent,
+                BadRequest, StatusCodeHttpResult, ProblemHttpResult>>
+            (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
                 {
                     var result = await service.GetBestBuyAndSellDates(fromDate, toDate).ConfigureAwait(false);
                     if (result is null)
                     {
-                        return Results.NoContent();
+                        return TypedResults.NoContent();
                     }
-                    return Results.Ok(new BuyAndSellResponse
+                    return TypedResults.Ok(new BuyAndSellResponse
                     (
                         result.Value.BuyDate,
                         result.Value.SellDate
                     ));
                 }
-                catch (HttpRequestException ex)
+                catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    return Results.Problem(statusCode: (int?)ex.StatusCode);
+                    return TypedResults.StatusCode((int)HttpStatusCode.TooManyRequests);
+                }
+                catch (HttpRequestException)
+                {
+                    return TypedResults.Problem(statusCode: (int)HttpStatusCode.InternalServerError);
                 }
             })
             .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
-            .Produces<BuyAndSellResponse>((int)HttpStatusCode.OK)
-            .Produces((int)HttpStatusCode.NotFound)
-            .Produces((int)HttpStatusCode.BadRequest)
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
     }
