@@ -1,16 +1,32 @@
 {
     "version": "0.2.0",
     "configurations": [
-      {
-        "name": ".NET Core Launch (console)",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build",
-        "program": "${workspaceFolder}/src/Api/bin/Debug/net9.0/Api.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/src/api",
-        "stopAtEntry": false,
-        "console": "internalConsole"
-      }
+        {
+            "name": "Api (Debug)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Api/bin/Debug/net9.0/Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/api",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "justMyCode": true,
+        },
+        {
+            "name": "Api (Debug with Browser)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Api/bin/Debug/net9.0/Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/api",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "justMyCode": true,
+            "serverReadyAction": {
+                "pattern": "Now listening on: (http?://\\S+)",
+                "uriFormat": "%s/scalar",
+                "action": "openExternally"
+            }
+        },
     ]
   }
