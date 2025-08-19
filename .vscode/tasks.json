@@ -2,9 +2,16 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "run terminal",
+            "label": "run",
             "type": "shell",
-            "command": "dotnet run watch --project src/Api/Api.csproj",
+            "command": "dotnet run --launch-profile dev --project src/Api/Api.csproj",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "watch",
+            "type": "shell",
+            "command": "dotnet watch run --launch-profile dev --project src/Api/Api.csproj",
             "problemMatcher": "$msCompile",
             "group": "build"
         },
@@ -12,13 +19,6 @@
             "label": "run docker",
             "type": "shell",
             "command": "docker compose up --build",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "run app",
-            "type": "shell",
-            "command": "dotnet run watch --project src/Api/Api.csproj",
             "problemMatcher": "$msCompile",
             "group": "build"
         },
