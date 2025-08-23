@@ -17,6 +17,14 @@ Tools used:
 
 -   .NET SDK
 -   .NET report generator `dotnet tool install -g dotnet-reportgenerator-globaltool`
+-   Docker
 -   Azure
 -   Terraform
--   Docker
+
+Docker
+
+-   Run via Docker `docker compose up --build`
+
+Api
+
+-   Launch `dotnet run --launch-profile dev --project src/Api/Api.csproj`
