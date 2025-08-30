@@ -20,7 +20,7 @@ internal static class ApiEndpoints
 
         group.MapGet("/longestdownwardtrend",
             async Task<Results<Ok<LongestDownwardTrendResponse>, NoContent,
-                BadRequest, StatusCodeHttpResult, ProblemHttpResult>>
+                BadRequest, StatusCodeHttpResult, UnauthorizedHttpResult, ProblemHttpResult>>
             (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
@@ -38,6 +38,10 @@ internal static class ApiEndpoints
                 {
                     return TypedResults.StatusCode((int)HttpStatusCode.TooManyRequests);
                 }
+                catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return TypedResults.Problem(detail: "Query spanning over 365 days", statusCode: (int)HttpStatusCode.Unauthorized);
+                }
                 catch (HttpRequestException)
                 {
                     return TypedResults.Problem(statusCode: (int)HttpStatusCode.InternalServerError);
@@ -45,11 +49,12 @@ internal static class ApiEndpoints
             })
             .WithDescription("Get longest downward trend in days between given dates")
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
+            .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
         group.MapGet("/highestradingvolume",
             async Task<Results<Ok<HighestTradingVolumeResponse>, NoContent,
-                BadRequest, StatusCodeHttpResult, ProblemHttpResult>>
+                BadRequest, StatusCodeHttpResult, UnauthorizedHttpResult, ProblemHttpResult>>
             (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
@@ -69,6 +74,10 @@ internal static class ApiEndpoints
                 {
                     return TypedResults.StatusCode((int)HttpStatusCode.TooManyRequests);
                 }
+                catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return TypedResults.Problem(detail: "Query spanning over 365 days", statusCode: (int)HttpStatusCode.Unauthorized);
+                }
                 catch (HttpRequestException)
                 {
                     return TypedResults.Problem(statusCode: (int)HttpStatusCode.InternalServerError);
@@ -76,11 +85,12 @@ internal static class ApiEndpoints
             })
             .WithDescription("Get the date with the highest trading volume between given dates")
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
+            .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
         group.MapGet("/buyandsell",
             async Task<Results<Ok<BuyAndSellResponse>, NoContent,
-                BadRequest, StatusCodeHttpResult, ProblemHttpResult>>
+                BadRequest, StatusCodeHttpResult, UnauthorizedHttpResult, ProblemHttpResult>>
             (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
@@ -100,6 +110,10 @@ internal static class ApiEndpoints
                 {
                     return TypedResults.StatusCode((int)HttpStatusCode.TooManyRequests);
                 }
+                catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return TypedResults.Problem(detail: "Query spanning over 365 days", statusCode: (int)HttpStatusCode.Unauthorized);
+                }
                 catch (HttpRequestException)
                 {
                     return TypedResults.Problem(statusCode: (int)HttpStatusCode.InternalServerError);
@@ -107,6 +121,7 @@ internal static class ApiEndpoints
             })
             .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
+            .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
     }
 }
