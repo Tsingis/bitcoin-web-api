@@ -15,6 +15,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: Azure
     permissions:
       id-token: write
       contents: read
