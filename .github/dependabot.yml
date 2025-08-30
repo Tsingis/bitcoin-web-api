@@ -42,6 +42,14 @@ updates:
       time: "21:00"
       timezone: "Europe/Helsinki"
     target-branch: "master"
+  - package-ecosystem: "docker-compose"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "wednesday"
+      time: "21:00"
+      timezone: "Europe/Helsinki"
+    target-branch: "master"
   - package-ecosystem: "terraform"
     directory: "/terraform"
     schedule:
