@@ -12,8 +12,19 @@ services:
       ASPNETCORE_ENVIRONMENT: $ASPNETCORE_ENVIRONMENT
       ASPNETCORE_HTTP_PORTS: $ASPNETCORE_HTTP_PORTS
       KEY_VAULT_NAME: $KEY_VAULT_NAME
+      OUTPUT_CACHE: $OUTPUT_CACHE
+      MARKET_CLIENT_URL: $MARKET_CLIENT_URL
     user: app
     read_only: true
     privileged: false
     tmpfs:
       - /tmp:rw
+  wiremock:
+    image: wiremock/wiremock:3x-alpine
+    container_name: wiremock
+    ports:
+      - 9091:8080
+    read_only: false
+    privileged: true
+    volumes:
+      - ./wiremock:/home/wiremock/mappings

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Services.Extensions;
 using Services.Models;
@@ -7,7 +8,7 @@ using Services.Utility;
 
 namespace Services;
 
-public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory) : IMarketClient
+public class MarketClient(ILogger<MarketClient> logger, IConfiguration configuration, IHttpClientFactory httpClientFactory) : IMarketClient
 {
     private readonly ILogger<MarketClient> _logger = logger;
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
@@ -16,13 +17,14 @@ public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpC
 
     public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(DateOnly fromDate, DateOnly toDate)
     {
-        var baseUrl = $"https://api.coingecko.com/api/v3/coins/{Constants.CryptoCurrency}/market_chart/range";
-        var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, Constants.Currency);
+        const string baseUrl = "/api/v3/coins/bitcoin/market_chart/range";
+        var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, "eur");
         var url = QueryHelpers.AddQueryString(baseUrl, parameters);
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
+            httpClient.BaseAddress = new Uri(configuration.GetValue("MARKET_CLIENT_URL", "https://api.coingecko.com"));
             var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
