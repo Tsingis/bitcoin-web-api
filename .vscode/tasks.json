@@ -82,6 +82,13 @@
             "group": "build"
         },
         {
+            "label": "remove bin/obj",
+            "type": "shell",
+            "command": "for /d /r . %d in (bin obj) do @if exist \"%d\" rmdir /s /q \"%d\"",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
             "label": "terraform init",
             "type": "shell",
             "command": "terraform init",
