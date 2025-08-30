@@ -4,7 +4,7 @@ namespace Api.Setup;
 
 internal static class ApiMiddleware
 {
-    public static void ConfigureMiddleware(this WebApplication app, IWebHostEnvironment environment)
+    public static void ConfigureMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
         if (environment.IsDevelopment())
         {
@@ -13,7 +13,10 @@ internal static class ApiMiddleware
 
         app.UseRouting();
 
-        app.UseOutputCache();
+        if (configuration.GetValue("OUTPUT_CACHE", true))
+        {
+            app.UseOutputCache();
+        }
 
         const string documentName = "/openapi/v1.json";
         const string apiName = "Bitcoin Web API v1";

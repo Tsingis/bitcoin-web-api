@@ -8,6 +8,7 @@ DotNetEnv.Env.TraversePath().Load();
 var config = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables()
     .Build();
 
 const string logFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}";
@@ -23,7 +24,7 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
-    var keyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME");
+    var keyVaultName = builder.Configuration.GetValue<string>("KEY_VAULT_NAME");
     if (builder.Environment.IsProduction() && !string.IsNullOrEmpty(keyVaultName))
     {
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
@@ -42,7 +43,7 @@ try
 
     app.ConfigureEndpoints();
 
-    app.ConfigureMiddleware(app.Environment);
+    app.ConfigureMiddleware(app.Environment, app.Configuration);
 
     await app.RunAsync().ConfigureAwait(false);
 }
