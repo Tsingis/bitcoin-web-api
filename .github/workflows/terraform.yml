@@ -1,0 +1,59 @@
+name: terraform
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform.yml"
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  terraform:
+    name: Deploy Terraform
+    runs-on: ubuntu-latest
+    environment: Azure
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_rg_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+      TF_VAR_kv_name: ${{ secrets.KEY_VAULT_NAME }}
+      TF_VAR_ai_name: ${{ secrets.APP_INSIGHTS_NAME }}
+      TF_VAR_law_name: ${{ secrets.LOG_ANALYTICS_WS_NAME }}
+      TF_VAR_ca_env_name: ${{ vars.CONTAINER_APP_ENVIRONMENT }}
+      TF_VAR_ca_app_name: ${{ vars.CONTAINER_APP_NAME }}
+      TF_VAR_registry_image: ${{ vars.IMAGE }}
+      TF_VAR_registry_username: ${{ secrets.DOCKERHUB_USERNAME }}
+      TF_VAR_registry_password: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Terraform format
+        run: terraform fmt -check
+        working-directory: ./terraform
+      - name: Terraform init
+        run: |
+          terraform init \
+            -backend-config="storage_account_name=${{ secrets.TF_STATE_STORAGE }}" \
+            -backend-config="container_name=${{ secrets.TF_STATE_CONTAINER }}"
+        working-directory: ./terraform
+      - name: Terraform plan
+        run: terraform plan -out=tfplan
+        working-directory: ./terraform
+      - name: Terraform apply
+        if: github.event_name == 'workflow_dispatch'
+        run: terraform apply -auto-approve tfplan
+        working-directory: ./terraform
