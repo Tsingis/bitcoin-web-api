@@ -1,5 +1,13 @@
-name: deploy
+name: build-deploy
 on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "src/**"
+      - "Directory.Build.props"
+      - "Dockerfile"
+      - ".github/workflows/deploy.yml"
   push:
     branches:
       - master
@@ -13,9 +21,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment: Azure
     permissions:
       id-token: write
       contents: read
@@ -35,14 +42,23 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: true
+          push: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
           load: true
           pull: false
-          no-cache: true
+          no-cache: false
           tags: ${{ vars.IMAGE }}
         env:
           DOCKER_BUILD_SUMMARY: false
           DOCKER_BUILD_RECORD_UPLOAD: false
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: build
+    environment: Azure
+    permissions:
+      id-token: write
+      contents: read
+    steps:
       - name: Azure login
         uses: azure/login@v2
         with:
@@ -60,4 +76,6 @@ jobs:
           registryUsername: ${{ secrets.DOCKERHUB_USERNAME }}
           registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
           targetPort: ${{ vars.CONTAINER_PORT }}
-          environmentVariables: ASPNETCORE_ENVIRONMENT=Production KEY_VAULT_NAME=${{ secrets.KEY_VAULT_NAME }}
+          environmentVariables: >
+            ASPNETCORE_ENVIRONMENT=Production
+            KEY_VAULT_NAME=${{ secrets.KEY_VAULT_NAME }}
