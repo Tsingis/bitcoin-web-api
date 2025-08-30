@@ -14,14 +14,14 @@ public class UtilityTests
     public void LongestConsecutiveDecreasingSubset()
     {
         var numberOfDays = 10;
-        var now = DateTimeOffset.UtcNow;
+        var date = new DateTimeOffset(new DateTime(2025, 1, 1, 12, 0, 0, 0, DateTimeKind.Utc));
         var marketChartPoints = new List<MarketChartPoint>();
 
         var price = new Random().Next(0, int.MaxValue);
 
         marketChartPoints.Add(new MarketChartPoint
         {
-            Date = now,
+            Date = date,
             Price = price,
             MarketCap = new Random().Next(),
             TotalVolume = new Random().Next(),
@@ -31,7 +31,7 @@ public class UtilityTests
         {
             marketChartPoints.Add(new MarketChartPoint
             {
-                Date = now.AddDays(i),
+                Date = date.AddDays(i),
                 Price = price - i,
                 MarketCap = new Random().Next(),
                 TotalVolume = new Random().Next(),
@@ -40,7 +40,7 @@ public class UtilityTests
 
         marketChartPoints.Add(new MarketChartPoint
         {
-            Date = now.AddDays(numberOfDays + 1),
+            Date = date.AddDays(numberOfDays + 1),
             Price = price + 1,
             MarketCap = new Random().Next(),
             TotalVolume = new Random().Next(),
@@ -58,13 +58,13 @@ public class UtilityTests
     public void EarliestMarketChartPoints_Found()
     {
         var numberOfDays = 10;
-        var now = DateTimeOffset.UtcNow;
+        var date = new DateTimeOffset(new DateTime(2025, 1, 1, 12, 0, 0, 0, DateTimeKind.Utc));
         var marketChartPoints = new List<MarketChartPoint>();
         for (var i = 1; i < 24 * numberOfDays; i++)
         {
             marketChartPoints.Add(new MarketChartPoint
             {
-                Date = now.AddHours(i),
+                Date = date.AddHours(i),
                 Price = new Random().Next(),
                 MarketCap = new Random().Next(),
                 TotalVolume = new Random().Next(),
@@ -74,7 +74,7 @@ public class UtilityTests
         var result = MarketChartHelper.GetEarliestMarketChartPointsByDate(marketChartPoints);
 
         result.ShouldNotBeEmpty();
-        if (now.TimeOfDay.Ticks == 0)
+        if (date.TimeOfDay.Ticks == 0)
         {
             result.Count.ShouldBe(numberOfDays);
         }
@@ -92,17 +92,17 @@ public class UtilityTests
             Prices =
             [
                 [1629811200000, 45000],
-            [1629897600000, 46000]
+                [1629897600000, 46000]
             ],
             MarketCaps =
             [
                 [1629811200000, 850000000000],
-            [1629897600000, 860000000000]
+                [1629897600000, 860000000000]
             ],
             TotalVolumes =
             [
                 [1629811200000, 35000000000],
-            [1629897600000, 36000000000]
+                [1629897600000, 36000000000]
             ]
         };
 
