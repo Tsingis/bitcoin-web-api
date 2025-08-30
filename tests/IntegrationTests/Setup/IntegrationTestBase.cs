@@ -1,15 +1,15 @@
 using Xunit;
 
-namespace IntegrationTests;
+namespace IntegrationTests.Setup;
 
-public abstract class IntegrationTestBase : IClassFixture<ApplicationFactory>, IAsyncLifetime
+public abstract class IntegrationTestBase : IAsyncLifetime
 {
     internal readonly ApplicationFactory _factory;
     internal readonly HttpClient _client;
 
-    protected IntegrationTestBase(ApplicationFactory factory)
+    protected IntegrationTestBase(Fixture fixture)
     {
-        _factory = factory;
+        _factory = new ApplicationFactory(fixture);
         _client = _factory.CreateClient();
     }
 
@@ -21,6 +21,7 @@ public abstract class IntegrationTestBase : IClassFixture<ApplicationFactory>, I
     public virtual ValueTask DisposeAsync()
     {
         _client.Dispose();
+        _factory.Dispose();
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
     }

@@ -140,6 +140,9 @@
         "dependencies": {
           "Microsoft.Extensions.Primitives": "9.0.8"
         }
+      },
+      "common": {
+        "type": "Project"
       }
     }
   }

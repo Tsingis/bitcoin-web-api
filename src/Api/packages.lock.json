@@ -1589,9 +1589,13 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
+      "common": {
+        "type": "Project"
+      },
       "services": {
         "type": "Project",
         "dependencies": {
+          "Common": "[1.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[9.0.8, )",
           "Microsoft.Extensions.Http": "[9.0.8, )",
           "Microsoft.Extensions.Logging": "[9.0.8, )"

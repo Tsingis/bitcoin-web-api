@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Common;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,7 @@ public class MarketClient(ILogger<MarketClient> logger, IConfiguration configura
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
-            httpClient.BaseAddress = new Uri(configuration.GetValue("MARKET_CLIENT_URL", "https://api.coingecko.com"));
+            httpClient.BaseAddress = new Uri(configuration.GetValue(EnvironmentVariable.MarketClientUrl, "https://api.coingecko.com"));
             var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {

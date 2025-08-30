@@ -3,20 +3,24 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Api.Setup;
+using IntegrationTests.Setup;
 using Shouldly;
 using Xunit;
 
 namespace IntegrationTests;
 
-public sealed class ApiEndpointsTests(ApplicationFactory factory) : IntegrationTestBase(factory)
+public sealed class ApiEndpointsTests(Fixture fixture) : IntegrationTestBase(fixture)
 {
+    private const string DateFormat = "yyyy-MM-dd";
     private const string BaseUrl = "/api/v1";
 
+    private static readonly DateTime s_mockCutOffDate = new(2024, 8, 29, 0, 0, 0, DateTimeKind.Utc);
+
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
-    new TheoryData<string?, string?, HttpStatusCode>
+    new()
     {
-        {DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), HttpStatusCode.OK},
-        {DateTime.Now.AddMonths(-13).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+        {DateTime.Now.AddMonths(-1).ToString(DateFormat, CultureInfo.InvariantCulture), DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
+        {s_mockCutOffDate.ToString(DateFormat, CultureInfo.InvariantCulture), s_mockCutOffDate.AddYears(1).AddDays(1).ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
         {"", null, HttpStatusCode.BadRequest},
     };
 

@@ -1,6 +1,7 @@
 using System.Globalization;
 using Api.Setup;
 using Azure.Identity;
+using Common;
 using Serilog;
 
 DotNetEnv.Env.TraversePath().Load();
@@ -24,7 +25,7 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
-    var keyVaultName = builder.Configuration.GetValue<string>("KEY_VAULT_NAME");
+    var keyVaultName = builder.Configuration.GetValue<string>(EnvironmentVariable.KeyVaultName);
     if (builder.Environment.IsProduction() && !string.IsNullOrEmpty(keyVaultName))
     {
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
