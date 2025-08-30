@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
@@ -106,7 +107,7 @@ internal static class ApiServices
 
             opt.OnRejected = async (context, cancellationToken) =>
             {
-                context.HttpContext.Response.StatusCode = 429;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
                 await context.HttpContext.Response
                     .WriteAsync("Too many requests. Please try again later.", cancellationToken)
                     .ConfigureAwait(false);
