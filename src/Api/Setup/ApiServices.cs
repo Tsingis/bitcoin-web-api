@@ -1,8 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
-using APIWeaver;
 using Asp.Versioning;
+using MartinCostello.OpenApi;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Serilog;
@@ -42,8 +42,11 @@ internal static class ApiServices
             opt.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
         });
 
-        services.AddApiWeaver(opt =>
+        services.AddOpenApiExtensions(opt =>
         {
+            opt.AddServerUrls = false;
+            opt.AddExamples = true;
+            opt.SerializationContexts.Add(DateOnlyJsonSerializerContext.Default);
             opt.AddExample<DateOnly, DateOnlyExampleProvider>();
         });
 

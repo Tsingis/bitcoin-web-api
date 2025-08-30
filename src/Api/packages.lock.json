@@ -2,15 +2,6 @@
   "version": 2,
   "dependencies": {
     "net9.0": {
-      "APIWeaver.OpenApi": {
-        "type": "Direct",
-        "requested": "[2.7.0, )",
-        "resolved": "2.7.0",
-        "contentHash": "XrHa+EXyUyQ1y01/XdyEFBQbaQCJH2gpycUcKWIIkQq17T0k0mJ6DYhsOgV1nNlSuq2+LvbeM3o7H+Xr846W3g==",
-        "dependencies": {
-          "Microsoft.AspNetCore.OpenApi": "9.0.0"
-        }
-      },
       "Asp.Versioning.Mvc.ApiExplorer": {
         "type": "Direct",
         "requested": "[8.1.0, )",
@@ -54,6 +45,16 @@
           "Sprache": "2.3.1",
           "System.Net.Http": "4.3.4",
           "System.Text.RegularExpressions": "4.3.1"
+        }
+      },
+      "MartinCostello.OpenApi.Extensions": {
+        "type": "Direct",
+        "requested": "[1.1.0, )",
+        "resolved": "1.1.0",
+        "contentHash": "xBkrm2YVSyb7dmFb+5ZFLl1O/bkqfjzqbIfS/hCAJBdWOEkmfnQHzMwO9qt9QiI1wd45VOtGUAwR+E35nwSjlQ==",
+        "dependencies": {
+          "Microsoft.AspNetCore.OpenApi": "9.0.0",
+          "Microsoft.OpenApi": "1.6.23"
         }
       },
       "Microsoft.ApplicationInsights.AspNetCore": {
@@ -573,8 +574,8 @@
       },
       "Microsoft.OpenApi": {
         "type": "Transitive",
-        "resolved": "1.6.17",
-        "contentHash": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA=="
+        "resolved": "1.6.23",
+        "contentHash": "tZ1I0KXnn98CWuV8cpI247A17jaY+ILS9vvF7yhI0uPPEqF4P1d7BWL5Uwtel10w9NucllHB3nTkfYTAcHAh8g=="
       },
       "Microsoft.Win32.Primitives": {
         "type": "Transitive",

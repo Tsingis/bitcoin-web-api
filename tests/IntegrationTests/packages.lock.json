@@ -68,14 +68,6 @@
           "xunit.v3.core": "[3.0.1]"
         }
       },
-      "APIWeaver.OpenApi": {
-        "type": "Transitive",
-        "resolved": "2.7.0",
-        "contentHash": "XrHa+EXyUyQ1y01/XdyEFBQbaQCJH2gpycUcKWIIkQq17T0k0mJ6DYhsOgV1nNlSuq2+LvbeM3o7H+Xr846W3g==",
-        "dependencies": {
-          "Microsoft.AspNetCore.OpenApi": "9.0.0"
-        }
-      },
       "Asp.Versioning.Abstractions": {
         "type": "Transitive",
         "resolved": "8.1.0",
@@ -175,6 +167,15 @@
         "type": "Transitive",
         "resolved": "4.4.0",
         "contentHash": "gwJEfIGS7FhykvtZoscwXj/XwW+mJY6UbAZk+qtLKFUGWC95kfKXnj8VkxsZQnWBxJemM/q664rGLN5nf+OHZw=="
+      },
+      "MartinCostello.OpenApi.Extensions": {
+        "type": "Transitive",
+        "resolved": "1.1.0",
+        "contentHash": "xBkrm2YVSyb7dmFb+5ZFLl1O/bkqfjzqbIfS/hCAJBdWOEkmfnQHzMwO9qt9QiI1wd45VOtGUAwR+E35nwSjlQ==",
+        "dependencies": {
+          "Microsoft.AspNetCore.OpenApi": "9.0.0",
+          "Microsoft.OpenApi": "1.6.23"
+        }
       },
       "Microsoft.ApplicationInsights": {
         "type": "Transitive",
@@ -741,8 +742,8 @@
       },
       "Microsoft.OpenApi": {
         "type": "Transitive",
-        "resolved": "1.6.17",
-        "contentHash": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA=="
+        "resolved": "1.6.23",
+        "contentHash": "tZ1I0KXnn98CWuV8cpI247A17jaY+ILS9vvF7yhI0uPPEqF4P1d7BWL5Uwtel10w9NucllHB3nTkfYTAcHAh8g=="
       },
       "Microsoft.Testing.Extensions.TrxReport.Abstractions": {
         "type": "Transitive",
@@ -1947,11 +1948,11 @@
       "api": {
         "type": "Project",
         "dependencies": {
-          "APIWeaver.OpenApi": "[2.7.0, )",
           "Asp.Versioning.Mvc.ApiExplorer": "[8.1.0, )",
           "Azure.Extensions.AspNetCore.Configuration.Secrets": "[1.4.0, )",
           "Azure.Identity": "[1.15.0, )",
           "DotNetEnv": "[3.1.1, )",
+          "MartinCostello.OpenApi.Extensions": "[1.1.0, )",
           "Microsoft.ApplicationInsights.AspNetCore": "[2.23.0, )",
           "Microsoft.AspNetCore.OpenApi": "[9.0.8, )",
           "Microsoft.Extensions.Logging.ApplicationInsights": "[2.23.0, )",
