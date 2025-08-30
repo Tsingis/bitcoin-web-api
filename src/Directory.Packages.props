@@ -22,6 +22,6 @@
     <PackageVersion Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848"/>
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.4" />
   </ItemGroup>
 </Project>

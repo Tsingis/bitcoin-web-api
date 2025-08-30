@@ -1041,8 +1041,8 @@
       },
       "Swashbuckle.AspNetCore.SwaggerUI": {
         "type": "Transitive",
-        "resolved": "9.0.3",
-        "contentHash": "DgJKJASz5OAygeKv2+N0FCZVhQylESqLXrtrRAqIT0vKpX7t5ImJ1FL6+6OqxKiamGkL0jchRXR8OgpMSsMh8w=="
+        "resolved": "9.0.4",
+        "contentHash": "2ugT2OvZsKHqk/2rMDmuqDuFmtix0NvzlXxAfnfHROVMTovbx7Z0UsOQHZa462DBTgdBFnR2Ss6wm4fypfymdA=="
       },
       "System.AppContext": {
         "type": "Transitive",
@@ -1962,7 +1962,7 @@
           "Serilog.Sinks.ApplicationInsights": "[4.0.0, )",
           "Serilog.Sinks.Console": "[6.0.0, )",
           "Services": "[1.0.0, )",
-          "Swashbuckle.AspNetCore.SwaggerUI": "[9.0.3, )"
+          "Swashbuckle.AspNetCore.SwaggerUI": "[9.0.4, )"
         }
       },
       "services": {
