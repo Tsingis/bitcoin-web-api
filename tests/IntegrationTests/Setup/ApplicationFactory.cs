@@ -8,9 +8,9 @@ public sealed class ApplicationFactory(Fixture fixture) : WebApplicationFactory<
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        if (bool.Parse(Environment.GetEnvironmentVariable(EnvironmentVariable.UseMocking) ?? "false"))
+        if (EnvVarAccessors.UseMocking)
         {
-            Environment.SetEnvironmentVariable(EnvironmentVariable.MarketClientUrl, $"http://localhost:{fixture.GetPort()}");
+            builder?.UseSetting(EnvVarKeys.MarketClientUrl, $"http://localhost:{fixture.GetPort()}");
         }
     }
 }

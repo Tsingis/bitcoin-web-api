@@ -17,7 +17,7 @@ public class Fixture : IAsyncLifetime
     {
         DotNetEnv.Env.TraversePath().Load();
 
-        if (bool.Parse(Environment.GetEnvironmentVariable(EnvironmentVariable.UseMocking) ?? "false"))
+        if (EnvVarAccessors.UseMocking)
         {
             _wireMockContainer = new ContainerBuilder()
                 .WithCleanUp(true)

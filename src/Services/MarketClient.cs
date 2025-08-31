@@ -25,7 +25,7 @@ public class MarketClient(ILogger<MarketClient> logger, IConfiguration configura
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
-            httpClient.BaseAddress = new Uri(configuration.GetValue(EnvironmentVariable.MarketClientUrl, "https://api.coingecko.com"));
+            httpClient.BaseAddress = new Uri(configuration.GetValue(EnvVarKeys.MarketClientUrl, "https://api.coingecko.com"));
             var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {

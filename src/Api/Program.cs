@@ -26,7 +26,7 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
-    var keyVaultName = builder.Configuration.GetValue<string>(EnvironmentVariable.KeyVaultName);
+    var keyVaultName = builder.Configuration.GetValue<string>(EnvVarKeys.KeyVaultName);
     if (builder.Environment.IsProduction() && !string.IsNullOrEmpty(keyVaultName))
     {
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");

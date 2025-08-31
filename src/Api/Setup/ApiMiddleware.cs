@@ -1,3 +1,4 @@
+using Common;
 using Scalar.AspNetCore;
 
 namespace Api.Setup;
@@ -13,7 +14,7 @@ internal static class ApiMiddleware
 
         app.UseRouting();
 
-        if (configuration.GetValue("OUTPUT_CACHE", true))
+        if (configuration.GetValue(EnvVarKeys.UseOutputCache, true))
         {
             app.UseOutputCache();
         }
