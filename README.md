@@ -20,6 +20,7 @@ Tools used:
 -   Docker
 -   Azure
 -   Terraform
+-   WireMock
 
 Docker
 
