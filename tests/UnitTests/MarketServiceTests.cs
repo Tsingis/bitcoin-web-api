@@ -1,7 +1,7 @@
+using Common.Extensions;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Services;
-using Services.Extensions;
 using Services.Models;
 using Shouldly;
 using Xunit;

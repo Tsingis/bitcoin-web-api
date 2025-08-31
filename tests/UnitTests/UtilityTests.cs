@@ -1,6 +1,6 @@
 using System.Globalization;
+using Common.Extensions;
 using Services.Exceptions;
-using Services.Extensions;
 using Services.Models;
 using Services.Utility;
 using Shouldly;
