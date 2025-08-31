@@ -1,4 +1,5 @@
 using System.Globalization;
+using Api.Endpoints;
 using Api.Setup;
 using Azure.Identity;
 using Common;
@@ -42,7 +43,7 @@ try
 
     var app = builder.Build();
 
-    app.ConfigureEndpoints();
+    app.MapEndpoints();
 
     app.ConfigureMiddleware(app.Environment, app.Configuration);
 

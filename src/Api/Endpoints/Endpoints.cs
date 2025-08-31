@@ -3,11 +3,11 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Services;
 
-namespace Api.Setup;
+namespace Api.Endpoints;
 
-internal static class ApiEndpoints
+internal static class Endpoints
 {
-    public static void ConfigureEndpoints(this WebApplication app)
+    public static void MapEndpoints(this WebApplication app)
     {
         var apiVersionSet = app.NewApiVersionSet()
             .HasApiVersion(new ApiVersion(1))
@@ -125,7 +125,3 @@ internal static class ApiEndpoints
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
     }
 }
-
-public record LongestDownwardTrendResponse(int Days);
-public record HighestTradingVolumeResponse(DateOnly Date, decimal Volume);
-public record BuyAndSellResponse(DateOnly BuyDate, DateOnly SellDate);
