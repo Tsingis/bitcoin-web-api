@@ -5,6 +5,7 @@
     <Project Path="src/Services/Services.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/ArchitectureTests/ArchitectureTests.csproj" />
     <Project Path="tests/IntegrationTests/IntegrationTests.csproj" />
     <Project Path="tests/UnitTests/UnitTests.csproj" />
   </Folder>
