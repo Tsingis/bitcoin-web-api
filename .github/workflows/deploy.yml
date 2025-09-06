@@ -2,7 +2,7 @@ name: deploy
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - "src/**"
       - "Directory.Build.props"
@@ -10,7 +10,7 @@ on:
       - ".github/workflows/deploy.yml"
   push:
     branches:
-      - master
+      - main
     paths:
       - "src/**"
       - "Directory.Build.props"
