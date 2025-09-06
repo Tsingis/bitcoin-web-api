@@ -7,7 +7,6 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
-    target-branch: "master"
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
@@ -15,7 +14,6 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
-    target-branch: "master"
     groups:
       asp:
         patterns:
@@ -41,7 +39,6 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
-    target-branch: "master"
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
@@ -49,7 +46,6 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
-    target-branch: "master"
   - package-ecosystem: "terraform"
     directory: "/terraform"
     schedule:
@@ -57,4 +53,3 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
-    target-branch: "master"
