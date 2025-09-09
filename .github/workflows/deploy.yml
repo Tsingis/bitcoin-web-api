@@ -21,7 +21,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     environment: Azure
     permissions:
@@ -51,15 +51,22 @@ jobs:
         env:
           DOCKER_BUILD_SUMMARY: false
           DOCKER_BUILD_RECORD_UPLOAD: false
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: build
+    environment: Azure
+    permissions:
+      id-token: write
+      contents: read
+    steps:
       - name: Azure login
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: azure/container-apps-deploy-action@v2
         with:
           resourceGroup: ${{ vars.RESOURCE_GROUP_NAME}}
