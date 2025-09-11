@@ -3,7 +3,9 @@ using Api.Endpoints;
 using Api.Setup;
 using Azure.Identity;
 using Common;
+using Microsoft.ApplicationInsights.Extensibility;
 using Serilog;
+using Serilog.Exceptions;
 
 DotNetEnv.Env.TraversePath().Load();
 
@@ -31,15 +33,31 @@ try
     {
         var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
         builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
-
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(builder.Configuration)
-            .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
-            .WriteTo.ApplicationInsights(builder.Configuration["ApplicationInsights:ConnectionString"], TelemetryConverter.Traces)
-            .CreateLogger();
     }
 
     builder.Services.ConfigureServices();
+
+    builder.Host.UseSerilog((ctx, services, loggerConfig) =>
+    {
+        loggerConfig
+            .ReadFrom.Configuration(ctx.Configuration)
+            .Enrich.FromLogContext()
+            .Enrich.WithExceptionDetails()
+            .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture);
+
+        if (ctx.HostingEnvironment.IsProduction())
+        {
+            var tc = new TelemetryConfiguration
+            {
+                ConnectionString = ctx.Configuration["ApplicationInsights:ConnectionString"]
+            };
+            loggerConfig.WriteTo.ApplicationInsights(tc, TelemetryConverter.Traces);
+        }
+    },
+        writeToProviders: false,
+        preserveStaticLogger: false
+    );
+
 
     var app = builder.Build();
 
