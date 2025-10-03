@@ -4,7 +4,7 @@ $coverageFiles = Get-ChildItem -Path "tests" -Recurse -Filter "coverage.xml"
 
 if ($coverageFiles) {
     $reportFiles = ($coverageFiles | ForEach-Object { $_.FullName }) -join ";"
-    reportgenerator -reports:$reportFiles -targetdir:coveragereport
+    dotnet tool run reportgenerator -reports:$reportFiles -targetdir:coveragereport
 
     Start-Process "coveragereport/index.html"
 } else {

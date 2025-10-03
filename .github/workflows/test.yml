@@ -28,7 +28,7 @@ jobs:
           cache: true
           cache-dependency-path: "**/packages.lock.json"
       - name: Install Report Generator
-        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+        run: dotnet tool restore
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Build
@@ -41,7 +41,7 @@ jobs:
           USE_MOCKING: ${{ vars.USE_MOCKING }}
       - name: Find coverage files and generate report
         run: |
-          reportgenerator -reports:"${{ github.workspace }}/**/coverage.xml" \
+          dotnet tool run reportgenerator -reports:"${{ github.workspace }}/**/coverage.xml" \
           -targetdir:"coverage-report" \
           -reporttypes:MarkdownSummaryGithub
       - name: Upload coverage report
