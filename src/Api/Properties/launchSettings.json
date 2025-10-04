@@ -4,13 +4,8 @@
       "commandName": "Project",
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:8080",
       "launchBrowser": true,
       "launchUrl": "scalar",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HTTP_PORTS": "8080"
-      }
     }
   }
 }
