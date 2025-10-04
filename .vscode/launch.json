@@ -12,6 +12,9 @@
             "stopAtEntry": false,
             "console": "internalConsole",
             "justMyCode": false,
+            "logging": {
+                "moduleLoad": false
+            }
         },
         {
             "name": "Api (Debug with Browser)",
@@ -24,6 +27,9 @@
             "stopAtEntry": false,
             "console": "internalConsole",
             "justMyCode": false,
+            "logging": {
+                "moduleLoad": false
+            },
             "serverReadyAction": {
                 "pattern": "Now listening on: (http?://\\S+)",
                 "uriFormat": "%s/scalar",
