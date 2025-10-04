@@ -43,7 +43,7 @@ try
             .ReadFrom.Configuration(ctx.Configuration)
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
-            .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture);
+            .WriteTo.Async(x => x.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture));
 
         if (ctx.HostingEnvironment.IsProduction())
         {
