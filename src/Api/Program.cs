@@ -6,6 +6,9 @@ using Common;
 using Microsoft.ApplicationInsights.Extensibility;
 using Serilog;
 using Serilog.Exceptions;
+using Serilog.Formatting;
+using Serilog.Formatting.Compact;
+using Serilog.Formatting.Display;
 
 DotNetEnv.Env.TraversePath().Load();
 
@@ -39,11 +42,18 @@ try
 
     builder.Host.UseSerilog((ctx, services, loggerConfig) =>
     {
+        ITextFormatter formatter = new MessageTemplateTextFormatter(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture);
+
+        if (EnvVarAccessors.UseJsonFormatting)
+        {
+            formatter = new CompactJsonFormatter();
+        }
+
         loggerConfig
             .ReadFrom.Configuration(ctx.Configuration)
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
-            .WriteTo.Async(x => x.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture));
+            .WriteTo.Async(x => x.Console(formatter));
 
         if (ctx.HostingEnvironment.IsProduction())
         {
