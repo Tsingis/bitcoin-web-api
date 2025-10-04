@@ -3,9 +3,9 @@ using Scalar.AspNetCore;
 
 namespace Api.Setup;
 
-internal static class ApiMiddleware
+internal static class MiddlewareConfigurationExtensions
 {
-    public static void ConfigureMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
+    public static void AddMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
         app.UseExceptionHandler();
 

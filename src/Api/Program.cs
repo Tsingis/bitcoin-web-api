@@ -1,79 +1,32 @@
-using System.Globalization;
 using Api.Endpoints;
 using Api.Setup;
-using Azure.Identity;
-using Common;
-using Microsoft.ApplicationInsights.Extensibility;
 using Serilog;
-using Serilog.Exceptions;
-using Serilog.Formatting;
-using Serilog.Formatting.Compact;
-using Serilog.Formatting.Display;
 
 DotNetEnv.Env.TraversePath().Load();
 
-var config = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddEnvironmentVariables()
-    .Build();
-
-const string logFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}";
-
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(config)
-    .WriteTo.Console(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture)
-    .CreateBootstrapLogger();
-
 try
 {
+    Log.Logger = LoggingConfigurationExtensions.CreateBootstrapLogger();
+
     Log.Information("Starting up the application");
 
     var builder = WebApplication.CreateBuilder(args);
 
-    var keyVaultName = builder.Configuration.GetValue<string>(EnvVarKeys.KeyVaultName);
-    if (builder.Environment.IsProduction() && !string.IsNullOrEmpty(keyVaultName))
-    {
-        var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
-        builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
-    }
+    builder.Configuration.AddConfiguration(builder.Environment);
 
-    builder.Services.ConfigureServices(builder.Environment);
+    builder.Services.AddServices(builder.Environment);
 
     builder.Host.UseSerilog((ctx, services, loggerConfig) =>
-    {
-        ITextFormatter formatter = new MessageTemplateTextFormatter(outputTemplate: logFormat, formatProvider: CultureInfo.InvariantCulture);
-
-        if (EnvVarAccessors.UseJsonFormatting)
-        {
-            formatter = new CompactJsonFormatter();
-        }
-
-        loggerConfig
-            .ReadFrom.Configuration(ctx.Configuration)
-            .Enrich.FromLogContext()
-            .Enrich.WithExceptionDetails()
-            .WriteTo.Async(x => x.Console(formatter));
-
-        if (ctx.HostingEnvironment.IsProduction())
-        {
-            var tc = new TelemetryConfiguration
-            {
-                ConnectionString = ctx.Configuration["ApplicationInsights:ConnectionString"]
-            };
-            loggerConfig.WriteTo.ApplicationInsights(tc, TelemetryConverter.Traces);
-        }
-    },
+        loggerConfig.AddLoggingConfiguration(ctx.Configuration, builder.Environment),
         writeToProviders: false,
         preserveStaticLogger: false
     );
-
 
     var app = builder.Build();
 
     app.MapEndpoints();
 
-    app.ConfigureMiddleware(app.Environment, app.Configuration);
+    app.AddMiddleware(app.Environment, app.Configuration);
 
     await app.RunAsync().ConfigureAwait(false);
 }

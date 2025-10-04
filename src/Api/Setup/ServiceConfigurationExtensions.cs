@@ -11,9 +11,9 @@ using Services;
 
 namespace Api.Setup;
 
-internal static class ApiServices
+internal static class ServiceConfigurationExtensions
 {
-    public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment environment)
+    public static void AddServices(this IServiceCollection services, IWebHostEnvironment environment)
     {
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
