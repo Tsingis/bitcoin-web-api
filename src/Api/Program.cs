@@ -35,7 +35,7 @@ try
         builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
     }
 
-    builder.Services.ConfigureServices();
+    builder.Services.ConfigureServices(builder.Environment);
 
     builder.Host.UseSerilog((ctx, services, loggerConfig) =>
     {

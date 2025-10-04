@@ -13,9 +13,12 @@ namespace Api.Setup;
 
 internal static class ApiServices
 {
-    public static void ConfigureServices(this IServiceCollection services)
+    public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment environment)
     {
-        services.AddApplicationInsightsTelemetry();
+        if (environment.IsProduction())
+        {
+            services.AddApplicationInsightsTelemetry();
+        }
 
         services.AddSerilog();
 

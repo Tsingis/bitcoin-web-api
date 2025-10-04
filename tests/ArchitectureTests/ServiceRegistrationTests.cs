@@ -12,7 +12,7 @@ public class ServiceRegistrationTests
     public void ShouldHave_Scoped_MarketClient()
     {
         var builder = WebApplication.CreateBuilder();
-        builder.Services.ConfigureServices();
+        builder.Services.ConfigureServices(builder.Environment);
 
         var marketClient = builder.Services.SingleOrDefault(x => x.ServiceType == typeof(IMarketClient));
 
@@ -24,7 +24,7 @@ public class ServiceRegistrationTests
     public void ShouldHave_Scoped_MarketService()
     {
         var builder = WebApplication.CreateBuilder();
-        builder.Services.ConfigureServices();
+        builder.Services.ConfigureServices(builder.Environment);
 
         var marketService = builder.Services.SingleOrDefault(x => x.ServiceType == typeof(IMarketService));
 
