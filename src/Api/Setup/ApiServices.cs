@@ -15,6 +15,9 @@ internal static class ApiServices
 {
     public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment environment)
     {
+        services.AddProblemDetails();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+
         if (environment.IsProduction())
         {
             services.AddApplicationInsightsTelemetry();

@@ -43,9 +43,8 @@ public class MarketClient(ILogger<MarketClient> logger, IConfiguration configura
                 return data;
             }
 
-            var exception = new HttpRequestException("Error getting market chart data", null, response.StatusCode);
-            _logger.LogError(exception, "Error getting market chart data. Status: {Status}", response.StatusCode);
-            throw exception;
+            var message = $"Error getting market chart data. Response code: {response.StatusCode}";
+            throw new HttpRequestException(message, null, response.StatusCode);
         }
     }
 }

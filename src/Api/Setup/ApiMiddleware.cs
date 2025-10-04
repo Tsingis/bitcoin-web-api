@@ -7,10 +7,7 @@ internal static class ApiMiddleware
 {
     public static void ConfigureMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
-        if (environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
+        app.UseExceptionHandler();
 
         app.UseRouting();
 
