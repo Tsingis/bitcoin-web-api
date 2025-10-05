@@ -48,6 +48,8 @@ public class Fixture : IAsyncLifetime
         {
             TestContext.Current.SendDiagnosticMessage("Starting Wiremock container");
             await _wireMockContainer.StartAsync(TestContext.Current.CancellationToken).ConfigureAwait(false);
+
+            await Task.Delay(10_000).ConfigureAwait(false);
         }
     }
 
