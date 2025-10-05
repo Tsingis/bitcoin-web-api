@@ -100,15 +100,18 @@ internal static class ServiceConfigurationExtensions
         {
             opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
             {
+                var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                var path = httpContext.Request.Path.ToString();
+
                 return RateLimitPartition.GetFixedWindowLimiter(
-                partitionKey: httpContext.Request.Path.ToString(),
-                factory: _ => new FixedWindowRateLimiterOptions
-                {
-                    PermitLimit = 10,
-                    Window = TimeSpan.FromMinutes(1),
-                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                    QueueLimit = 2
-                });
+                    partitionKey: $"{ip}-{path}",
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 5,
+                        Window = TimeSpan.FromSeconds(30),
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 0
+                    });
             });
 
             opt.OnRejected = async (context, cancellationToken) =>
