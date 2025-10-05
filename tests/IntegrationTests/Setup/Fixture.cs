@@ -19,11 +19,16 @@ public class Fixture : IAsyncLifetime
 
         if (EnvVarAccessors.UseMocking)
         {
+            var network = new NetworkBuilder()
+                .WithName(Guid.NewGuid().ToString("N"))
+                .Build();
+
             _wireMockContainer = new ContainerBuilder()
-                .WithCleanUp(true)
-                .WithAutoRemove(true)
                 .WithImage("wiremock/wiremock:3x-alpine")
                 .WithName("wiremock")
+                .WithCleanUp(true)
+                .WithAutoRemove(true)
+                .WithNetwork(network)
                 .WithPortBinding(8080, true)
                 .WithBindMount(Path.Join(Environment.CurrentDirectory, "wiremock"), "/home/wiremock/mappings")
                 .WithWaitStrategy(Wait.ForUnixContainer()
