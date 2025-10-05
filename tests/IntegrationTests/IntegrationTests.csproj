@@ -4,6 +4,7 @@
     <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
     <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
     <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
+    <TestingPlatformShowOutput>true</TestingPlatformShowOutput>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Api\Api.csproj" />
