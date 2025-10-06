@@ -1,4 +1,5 @@
 {
+  "priority": 1,
   "request": {
     "method": "GET",
     "urlPath": "/api/v3/coins/bitcoin/market_chart/range",
