@@ -46,8 +46,15 @@ public class Fixture : IAsyncLifetime
     {
         if (_wireMockContainer is not null)
         {
+            var ct = TestContext.Current.CancellationToken;
             TestContext.Current.SendDiagnosticMessage("Starting Wiremock container");
-            await _wireMockContainer.StartAsync(TestContext.Current.CancellationToken).ConfigureAwait(false);
+            await _wireMockContainer.StartAsync(ct).ConfigureAwait(false);
+
+            if (EnvVarAccessors.ShowMockingLogs)
+            {
+                var (Stdout, _) = await _wireMockContainer.GetLogsAsync(ct: ct).ConfigureAwait(false);
+                TestContext.Current.SendDiagnosticMessage($"[WireMock] {Stdout}");
+            }
         }
     }
 
@@ -55,8 +62,9 @@ public class Fixture : IAsyncLifetime
     {
         if (_wireMockContainer is not null)
         {
+            var ct = TestContext.Current.CancellationToken;
             TestContext.Current.SendDiagnosticMessage("Stopping Wiremock container");
-            await _wireMockContainer.StopAsync(TestContext.Current.CancellationToken).ConfigureAwait(false);
+            await _wireMockContainer.StopAsync(ct).ConfigureAwait(false);
             await _wireMockContainer.DisposeAsync().ConfigureAwait(false);
         }
         GC.SuppressFinalize(this);

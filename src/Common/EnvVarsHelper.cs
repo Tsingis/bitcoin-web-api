@@ -7,12 +7,16 @@ public static class EnvVarKeys
     public const string UseOutputCache = "USE_OUTPUT_CACHE";
     public const string MarketClientUrl = "MARKET_CLIENT_URL";
     public const string UseMocking = "USE_MOCKING";
+    public const string ShowMockingLogs = "SHOW_MOCKING_LOGS";
 }
 
 public static class EnvVarAccessors
 {
     public static bool UseMocking =>
         bool.TryParse(Environment.GetEnvironmentVariable(EnvVarKeys.UseMocking), out var value) && value;
+
+    public static bool ShowMockingLogs =>
+        bool.TryParse(Environment.GetEnvironmentVariable(EnvVarKeys.ShowMockingLogs), out var value) && value;
 
     public static bool UseJsonFormatting =>
         bool.TryParse(Environment.GetEnvironmentVariable(EnvVarKeys.UseJsonFormatting), out var value) && value;

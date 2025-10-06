@@ -39,6 +39,7 @@ jobs:
           --coverage --coverage-output-format xml --coverage-output ${{ github.workspace }}/coverage.xml
         env:
           USE_MOCKING: ${{ vars.USE_MOCKING }}
+          SHOW_MOCKING_LOGS: ${{ vars.SHOW_MOCKING_LOGS }}
       - name: Find coverage files and generate report
         run: |
           dotnet tool run reportgenerator -reports:"${{ github.workspace }}/**/coverage.xml" \
