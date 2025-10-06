@@ -18,6 +18,7 @@
     <NoWarn>S125;CA1848;CA1002;CA1515;S1118</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <IsPackable>false</IsPackable>
     <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
     <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
     <TestingPlatformShowTestsFailure>false</TestingPlatformShowTestsFailure>
@@ -29,5 +30,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <Content Include="$(SolutionDir)\tests\xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
