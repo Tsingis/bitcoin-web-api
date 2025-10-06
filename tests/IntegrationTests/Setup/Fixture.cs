@@ -30,7 +30,7 @@ public class Fixture : IAsyncLifetime
                 .WithAutoRemove(true)
                 .WithNetwork(network)
                 .WithPortBinding(8080, true)
-                .WithBindMount(Path.Join(Environment.CurrentDirectory, "wiremock"), "/home/wiremock/mappings")
+                .WithBindMount(Path.Join(AppContext.BaseDirectory, "wiremock"), "/home/wiremock/mappings")
                 .WithWaitStrategy(Wait.ForUnixContainer()
                     .UntilHttpRequestIsSucceeded(request => request
                         .ForPort(8080)
