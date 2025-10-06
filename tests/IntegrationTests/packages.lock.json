@@ -34,6 +34,17 @@
           "Microsoft.Testing.Platform": "1.8.4"
         }
       },
+      "Serilog.Sinks.XUnit3": {
+        "type": "Direct",
+        "requested": "[1.1.0, )",
+        "resolved": "1.1.0",
+        "contentHash": "XqGy76yqRh9pj4FGqpjDlU8fjuw7QnXrYOuBNaLgtyvBn+/ALtCQqyiG6AqYByHkynCzkz1Dx383P1OHyyTg/Q==",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "9.0.9",
+          "Serilog": "4.3.0",
+          "xunit.v3.extensibility.core": "3.0.1"
+        }
+      },
       "Shouldly": {
         "type": "Direct",
         "requested": "[4.3.0, )",

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace IntegrationTests;
 
-public sealed class ApiEndpointsTests(Fixture fixture) : IntegrationTestBase(fixture)
+public sealed class ApiEndpointsTests(Fixture fixture, ITestOutputHelper outputHelper) : IntegrationTestBase(fixture, outputHelper)
 {
     private const string DateFormat = "yyyy-MM-dd";
     private const string BaseUrl = "/api/v1";
