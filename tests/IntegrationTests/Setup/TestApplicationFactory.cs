@@ -1,0 +1,43 @@
+using Common;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Serilog;
+using Serilog.Sinks.XUnit3;
+using Xunit;
+
+namespace IntegrationTests.Setup;
+
+public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFactory<Program>
+{
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        if (EnvVarAccessors.UseMocking)
+        {
+            builder?.UseSetting(EnvVarKeys.MarketClientUrl, $"http://localhost:{fixture.GetPort()}");
+        }
+    }
+
+    protected override IHost CreateHost(IHostBuilder builder)
+    {
+        builder.ConfigureServices(services =>
+        {
+            services.AddSingleton(Options.Create(new XUnit3TestOutputSinkOptions()));
+            services.AddSingleton<XUnit3TestOutputSink>();
+        });
+
+        builder.UseSerilog((ctx, sp, config) =>
+            config.MinimumLevel.Information()
+                .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Error)
+                .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Error)
+                .WriteTo.XUnit3TestOutput(sp.GetRequiredService<XUnit3TestOutputSink>())
+            );
+
+        return base.CreateHost(builder);
+    }
+
+    public void SetTestOutputHelper(ITestOutputHelper testOutputHelper) =>
+        Services.GetRequiredService<XUnit3TestOutputSink>().TestOutputHelper = testOutputHelper;
+}
