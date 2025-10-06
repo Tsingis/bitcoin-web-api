@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\src\Api\Api.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MartinCostello.Logging.XUnit.v3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />

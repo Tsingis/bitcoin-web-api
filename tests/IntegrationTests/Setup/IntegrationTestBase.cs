@@ -4,12 +4,13 @@ namespace IntegrationTests.Setup;
 
 public abstract class IntegrationTestBase : IAsyncLifetime
 {
-    internal readonly ApplicationFactory _factory;
+    internal readonly TestApplicationFactory _factory;
     internal readonly HttpClient _client;
 
-    protected IntegrationTestBase(Fixture fixture)
+    protected IntegrationTestBase(Fixture fixture, ITestOutputHelper outputHelper)
     {
-        _factory = new ApplicationFactory(fixture);
+        _factory = new TestApplicationFactory(fixture);
+        _factory.SetOutputHelper(outputHelper);
         _client = _factory.CreateClient();
     }
 
@@ -21,6 +22,7 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     public virtual ValueTask DisposeAsync()
     {
         _client.Dispose();
+        _factory.ClearOutputHelper();
         _factory.Dispose();
         GC.SuppressFinalize(this);
         return ValueTask.CompletedTask;
