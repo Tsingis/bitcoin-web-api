@@ -26,8 +26,9 @@ bld/
 [Ll]ogs/
 
 # Coverage
-[Cc]overagereport
-coverage.*.xml
+[Cc]overage-report
+*coverage.*.xml
+*cobertura.xml
 
 # PDFs
 *.pdf

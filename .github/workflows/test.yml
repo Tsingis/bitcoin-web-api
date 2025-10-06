@@ -35,14 +35,14 @@ jobs:
         run: dotnet build -c Release --no-restore
       - name: Test & collect coverage
         run: |
-          dotnet test -c Release --no-restore --no-build -- \
-          --coverage --coverage-output-format xml --coverage-output ${{ github.workspace }}/coverage.xml
+          dotnet test -c Release --no-restore --no-build \
+          --settings tests/coverage.runsettings --results-directory ${{ github.workspace }}/test-results
         env:
           USE_MOCKING: ${{ vars.USE_MOCKING }}
           SHOW_MOCKING_LOGS: ${{ vars.SHOW_MOCKING_LOGS }}
       - name: Find coverage files and generate report
         run: |
-          dotnet tool run reportgenerator -reports:"${{ github.workspace }}/**/coverage.xml" \
+          dotnet tool run reportgenerator -reports:"${{ github.workspace }}/test-results/**/*cobertura.xml" \
           -targetdir:"coverage-report" \
           -reporttypes:MarkdownSummaryGithub
       - name: Upload coverage report

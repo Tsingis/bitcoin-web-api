@@ -1,14 +1,15 @@
-dotnet test -c Debug --no-restore --no-build -- --coverage --coverage-output-format xml --coverage-output coverage.xml
+dotnet build -c Release
+dotnet test -c Release --no-build --settings tests/coverage.runsettings --results-directory test-results
 
-$coverageFiles = Get-ChildItem -Path "tests" -Recurse -Filter "coverage.xml"
+$coverageFiles = Get-ChildItem -Path "test-results" -Recurse -Filter "*cobertura.xml"
 
 if ($coverageFiles) {
     $reportFiles = ($coverageFiles | ForEach-Object { $_.FullName }) -join ";"
-    dotnet tool run reportgenerator -reports:$reportFiles -targetdir:coveragereport
+    dotnet tool run reportgenerator -reports:$reportFiles -targetdir:coverage-report
 
-    Start-Process "coveragereport/index.html"
+    Start-Process "coverage-report/index.html"
 } else {
     Write-Host "Coverage reports not found."
 }
 
-Get-ChildItem -Path "tests" -Recurse -Filter "TestResults" | ForEach-Object { Remove-Item -Recurse -Force -Path $_.FullName }
+Get-ChildItem -Path "test-results" -Recurse | ForEach-Object { Remove-Item -Recurse -Force -Path $_.FullName }
