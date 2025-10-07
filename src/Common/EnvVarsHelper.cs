@@ -8,6 +8,7 @@ public static class EnvVarKeys
     public const string MarketClientUrl = "MARKET_CLIENT_URL";
     public const string UseMocking = "USE_MOCKING";
     public const string ShowMockingLogs = "SHOW_MOCKING_LOGS";
+    public const string TestingLogLevel = "TESTING_LOG_LEVEL";
 }
 
 public static class EnvVarAccessors

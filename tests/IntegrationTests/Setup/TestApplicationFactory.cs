@@ -5,10 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.XUnit3;
 using Xunit;
 
 namespace IntegrationTests.Setup;
+
+
 
 public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFactory<Program>
 {
@@ -29,9 +32,9 @@ public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFact
         });
 
         builder.UseSerilog((ctx, sp, config) =>
-            config.MinimumLevel.Information()
-                .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Error)
-                .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Error)
+            config.MinimumLevel.Is(GetLogEventLevel())
+                .MinimumLevel.Override("System", LogEventLevel.Error)
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Error)
                 .WriteTo.XUnit3TestOutput(sp.GetRequiredService<XUnit3TestOutputSink>())
             );
 
@@ -40,4 +43,19 @@ public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFact
 
     public void SetTestOutputHelper(ITestOutputHelper testOutputHelper) =>
         Services.GetRequiredService<XUnit3TestOutputSink>().TestOutputHelper = testOutputHelper;
+
+    private static LogEventLevel GetLogEventLevel()
+    {
+        var logLevel = Environment.GetEnvironmentVariable(EnvVarKeys.TestingLogLevel);
+        return logLevel?.ToUpperInvariant() switch
+        {
+            "VERBOSE" => LogEventLevel.Verbose,
+            "DEBUG" => LogEventLevel.Debug,
+            "INFORMATION" => LogEventLevel.Information,
+            "WARNING" => LogEventLevel.Warning,
+            "ERROR" => LogEventLevel.Error,
+            "FATAL" => LogEventLevel.Fatal,
+            _ => LogEventLevel.Information
+        };
+    }
 }
