@@ -7,11 +7,16 @@
     <PackageReference Include="Serilog.Sinks.XUnit3" />
     <PackageReference Include="Shouldly" />
     <PackageReference Include="Testcontainers" />
+    <PackageReference Include="YamlDotNet" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\wiremock\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>wiremock\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Content>
+    <Content Include="..\..\docker-compose.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>docker-compose.yml</Link>
     </Content>
   </ItemGroup>
 </Project>

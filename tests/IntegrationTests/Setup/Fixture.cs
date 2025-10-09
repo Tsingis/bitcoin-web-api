@@ -4,6 +4,7 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using IntegrationTests.Setup;
 using Xunit;
+using YamlDotNet.RepresentationModel;
 
 [assembly: AssemblyFixture(typeof(Fixture))]
 
@@ -19,12 +20,14 @@ public class Fixture : IAsyncLifetime
 
         if (EnvVarAccessors.UseMocking)
         {
+            var image = GetImage("wiremock", Path.Join(AppContext.BaseDirectory, "docker-compose.yml"));
+
             var network = new NetworkBuilder()
                 .WithName(Guid.NewGuid().ToString("N"))
                 .Build();
 
             _wireMockContainer = new ContainerBuilder()
-                .WithImage("wiremock/wiremock:3x-alpine")
+                .WithImage(image)
                 .WithName("wiremock")
                 .WithCleanUp(true)
                 .WithAutoRemove(true)
@@ -73,5 +76,16 @@ public class Fixture : IAsyncLifetime
     public ushort? GetPort()
     {
         return _wireMockContainer?.GetMappedPublicPort();
+    }
+
+    public static string? GetImage(string serviceName, string composeFilePath)
+    {
+        using var reader = new StreamReader(composeFilePath);
+        var yaml = new YamlStream();
+        yaml.Load(reader);
+
+        var root = (YamlMappingNode)yaml.Documents[0].RootNode;
+        var imageNode = (YamlScalarNode)root["services"][serviceName]["image"];
+        return imageNode?.Value;
     }
 }
