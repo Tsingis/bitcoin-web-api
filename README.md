@@ -1,4 +1,4 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tsingis_bitcoin-web-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tsingis_bitcoin-web-api) [![Deploy Status](https://github.com/tsingis/bitcoin-web-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/Tsingis/bitcoin-web-api/actions/workflows/deploy.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tsingis_bitcoin-web-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tsingis_bitcoin-web-api) [![Deploy Status](https://github.com/tsingis/bitcoin-web-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/Tsingis/bitcoin-web-api/actions/workflows/deploy.yml) [![Docker Scan](https://github.com/tsingis/bitcoin-web-api/actions/workflows/scan.yml/badge.svg)](https://github.com/tsingis/bitcoin-web-api/actions/workflows/scan.yml)
 
 # About
 
@@ -10,21 +10,21 @@ API based on [GoinGecko's public API.](https://www.coingecko.com/en/api/document
 
 API documentation
 
--   Swagger [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/swagger)
--   Scalar [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/scalar)
+- Swagger [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/swagger)
+- Scalar [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/scalar)
 
 Tools used:
 
--   .NET SDK
--   Docker
--   Azure
--   Terraform
--   WireMock
+- .NET SDK
+- Docker
+- Azure
+- Terraform
+- WireMock
 
 Docker
 
--   Run via Docker `docker compose up --build`
+- Run via Docker `docker compose up --build`
 
 Api
 
--   Launch `dotnet run --launch-profile dev --project src/Api/Api.csproj`
+- Launch `dotnet run --launch-profile dev --project src/Api/Api.csproj`
