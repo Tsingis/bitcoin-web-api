@@ -1,0 +1,17 @@
+{
+  "priority": 3,
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/coins/bitcoin/market_chart/range",
+    "queryParameters": {
+      "vs_currency": { "equalTo": "eur"},
+      "from": { "matches": ".*" },
+      "to": { "matches": ".*" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {"prices":[],"market_caps":[],"total_volumes":[]},
+    "headers": { "Content-Type": "application/json" }
+  }
+}

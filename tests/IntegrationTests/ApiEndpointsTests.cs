@@ -15,13 +15,14 @@ public sealed class ApiEndpointsTests(Fixture fixture, ITestOutputHelper outputH
     private const string BaseUrl = "/api/v1";
 
     private static readonly DateOnly s_today = DateOnly.FromDateTime(DateTime.UtcNow);
-    private static readonly DateOnly s_mockCutOffDate = new(2024, 8, 29);
+    private static readonly DateOnly s_mockDate = new(2025, 8, 30);
 
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new()
     {
-        {s_today.AddMonths(-1).ToString(DateFormat, CultureInfo.InvariantCulture), s_today.ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
-        {s_mockCutOffDate.ToString(DateFormat, CultureInfo.InvariantCulture), s_mockCutOffDate.AddYears(1).AddDays(1).ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+        {s_today.ToString(DateFormat, CultureInfo.InvariantCulture), s_today.AddMonths(1).ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.NoContent},
+        {s_mockDate.ToString(DateFormat, CultureInfo.InvariantCulture), s_mockDate.AddDays(11).ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
+        {s_mockDate.AddYears(-1).AddDays(-1).ToString(DateFormat, CultureInfo.InvariantCulture), s_mockDate.ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
         {"", null, HttpStatusCode.BadRequest},
     };
 
