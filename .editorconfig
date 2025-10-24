@@ -21,6 +21,9 @@ indent_size = 4
 [*{_AssemblyInfo.cs,.notsupported.cs,AsmOffsets.cs}]
 generated_code = true
 
+[tests/**/*.cs]
+dotnet_diagnostic.CA2007.severity = none
+
 # C# files
 [*.cs]
 # New line preferences
