@@ -18,7 +18,7 @@ public class Fixture : IAsyncLifetime
     {
         DotNetEnv.Env.TraversePath().Load();
 
-        if (EnvVarAccessors.UseMocking)
+        if (EnvVarAccessors.UseMockServer)
         {
             var image = GetImage("wiremock", Path.Join(AppContext.BaseDirectory, "docker-compose.yml"));
 
@@ -53,7 +53,7 @@ public class Fixture : IAsyncLifetime
             TestContext.Current.SendDiagnosticMessage("Starting Wiremock container");
             await _wireMockContainer.StartAsync(ct).ConfigureAwait(false);
 
-            if (EnvVarAccessors.ShowMockingLogs)
+            if (EnvVarAccessors.ShowMockServerLogs)
             {
                 var (Stdout, _) = await _wireMockContainer.GetLogsAsync(ct: ct).ConfigureAwait(false);
                 TestContext.Current.SendDiagnosticMessage($"[WireMock] {Stdout}");
