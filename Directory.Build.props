@@ -12,7 +12,7 @@
     <AnalysisMode>all</AnalysisMode>
     <AnalysisLevel>latest</AnalysisLevel>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <EnforeCodeStyleInBuild>true</EnforeCodeStyleInBuild>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnableCodeAnalysis>true</EnableCodeAnalysis>
     <NoWarn>S125;CA1848;CA1002;CA1515;S1118</NoWarn>
