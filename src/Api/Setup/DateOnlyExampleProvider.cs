@@ -7,7 +7,7 @@ namespace Api.Setup;
 
 public sealed class DateOnlyExampleProvider : IExampleProvider<DateOnly>
 {
-    public static DateOnly GenerateExample() => EnvVarAccessors.UseMocking ? new DateOnly(2025, 8, 30) : DateOnly.FromDateTime(DateTime.UtcNow);
+    public static DateOnly GenerateExample() => EnvVarAccessors.UseMockServer ? new DateOnly(2025, 8, 30) : DateOnly.FromDateTime(DateTime.UtcNow);
 }
 
 [JsonSerializable(typeof(DateOnly))]

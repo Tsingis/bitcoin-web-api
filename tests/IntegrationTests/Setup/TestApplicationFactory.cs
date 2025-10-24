@@ -18,7 +18,7 @@ public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFact
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        if (EnvVarAccessors.UseMocking)
+        if (EnvVarAccessors.UseMockServer)
         {
             builder?.ConfigureAppConfiguration((context, builder) =>
             {
