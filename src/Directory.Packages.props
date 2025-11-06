@@ -8,12 +8,12 @@
     <PackageVersion Include="Azure.Identity" Version="1.17.0" />
     <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageVersion Include="DotNetEnv" Version="3.1.1" />
-    <PackageVersion Include="MartinCostello.OpenApi.Extensions" Version="1.1.0" />
+    <PackageVersion Include="MartinCostello.OpenApi.Extensions" Version="2.0.0" />
     <PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="[9.0.10,10.0.0)" />
-    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="[9.0.10,10.0.0)" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="[9.0.10,10.0.0)" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="[9.0.10,10.0.0)" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="[10.0.0,11.0.0)" />
+    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="[10.0.0,11.0.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="[10.0.0,11.0.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="[10.0.0,11.0.0)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.ApplicationInsights" Version="2.23.0" />
     <PackageVersion Include="Scalar.AspNetCore" Version="2.9.0" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
