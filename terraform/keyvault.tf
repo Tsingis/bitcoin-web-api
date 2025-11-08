@@ -6,10 +6,18 @@ resource "azurerm_key_vault" "kv" {
   sku_name                   = "standard"
   purge_protection_enabled   = true
   soft_delete_retention_days = 7
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_key_vault_secret" "ai_connection_string" {
   name         = "ApplicationInsights--ConnectionString"
   value        = azurerm_application_insights.ai.connection_string
   key_vault_id = azurerm_key_vault.kv.id
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
