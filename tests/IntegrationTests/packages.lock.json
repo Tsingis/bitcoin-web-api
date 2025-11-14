@@ -42,9 +42,9 @@
       },
       "Serilog.Sinks.XUnit3": {
         "type": "Direct",
-        "requested": "[1.1.0, )",
-        "resolved": "1.1.0",
-        "contentHash": "XqGy76yqRh9pj4FGqpjDlU8fjuw7QnXrYOuBNaLgtyvBn+/ALtCQqyiG6AqYByHkynCzkz1Dx383P1OHyyTg/Q==",
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "FHowHVO4F+uN/U9ISTBTEciIvvEU2fYmhyeiRaDzFt5uVGb1fp1frekchQluMv9+c/3wB5G2C7maF0H/tvS2Zg==",
         "dependencies": {
           "Microsoft.Extensions.Options": "9.0.9",
           "Serilog": "4.3.0",
@@ -901,11 +901,11 @@
       },
       "Serilog.Sinks.ApplicationInsights": {
         "type": "Transitive",
-        "resolved": "4.0.0",
-        "contentHash": "AlYq1JFqh+RFKwLKZ3X224Zbe1gnkMbqSELp2FApLN0iMyRPdwwxMJBCCrk49C8qOefBd4zN+J/1Tq3i75DunA==",
+        "resolved": "4.1.0",
+        "contentHash": "IC7su1J9FFkceWESs1A+AfM/NnBEKRpLpNYzEl+SYPe+RQWgs9PhPSgrIzsj3Un8oGgC/F9OrxibNNZwe+RDTg==",
         "dependencies": {
-          "Microsoft.ApplicationInsights": "2.20.0",
-          "Serilog": "2.11.0"
+          "Microsoft.ApplicationInsights": "2.23.0",
+          "Serilog": "4.2.0"
         }
       },
       "Serilog.Sinks.Async": {
@@ -1120,7 +1120,7 @@
           "Serilog.Extensions.Hosting": "[9.0.0, )",
           "Serilog.Formatting.Compact": "[3.0.0, )",
           "Serilog.Settings.Configuration": "[9.0.0, )",
-          "Serilog.Sinks.ApplicationInsights": "[4.0.0, )",
+          "Serilog.Sinks.ApplicationInsights": "[4.1.0, )",
           "Serilog.Sinks.Async": "[2.1.0, )",
           "Serilog.Sinks.Console": "[6.1.1, )",
           "Services": "[1.0.0, )",
