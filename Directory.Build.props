@@ -33,6 +33,9 @@
     <TestingPlatformCaptureOutput>false</TestingPlatformCaptureOutput>
     <NoWarn>$(NoWarn);CA5394;CA1707</NoWarn>
   </PropertyGroup>
+  <ItemGroup Label="Transitives">
+    <PackageVersion Include="Microsoft.OpenApi" Version="[2.3.10,)" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SonarAnalyzer.CSharp">
       <PrivateAssets>all</PrivateAssets>
