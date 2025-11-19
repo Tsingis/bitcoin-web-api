@@ -8,6 +8,7 @@ on:
       - "**/*.csproj"
       - "**/*.props"
       - "**/packages.lock.json"
+      - "docker-compose.yml"
       - ".config/dotnet-tools.json"
       - "global.json"
       - ".github/workflows/test.yml"
