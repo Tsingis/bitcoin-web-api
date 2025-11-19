@@ -18,6 +18,10 @@
     <NoWarn>S125;CA1848;CA1002;CA1515;S1118</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
     <InvariantGlobalization>true</InvariantGlobalization>
     <TieredPGO>true</TieredPGO>
   </PropertyGroup>
