@@ -37,10 +37,10 @@
     <PackageVersion Include="Microsoft.OpenApi" Version="[2.3.10,)" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SonarAnalyzer.CSharp">
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.16.0.128591">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    </GlobalPackageReference>
   </ItemGroup>
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <PackageReference Include="coverlet.collector">
