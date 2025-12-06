@@ -22,6 +22,8 @@ on:
       - ".config/dotnet-tools.json"
       - "global.json"
       - ".github/workflows/sonar.yml"
+  schedule:
+    - cron: "0 21 * * 0"
   workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
