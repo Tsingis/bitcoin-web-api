@@ -37,7 +37,7 @@
     <PackageVersion Include="Microsoft.OpenApi" Version="[2.3.10,)" />
   </ItemGroup>
   <ItemGroup>
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.16.0.128591">
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.16.1.129956">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </GlobalPackageReference>
