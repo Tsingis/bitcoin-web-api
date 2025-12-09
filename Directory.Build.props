@@ -34,7 +34,7 @@
     <NoWarn>$(NoWarn);CA5394;CA1707</NoWarn>
   </PropertyGroup>
   <ItemGroup Label="Transitives">
-    <PackageVersion Include="Microsoft.OpenApi" Version="[2.3.10,)" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="[2.3.11,3.0.0)" />
   </ItemGroup>
   <ItemGroup>
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.16.1.129956">
