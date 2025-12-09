@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0.101-alpine3.22 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.101-alpine3.23 AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN dotnet restore --locked-mode ./Api/Api.csproj
 
 RUN dotnet publish ./Api/Api.csproj -c Release --no-restore -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.1-alpine3.22
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.1-alpine3.23
 
 COPY --from=build /app/publish .
 
