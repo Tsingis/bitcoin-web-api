@@ -18,6 +18,8 @@ updates:
       - dependency-type: "all"
     cooldown:
       default-days: 1
+      exclude:
+        - "Microsoft.*"
     groups:
       asp:
         patterns:
@@ -26,6 +28,8 @@ updates:
         patterns:
           - "Microsoft.AspNetCore.*"
           - "Microsoft.Extensions.*"
+        exclude-patterns:
+          - "Microsoft.Extensions.Logging.ApplicationInsights"
       serilog:
         patterns:
           - "Serilog*"
