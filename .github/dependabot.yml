@@ -38,6 +38,10 @@ updates:
       timezone: "Europe/Helsinki"
   - package-ecosystem: "docker"
     directory: "/"
+    ignore:
+      - dependency-name: "*dotnet*"
+        update-types:
+          - "version-update:semver-major"
     schedule:
       interval: "monthly"
       day: "wednesday"
