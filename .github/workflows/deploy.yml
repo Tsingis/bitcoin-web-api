@@ -17,6 +17,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    if: github.event_name == 'push'
     uses: ./.github/workflows/build.yml
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -24,6 +25,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    if: always() && needs.build.result == 'success' || needs.build.result == 'skipped'
     environment: Azure
     permissions:
       id-token: write
