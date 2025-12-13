@@ -8,17 +8,15 @@ on:
       - "Directory.Build.props"
       - "Dockerfile"
       - ".github/workflows/build.yml"
-  push:
-    branches:
-      - main
-    paths:
-      - "src/**"
-      - "Directory.Build.props"
-      - "Dockerfile"
-      - ".github/workflows/build.yml"
+  workflow_call:
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
   workflow_dispatch:
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.name }}
   cancel-in-progress: true
 jobs:
   build:
