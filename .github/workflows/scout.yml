@@ -1,4 +1,4 @@
-name: scan
+name: scout
 on:
   workflow_dispatch:
     inputs:
@@ -26,13 +26,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           logout: true
-      - name: Scan
+      - name: Image CVEs
         uses: docker/scout-action@f8c776824083494ab0d56b8105ba2ca85c86e4de # v1.18.2
         with:
-          command: cves,recommendations
+          command: cves
           image: ${{ vars.IMAGE }}
           only-severities: ${{ inputs && inputs.severities || 'critical,high' }}
           only-fixed: true
           summary: true
           format: json
           exit-code: true
+      - name: Image recommendations
+        continue-on-error: true
+        uses: docker/scout-action@f8c776824083494ab0d56b8105ba2ca85c86e4de # v1.18.2
+        with:
+          command: recommendations
+          image: ${{ vars.IMAGE }}
+          only-severities: ${{ inputs && inputs.severities || 'critical,high' }}
+          only-fixed: true
+          summary: true
+          format: json

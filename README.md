@@ -1,4 +1,4 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tsingis_bitcoin-web-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tsingis_bitcoin-web-api) [![Docker Scan](https://github.com/tsingis/bitcoin-web-api/actions/workflows/scan.yml/badge.svg)](https://github.com/tsingis/bitcoin-web-api/actions/workflows/scan.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tsingis_bitcoin-web-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tsingis_bitcoin-web-api) [![Docker Scout](https://github.com/tsingis/bitcoin-web-api/actions/workflows/scout.yml/badge.svg)](https://github.com/tsingis/bitcoin-web-api/actions/workflows/scout.yml)
 
 # About
 
