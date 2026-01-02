@@ -26,8 +26,7 @@ public class Fixture : IAsyncLifetime
                 .WithName(Guid.NewGuid().ToString("N"))
                 .Build();
 
-            _wireMockContainer = new ContainerBuilder()
-                .WithImage(image)
+            _wireMockContainer = new ContainerBuilder(image)
                 .WithName("wiremock")
                 .WithCleanUp(true)
                 .WithAutoRemove(true)
