@@ -1,5 +1,10 @@
 name: test
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.cs"
   pull_request:
     branches:
       - main
@@ -17,7 +22,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     permissions:
-      contents: read
+      contents: write
     strategy:
       matrix:
         os: ["ubuntu-latest"]
@@ -38,20 +43,33 @@ jobs:
       - name: Test & collect coverage
         run: |
           dotnet test -c Release --no-restore --no-build \
-          --settings tests/coverage.runsettings --results-directory ${{ github.workspace }}/test-results
+          --settings tests/coverage.runsettings --results-directory ${{ runner.temp }}/test-results
         env:
           USE_MOCK_SERVER: ${{ vars.USE_MOCK_SERVER }}
           SHOW_MOCK_SERVER_LOGS: ${{ vars.SHOW_MOCK_SERVER_LOGS }}
           TESTING_LOG_LEVEL: ${{ vars.TESTING_LOG_LEVEL }}
-      - name: Find coverage files and generate report
+      - name: Generate report
         run: |
-          dotnet tool run reportgenerator -reports:"${{ github.workspace }}/test-results/**/*cobertura.xml" \
-          -targetdir:"coverage-report" \
-          -reporttypes:MarkdownSummaryGithub
+          dotnet tool run reportgenerator -reports:"${{ runner.temp }}/test-results/**/*cobertura.xml" \
+          -targetdir:"${{ runner.temp }}/coverage-report" \
+          -reporttypes:"Badges;MarkdownSummaryGithub"
+      - name: Create coverage-reports branch and push content
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          git fetch origin coverage-reports
+          git checkout coverage-reports || git checkout -b coverage-reports
+          cp -rp ${{ runner.temp }}/coverage-report/badge_combined.svg ./
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add badge_combined.svg
+          git commit -m "Update coverage reports" || echo "No changes to commit"
+          git push origin coverage-reports
+      - name: Set coverage summary
+        run: cat ${{ runner.temp }}/coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       - name: Upload coverage report
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: coverage-report
-          path: coverage-report
-      - name: Add coverage to summary
-        run: cat coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+          path: ${{ runner.temp }}/coverage-report
+          overwrite: true
+          retention-days: 10
