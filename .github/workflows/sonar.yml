@@ -60,7 +60,8 @@ jobs:
             /d:sonar.token="${{ env.SONAR_TOKEN }}" \
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" \
-            /d:sonar.scanner.scanAll=false
+            /d:sonar.scanner.scanAll=false \
+            /d:sonar.dotnet.excludeTestProjects=true
       - name: Restore dependencies
         run: dotnet restore --locked-mode
       - name: Build and collect coverage
