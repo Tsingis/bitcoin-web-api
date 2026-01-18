@@ -4,7 +4,10 @@ on:
     branches:
       - main
     paths:
-      - "**/*.cs"
+      - "src/**/*.cs"
+      - "tests/UnitTests/**/*.cs"
+      - "**/*.csproj"
+      - "**/*.props"
   pull_request:
     branches:
       - main
