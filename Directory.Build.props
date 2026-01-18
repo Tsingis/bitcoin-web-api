@@ -27,6 +27,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
     <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
     <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
     <TestingPlatformShowTestsFailure>false</TestingPlatformShowTestsFailure>
@@ -40,10 +41,6 @@
     </GlobalPackageReference>
   </ItemGroup>
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-    <PackageReference Include="coverlet.collector">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit.v3" />
     <PackageReference Include="xunit.runner.visualstudio">
