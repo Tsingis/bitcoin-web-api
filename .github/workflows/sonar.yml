@@ -4,8 +4,8 @@ on:
     branches:
       - main
     paths:
-      - "src/**"
-      - "tests/**"
+      - "**/*.cs"
+      - "**/*.csproj"
       - "**/*.props"
       - "**/packages.lock.json"
       - ".config/dotnet-tools.json"
@@ -15,8 +15,8 @@ on:
     branches:
       - main
     paths:
-      - "src/**"
-      - "tests/**"
+      - "**/*.cs"
+      - "**/*.csproj"
       - "**/*.props"
       - "**/packages.lock.json"
       - ".config/dotnet-tools.json"
