@@ -3,6 +3,7 @@
     <ProjectReference Include="..\..\src\Services\Services.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="Shouldly" />
   </ItemGroup>
