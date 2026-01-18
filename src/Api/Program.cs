@@ -8,8 +8,6 @@ try
 {
     Log.Logger = LoggingConfigurationExtensions.CreateBootstrapLogger();
 
-    Log.Information("Starting up the application");
-
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Configuration.AddConfiguration(builder.Environment);
