@@ -6,33 +6,30 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Xunit;
 
 namespace E2ETests.Setup;
 
-public sealed class ApiTestHost : IAsyncLifetime
+public sealed class TestApplicationHost : IAsyncLifetime
 {
-    private WebApplication? _app = null!;
+    private WebApplication? _app;
 
-    public Uri BaseAddress { get; private set; } = null!;
+    public Uri? BaseAddress { get; private set; }
 
     public async ValueTask InitializeAsync()
     {
-        Environment.SetEnvironmentVariable("HTTP_PORTS", null);
-        Environment.SetEnvironmentVariable("HTTPS_PORTS", null);
-
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
-            Args = [],
-            EnvironmentName = "Development",
-            ApplicationName = typeof(Program).Assembly.FullName
+            EnvironmentName = Environments.Development
         });
 
         builder.Services.AddServices(builder.Environment);
 
-        builder.WebHost
-            .UseKestrel()
-            .UseUrls("http://127.0.0.1:0");
+        builder.WebHost.UseKestrel(opt =>
+        {
+            opt.Listen(System.Net.IPAddress.Loopback, 0);
+        });
 
         _app = builder.Build();
 
@@ -42,13 +39,12 @@ public sealed class ApiTestHost : IAsyncLifetime
 
         await _app.StartAsync();
 
-        var addresses = _app?.Services
+        var address = _app?.Services
             .GetRequiredService<IServer>()
             .Features
             .Get<IServerAddressesFeature>()
-            ?.Addresses;
-
-        var address = addresses?.First();
+            ?.Addresses
+            ?.First();
 
         ArgumentNullException.ThrowIfNull(address);
 
