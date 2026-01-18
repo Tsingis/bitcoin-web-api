@@ -13,4 +13,7 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
+  <ItemGroup Label="Transitives">
+    <PackageVersion Include="Microsoft.OpenApi" Version="[2.4.3,3.0.0)" />
+  </ItemGroup>
 </Project>

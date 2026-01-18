@@ -22,4 +22,7 @@
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.0" />
   </ItemGroup>
+  <ItemGroup Label="Transitives">
+    <PackageVersion Include="Microsoft.OpenApi" Version="[2.4.3,3.0.0)" />
+  </ItemGroup>
 </Project>
