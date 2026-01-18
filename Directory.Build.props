@@ -28,10 +28,6 @@
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
-    <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
-    <TestingPlatformShowTestsFailure>false</TestingPlatformShowTestsFailure>
-    <TestingPlatformCaptureOutput>false</TestingPlatformCaptureOutput>
     <NoWarn>$(NoWarn);CA5394;CA1707</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -42,7 +38,7 @@
   </ItemGroup>
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.v3.mtp-v2" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

@@ -46,8 +46,9 @@ jobs:
         run: dotnet restore --locked-mode
       - name: Test & collect coverage
         run: |
-          dotnet test tests/UnitTests -c Release --no-restore \
-          --settings tests/coverage.runsettings --results-directory ${{ runner.temp }}/test-results
+          dotnet test --project tests/UnitTests -c Release --no-restore \
+          --results-directory ${{ runner.temp }}/test-results \
+          --coverage --coverage-output-format cobertura --coverage-output coverage.cobertura.xml
       - name: Generate report
         run: |
           dotnet tool run reportgenerator -reports:"${{ runner.temp }}/test-results/**/*cobertura.xml" \
@@ -91,7 +92,7 @@ jobs:
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Test
-        run: dotnet test tests/ArchitectureTests -c Release --no-restore
+        run: dotnet test --project tests/ArchitectureTests -c Release --no-restore
   integration-test:
     runs-on: ${{ matrix.os }}
     permissions:
@@ -110,7 +111,7 @@ jobs:
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Test
-        run: dotnet test tests/IntegrationTests -c Release --no-restore
+        run: dotnet test --project tests/IntegrationTests -c Release --no-restore
         env:
           USE_MOCK_SERVER: ${{ vars.USE_MOCK_SERVER }}
           SHOW_MOCK_SERVER_LOGS: ${{ vars.SHOW_MOCK_SERVER_LOGS }}
@@ -138,4 +139,4 @@ jobs:
         shell: pwsh
         run: ./tests/E2ETests/bin/Release/net10.0/playwright.ps1 install chromium --with-deps
       - name: Test
-        run: dotnet test tests/E2ETests -c Release --no-restore --no-build
+        run: dotnet test --project tests/E2ETests -c Release --no-restore --no-build
