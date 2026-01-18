@@ -8,12 +8,11 @@ namespace IntegrationTests;
 
 public sealed class OpenApiDocsTests(Fixture fixture, ITestOutputHelper outputHelper) : IntegrationTestBase(fixture, outputHelper)
 {
-    [Theory]
-    [InlineData("/openapi/v1.json")]
-    public async Task DocsJson(string endpoint)
+    [Fact]
+    public async Task DocsHasCustomExamples()
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(new Uri(endpoint, UriKind.Relative), cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri("/openapi/v1.json", UriKind.Relative), cancellationToken: ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         var data = await result.Content.ReadAsStringAsync(cancellationToken: ct);
