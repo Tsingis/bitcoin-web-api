@@ -16,17 +16,14 @@ public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFact
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        if (EnvVarAccessors.UseMockServer)
+        builder?.ConfigureAppConfiguration((context, builder) =>
         {
-            builder?.ConfigureAppConfiguration((context, builder) =>
+            var settings = new Dictionary<string, string?>
             {
-                var settings = new Dictionary<string, string?>
-                {
-                    { EnvVarKeys.MarketClientUrl, $"http://localhost:{fixture.GetPort()}" }
-                };
-                builder.AddInMemoryCollection(settings);
-            });
-        }
+                { EnvVarKeys.MarketClientUrl, $"http://localhost:{fixture.GetPort()}" }
+            };
+            builder.AddInMemoryCollection(settings);
+        });
     }
 
     protected override IHost CreateHost(IHostBuilder builder)
@@ -63,7 +60,7 @@ public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFact
             "WARNING" => LogEventLevel.Warning,
             "ERROR" => LogEventLevel.Error,
             "FATAL" => LogEventLevel.Fatal,
-            _ => LogEventLevel.Information
+            _ => LogEventLevel.Warning
         };
     }
 }

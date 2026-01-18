@@ -15,6 +15,16 @@ public static class ConfigurationExtensions
 
         configManager.AddConfiguration(config);
 
+        var marketClientUrl = configManager.GetValue<string>(EnvVarKeys.MarketClientUrl);
+        if (environment.IsDevelopment() && string.IsNullOrEmpty(marketClientUrl))
+        {
+            var settings = new Dictionary<string, string?>
+            {
+                [EnvVarKeys.MarketClientUrl] = "http://localhost:9091"
+            };
+            configManager.AddInMemoryCollection(settings);
+        }
+
         var keyVaultName = configManager.GetValue<string>(EnvVarKeys.KeyVaultName);
         if (environment.IsProduction() && !string.IsNullOrEmpty(keyVaultName))
         {

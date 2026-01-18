@@ -18,30 +18,27 @@ public class Fixture : IAsyncLifetime
     {
         DotNetEnv.Env.TraversePath().Load();
 
-        if (EnvVarAccessors.UseMockServer)
-        {
-            var image = GetImage("wiremock", Path.Join(AppContext.BaseDirectory, "docker-compose.yml"));
+        var image = GetImage("wiremock", Path.Join(AppContext.BaseDirectory, "docker-compose.yml"));
 
-            var network = new NetworkBuilder()
-                .WithName(Guid.NewGuid().ToString("N"))
-                .Build();
+        var network = new NetworkBuilder()
+            .WithName(Guid.NewGuid().ToString("N"))
+            .Build();
 
-            _wireMockContainer = new ContainerBuilder(image)
-                .WithName("wiremock")
-                .WithCleanUp(true)
-                .WithAutoRemove(true)
-                .WithNetwork(network)
-                .WithPortBinding(8080, true)
-                .WithBindMount(Path.Join(AppContext.BaseDirectory, "wiremock"), "/home/wiremock/mappings")
-                .WithWaitStrategy(Wait.ForUnixContainer()
-                    .UntilHttpRequestIsSucceeded(request => request
-                        .ForPort(8080)
-                        .ForPath("/__admin/mappings")
-                        .ForStatusCode(System.Net.HttpStatusCode.OK)))
-                .Build();
+        _wireMockContainer = new ContainerBuilder(image)
+            .WithName("wiremock")
+            .WithCleanUp(true)
+            .WithAutoRemove(true)
+            .WithNetwork(network)
+            .WithPortBinding(8080, true)
+            .WithBindMount(Path.Join(AppContext.BaseDirectory, "wiremock"), "/home/wiremock/mappings")
+            .WithWaitStrategy(Wait.ForUnixContainer()
+                .UntilHttpRequestIsSucceeded(request => request
+                    .ForPort(8080)
+                    .ForPath("/__admin/mappings")
+                    .ForStatusCode(System.Net.HttpStatusCode.OK)))
+            .Build();
 
-            TestContext.Current.SendDiagnosticMessage("Creating Wiremock container");
-        }
+        TestContext.Current.SendDiagnosticMessage("Creating Wiremock container");
     }
 
     public async ValueTask InitializeAsync()
