@@ -4,7 +4,7 @@ using Xunit;
 
 namespace E2ETests;
 
-public class SwaggerTests : E2ETestBase
+public class SwaggerTests(Fixture fixture) : TestBase(fixture)
 {
     [Fact]
     public async Task HasTitle()

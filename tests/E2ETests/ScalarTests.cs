@@ -4,7 +4,7 @@ using Xunit;
 
 namespace E2ETests;
 
-public class ScalarTests : E2ETestBase
+public class ScalarTests(Fixture fixture) : TestBase(fixture)
 {
     [Fact]
     public async Task HasTitle()
