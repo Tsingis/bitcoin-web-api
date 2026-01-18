@@ -50,10 +50,9 @@ jobs:
           distribution: "zulu"
       - name: Install tools
         run: dotnet tool restore
-      - name: Build and analyze with coverage
+      - name: Setup scanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          USE_MOCK_SERVER: ${{ vars.USE_MOCK_SERVER }}
         run: |
           dotnet tool run dotnet-sonarscanner begin \
             /k:"Tsingis_bitcoin-web-api" \
@@ -62,11 +61,21 @@ jobs:
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" \
             /d:sonar.scanner.scanAll=false
-
-          dotnet restore --locked-mode
-          dotnet build --no-restore
+      - name: Restore dependencies
+        run: dotnet restore --locked-mode
+      - name: Build and collect coverage
+        env:
+          USE_MOCK_SERVER: ${{ vars.USE_MOCK_SERVER }}
+        run: |
           dotnet tool run dotnet-coverage collect \
-            "dotnet test --project tests/UnitTests --no-restore --no-build" -f xml -o "coverage.xml"
-
+            "dotnet test --project tests/UnitTests --no-restore" -f xml -o "coverage.unit.xml"
+          dotnet tool run dotnet-coverage collect \
+            "dotnet test --project tests/IntegrationTests --no-restore" -f xml -o "coverage.integration.xml"
+      - name: Create report
+        run: dotnet tool run dotnet-coverage merge "coverage.*.xml" -o "coverage.xml" -f xml
+      - name: Finalize scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
           dotnet tool run dotnet-sonarscanner end \
-            /d:sonar.token="${{ env.SONAR_TOKEN }}"
+          /d:sonar.token="${{ env.SONAR_TOKEN }}"

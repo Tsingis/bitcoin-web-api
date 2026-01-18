@@ -4,6 +4,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="Serilog.Sinks.XUnit3" />
     <PackageReference Include="Shouldly" />
     <PackageReference Include="Testcontainers" />

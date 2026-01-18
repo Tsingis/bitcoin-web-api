@@ -1,6 +1,10 @@
 dotnet build -c Release
+
 dotnet test --project tests/UnitTests -c Release --no-build --results-directory test-results `
---coverage --coverage-output-format cobertura --coverage-output coverage.cobertura.xml
+--coverage --coverage-output-format cobertura --coverage-output coverage1.cobertura.xml
+
+dotnet test --project tests/IntegrationTests -c Release --no-build --results-directory test-results `
+--coverage --coverage-output-format cobertura --coverage-output coverage2.cobertura.xml
 
 $coverageFiles = Get-ChildItem -Path "test-results" -Recurse -Filter "*cobertura.xml"
 
