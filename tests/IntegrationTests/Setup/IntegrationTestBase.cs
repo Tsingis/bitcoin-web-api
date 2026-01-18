@@ -7,9 +7,9 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     internal readonly TestApplicationFactory _factory;
     internal readonly HttpClient _client;
 
-    protected IntegrationTestBase(Fixture fixture, ITestOutputHelper outputHelper)
+    protected IntegrationTestBase(Fixture fixture, ITestOutputHelper outputHelper, bool useOutputCache = true)
     {
-        _factory = new TestApplicationFactory(fixture);
+        _factory = new TestApplicationFactory(fixture, useOutputCache);
         _factory.SetTestOutputHelper(outputHelper);
         _client = _factory.CreateClient();
     }

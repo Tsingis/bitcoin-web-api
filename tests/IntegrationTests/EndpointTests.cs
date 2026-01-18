@@ -10,18 +10,12 @@ namespace IntegrationTests;
 
 public sealed class EndpointsTests(Fixture fixture, ITestOutputHelper outputHelper) : IntegrationTestBase(fixture, outputHelper)
 {
-    private const string DateFormat = "yyyy-MM-dd";
-    private const string BaseUrl = "/api/v1";
-
-    private static readonly DateOnly s_today = DateOnly.FromDateTime(DateTime.UtcNow);
-    private static readonly DateOnly s_mockDate = new(2025, 8, 30);
-
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new()
     {
-        {s_today.ToString(DateFormat, CultureInfo.InvariantCulture), s_today.AddMonths(1).ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.NoContent},
-        {s_mockDate.ToString(DateFormat, CultureInfo.InvariantCulture), s_mockDate.AddDays(11).ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
-        {s_mockDate.AddYears(-1).AddDays(-1).ToString(DateFormat, CultureInfo.InvariantCulture), s_mockDate.ToString(DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+        {Constants.s_today.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.s_today.AddMonths(1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.NoContent},
+        {Constants.s_mockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.s_mockDate.AddDays(11).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
+        {Constants.s_mockDate.AddYears(-1).AddDays(-1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.s_mockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
         {"", null, HttpStatusCode.BadRequest},
     };
 
@@ -30,7 +24,8 @@ public sealed class EndpointsTests(Fixture fixture, ITestOutputHelper outputHelp
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(new Uri($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", UriKind.Relative), cancellationToken: ct);
+        var url = new Uri($"{Constants.BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
+        var result = await _client.GetAsync(url, cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -45,7 +40,8 @@ public sealed class EndpointsTests(Fixture fixture, ITestOutputHelper outputHelp
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(new Uri($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", UriKind.Relative), cancellationToken: ct);
+        var url = new Uri($"{Constants.BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
+        var result = await _client.GetAsync(url, cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
@@ -60,7 +56,8 @@ public sealed class EndpointsTests(Fixture fixture, ITestOutputHelper outputHelp
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(new Uri($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", UriKind.Relative), cancellationToken: ct);
+        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
+        var result = await _client.GetAsync(url, cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
