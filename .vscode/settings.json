@@ -1,4 +1,3 @@
 {
-    "dotnet.testWindow.useTestingPlatformProtocol": false,
     "dotnet.defaultSolution": "app.slnx"
 }
