@@ -40,6 +40,9 @@ jobs:
         run: dotnet restore --locked-mode
       - name: Build
         run: dotnet build -c Release --no-restore
+      - name: Setup playwright
+        shell: pwsh
+        run: ./tests/E2ETests/bin/Release/net10.0/playwright.ps1 install chromium --with-deps
       - name: Test & collect coverage
         run: |
           dotnet test -c Release --no-restore --no-build \
