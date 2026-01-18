@@ -21,3 +21,14 @@ resource "azurerm_key_vault_secret" "ai_connection_string" {
     prevent_destroy = true
   }
 }
+
+resource "azurerm_key_vault_secret" "api_key" {
+  name         = "api-key"
+  value        = var.api_key
+  key_vault_id = azurerm_key_vault.kv.id
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+

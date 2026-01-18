@@ -22,6 +22,7 @@ public class MarketClient(ILogger<MarketClient> logger, IConfiguration configura
         var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, "eur");
         var url = QueryHelpers.AddQueryString(baseUrl, parameters);
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
+        request.Headers.Add("x-cg-demo-api-key", configuration.GetValue("api-key", string.Empty));
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
