@@ -113,7 +113,6 @@ jobs:
       - name: Test
         run: dotnet test --project tests/IntegrationTests -c Release --no-restore
         env:
-          USE_MOCK_SERVER: ${{ vars.USE_MOCK_SERVER }}
           SHOW_MOCK_SERVER_LOGS: ${{ vars.SHOW_MOCK_SERVER_LOGS }}
           TESTING_LOG_LEVEL: ${{ vars.TESTING_LOG_LEVEL }}
   e2e-test:
