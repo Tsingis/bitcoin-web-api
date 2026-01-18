@@ -39,9 +39,8 @@ internal static class MiddlewareConfigurationExtensions
         if (environment.IsProduction())
         {
             app.UseHsts();
+            app.UseHttpsRedirection();
         }
-
-        app.UseHttpsRedirection();
 
         app.Use(async (context, next) =>
         {
