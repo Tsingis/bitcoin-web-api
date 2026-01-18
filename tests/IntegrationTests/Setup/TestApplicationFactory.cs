@@ -12,8 +12,6 @@ using Xunit;
 
 namespace IntegrationTests.Setup;
 
-
-
 public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -43,7 +41,9 @@ public sealed class TestApplicationFactory(Fixture fixture) : WebApplicationFact
             config.MinimumLevel.Is(GetLogEventLevel())
                 .MinimumLevel.Override("System", LogEventLevel.Error)
                 .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Error)
-                .WriteTo.XUnit3TestOutput(sp.GetRequiredService<XUnit3TestOutputSink>())
+                .WriteTo.XUnit3TestOutput(sp.GetRequiredService<XUnit3TestOutputSink>()),
+            preserveStaticLogger: true,
+            writeToProviders: false
             );
 
         return base.CreateHost(builder);
