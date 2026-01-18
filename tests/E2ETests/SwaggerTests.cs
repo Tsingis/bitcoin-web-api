@@ -4,7 +4,7 @@ using Xunit;
 
 namespace E2ETests;
 
-public sealed class SwaggerTests : E2ETestBase
+public class SwaggerTests : E2ETestBase
 {
     [Fact]
     public async Task HasTitle()
@@ -14,5 +14,17 @@ public sealed class SwaggerTests : E2ETestBase
         await page.GotoAsync("/swagger");
 
         await Assertions.Expect(page).ToHaveTitleAsync("Swagger UI");
+    }
+
+    [Fact]
+    public async Task HasEndpoints()
+    {
+        var page = await Context.NewPageAsync();
+
+        await page.GotoAsync("/swagger");
+
+        var endpointsList = page.Locator(".operation-tag-content > *");
+
+        await Assertions.Expect(endpointsList).ToHaveCountAsync(3);
     }
 }
