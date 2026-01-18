@@ -65,8 +65,13 @@ jobs:
 
           dotnet restore --locked-mode
           dotnet build --no-restore
+
           dotnet tool run dotnet-coverage collect \
-            "dotnet test --project tests/UnitTests --no-restore --no-build" -f xml -o "coverage.xml"
+            "dotnet test --project tests/UnitTests --no-restore --no-build" -f xml -o "coverage.unit.xml"
+          dotnet tool run dotnet-coverage collect \
+            "dotnet test --project tests/IntegrationTests --no-restore --no-build" -f xml -o "coverage.integration.xml"
+
+          dotnet tool run dotnet-coverage merge "coverage.*.xml" "coverage.integration.xml" -o "coverage.xml" -f xml
 
           dotnet tool run dotnet-sonarscanner end \
             /d:sonar.token="${{ env.SONAR_TOKEN }}"

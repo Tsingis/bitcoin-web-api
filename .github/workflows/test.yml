@@ -40,40 +40,52 @@ jobs:
           global-json-file: ./global.json
           cache: true
           cache-dependency-path: "**/packages.lock.json"
-      - name: Install Report Generator
-        run: dotnet tool restore
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Test & collect coverage
         run: |
           dotnet test --project tests/UnitTests -c Release --no-restore \
-          --results-directory ${{ runner.temp }}/test-results \
-          --coverage --coverage-output-format cobertura --coverage-output coverage.cobertura.xml
-      - name: Generate report
-        run: |
-          dotnet tool run reportgenerator -reports:"${{ runner.temp }}/test-results/**/*cobertura.xml" \
-          -targetdir:"${{ runner.temp }}/coverage-report" \
-          -reporttypes:"Badges;MarkdownSummaryGithub"
-      - name: Create coverage-reports branch and push content
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        run: |
-          git fetch origin coverage-reports
-          git checkout coverage-reports || git checkout -b coverage-reports
-          cp -rp ${{ runner.temp }}/coverage-report/badge_combined.svg ./
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add badge_combined.svg
-          git commit -m "Update coverage reports" || echo "No changes to commit"
-          git push origin coverage-reports
-      - name: Set coverage summary
-        run: cat ${{ runner.temp }}/coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+          --results-directory ${{ runner.temp }}/test-results/unit \
+          --coverage --coverage-output-format cobertura --coverage-output coverage-unit.cobertura.xml
       - name: Upload coverage report
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
-          name: coverage-report
-          path: ${{ runner.temp }}/coverage-report
+          name: coverage-report-unit
+          path: ${{ runner.temp }}/test-results/unit
           overwrite: true
-          retention-days: 10
+          retention-days: 1
+  integration-test:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        os: ["ubuntu-latest"]
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Setup .NET
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.1.0
+        with:
+          global-json-file: ./global.json
+          cache: true
+          cache-dependency-path: "**/packages.lock.json"
+      - name: Restore
+        run: dotnet restore --locked-mode
+      - name: Test
+        run: |
+          dotnet test --project tests/IntegrationTests -c Release --no-restore \
+          --results-directory ${{ runner.temp }}/test-results/integration \
+          --coverage --coverage-output-format cobertura --coverage-output coverage-integration.cobertura.xml
+        env:
+          SHOW_MOCK_SERVER_LOGS: ${{ vars.SHOW_MOCK_SERVER_LOGS }}
+          TESTING_LOG_LEVEL: ${{ vars.TESTING_LOG_LEVEL }}
+      - name: Upload coverage report
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: coverage-report-integration
+          path: ${{ runner.temp }}/test-results/integration
+          overwrite: true
+          retention-days: 1
   architecture-test:
     runs-on: ${{ matrix.os }}
     permissions:
@@ -93,28 +105,6 @@ jobs:
         run: dotnet restore --locked-mode
       - name: Test
         run: dotnet test --project tests/ArchitectureTests -c Release --no-restore
-  integration-test:
-    runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
-    strategy:
-      matrix:
-        os: ["ubuntu-latest"]
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - name: Setup .NET
-        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.1.0
-        with:
-          global-json-file: ./global.json
-          cache: true
-          cache-dependency-path: "**/packages.lock.json"
-      - name: Restore
-        run: dotnet restore --locked-mode
-      - name: Test
-        run: dotnet test --project tests/IntegrationTests -c Release --no-restore
-        env:
-          SHOW_MOCK_SERVER_LOGS: ${{ vars.SHOW_MOCK_SERVER_LOGS }}
-          TESTING_LOG_LEVEL: ${{ vars.TESTING_LOG_LEVEL }}
   e2e-test:
     runs-on: ${{ matrix.os }}
     permissions:
@@ -139,3 +129,38 @@ jobs:
         run: ./tests/E2ETests/bin/Release/net10.0/playwright.ps1 install chromium --with-deps
       - name: Test
         run: dotnet test --project tests/E2ETests -c Release --no-restore --no-build
+  coverage:
+    runs-on: ubuntu-latest
+    needs: [unit-test, integration-test]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Setup .NET
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.1.0
+        with:
+          global-json-file: ./global.json
+      - name: Install Report Generator
+        run: dotnet tool restore
+      - name: Download all coverage artifacts
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          path: ${{ runner.temp }}/coverage-reports
+      - name: Generate report
+        run: |
+          dotnet tool run reportgenerator -reports:"${{ runner.temp }}/coverage-reports/**/*cobertura.xml" \
+          -targetdir:"${{ runner.temp }}/coverage-report" \
+          -reporttypes:"Badges;MarkdownSummaryGithub"
+      - name: Create coverage-reports branch and push content
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          git fetch origin coverage-reports
+          git checkout coverage-reports || git checkout -b coverage-reports
+          cp -rp ${{ runner.temp }}/coverage-report/badge_combined.svg ./
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add badge_combined.svg
+          git commit -m "Update coverage reports" || echo "No changes to commit"
+          git push origin coverage-reports
+      - name: Set coverage summary
+        run: cat ${{ runner.temp }}/coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
