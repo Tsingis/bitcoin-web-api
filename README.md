@@ -2,7 +2,7 @@
 
 # About
 
-API based on [GoinGecko's public API.](https://www.coingecko.com/en/api/documentation) to get initial data for bitcoin with euro as currency. API attempts to give answer to following questions with given date range.
+Data provided by [GoinGecko](https://www.coingecko.com/) to get initial data for bitcoin with euro as currency. API attempts to give answer to following questions with given date range.
 
 1. How many days is the longest downward trend?
 2. Which date has the highest trading volume?
