@@ -18,6 +18,9 @@ on:
       - "global.json"
       - ".github/workflows/test.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   unit-test:
     runs-on: ${{ matrix.os }}
