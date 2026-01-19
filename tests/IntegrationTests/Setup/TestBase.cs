@@ -2,14 +2,14 @@ using Xunit;
 
 namespace IntegrationTests.Setup;
 
-public abstract class IntegrationTestBase : IAsyncLifetime
+public abstract class TestBase : IAsyncLifetime
 {
-    internal readonly TestApplicationFactory _factory;
+    internal readonly TestFactory _factory;
     internal readonly HttpClient _client;
 
-    protected IntegrationTestBase(Fixture fixture, ITestOutputHelper outputHelper, bool useOutputCache = true)
+    protected TestBase(WiremockFixture wiremock, ITestOutputHelper outputHelper, bool useOutputCache = true)
     {
-        _factory = new TestApplicationFactory(fixture, useOutputCache);
+        _factory = new TestFactory(wiremock, useOutputCache);
         _factory.SetTestOutputHelper(outputHelper);
         _client = _factory.CreateClient();
     }

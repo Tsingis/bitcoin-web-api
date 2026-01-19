@@ -3,13 +3,13 @@ using Xunit;
 
 namespace E2ETests.Setup;
 
-public abstract class TestBase(Fixture fixture) : IAsyncLifetime
+public abstract class TestBase(TestFactory fixture) : IAsyncLifetime
 {
     protected IBrowserContext Context { get; private set; } = default!;
 
     public async ValueTask InitializeAsync()
     {
-        var browser = await PlaywrightFixture.Browser;
+        var browser = await PlaywrightHost.Browser;
 
         Context = await browser.NewContextAsync(new()
         {

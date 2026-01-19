@@ -12,7 +12,7 @@ using Xunit;
 
 namespace IntegrationTests.Setup;
 
-public sealed class TestApplicationFactory(Fixture fixture, bool useOutputCache) : WebApplicationFactory<Program>
+public sealed class TestFactory(WiremockFixture wiremock, bool useOutputCache) : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -21,7 +21,7 @@ public sealed class TestApplicationFactory(Fixture fixture, bool useOutputCache)
         {
             var settings = new Dictionary<string, string?>
             {
-                { EnvVarKeys.MarketClientUrl, $"http://localhost:{fixture.GetPort()}" },
+                { EnvVarKeys.MarketClientUrl, $"http://localhost:{wiremock.GetPort()}" },
                 { EnvVarKeys.UseOutputCache, useOutputCache.ToString() }
             };
             builder.AddInMemoryCollection(settings);

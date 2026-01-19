@@ -8,11 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Xunit;
 
-[assembly: AssemblyFixture(typeof(Fixture))]
+[assembly: AssemblyFixture(typeof(TestFactory))]
 
 namespace E2ETests.Setup;
 
-public sealed class Fixture : WebApplicationFactory<Program>, IAsyncLifetime
+public sealed class TestFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public Uri? BaseAddress { get; private set; }
 

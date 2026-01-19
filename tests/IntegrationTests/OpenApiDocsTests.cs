@@ -6,7 +6,7 @@ using Xunit;
 
 namespace IntegrationTests;
 
-public sealed class OpenApiDocsTests(Fixture fixture, ITestOutputHelper outputHelper) : IntegrationTestBase(fixture, outputHelper)
+public sealed class OpenApiDocsTests(WiremockFixture fixture, ITestOutputHelper outputHelper) : TestBase(fixture, outputHelper)
 {
     [Fact]
     public async Task DocsHasCustomExamples()

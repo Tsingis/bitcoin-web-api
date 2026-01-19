@@ -2,7 +2,7 @@ using Microsoft.Playwright;
 
 namespace E2ETests.Setup;
 
-internal static class PlaywrightFixture
+internal static class PlaywrightHost
 {
     private static readonly Lazy<Task<IPlaywright>> _playwright =
         new(Microsoft.Playwright.Playwright.CreateAsync);

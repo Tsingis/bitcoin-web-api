@@ -5,14 +5,14 @@ using Xunit;
 
 namespace IntegrationTests;
 
-public sealed class InfraBehaviorTests(Fixture fixture)
+public sealed class InfraBehaviorTests(WiremockFixture fixture)
 {
     [Theory]
     [InlineData(false, false)]
     [InlineData(true, true)]
     public async Task Hits_Cache(bool useOutputCache, bool expectedCacheHit)
     {
-        using var factory = new TestApplicationFactory(fixture, useOutputCache);
+        using var factory = new TestFactory(fixture, useOutputCache);
         var client = factory.CreateClient();
 
         var ct = TestContext.Current.CancellationToken;
@@ -29,7 +29,7 @@ public sealed class InfraBehaviorTests(Fixture fixture)
     [InlineData(true, HttpStatusCode.OK)]
     public async Task Hits_RateLimit(bool useOutputCache, HttpStatusCode expectedStatusCode)
     {
-        using var factory = new TestApplicationFactory(fixture, useOutputCache);
+        using var factory = new TestFactory(fixture, useOutputCache);
         var client = factory.CreateClient();
 
         var ct = TestContext.Current.CancellationToken;

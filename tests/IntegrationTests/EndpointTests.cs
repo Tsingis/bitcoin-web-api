@@ -8,7 +8,7 @@ using Xunit;
 
 namespace IntegrationTests;
 
-public sealed class EndpointsTests(Fixture fixture, ITestOutputHelper outputHelper) : IntegrationTestBase(fixture, outputHelper)
+public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper outputHelper) : TestBase(fixture, outputHelper)
 {
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new()

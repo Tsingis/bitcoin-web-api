@@ -6,15 +6,15 @@ using IntegrationTests.Setup;
 using Xunit;
 using YamlDotNet.RepresentationModel;
 
-[assembly: AssemblyFixture(typeof(Fixture))]
+[assembly: AssemblyFixture(typeof(WiremockFixture))]
 
 namespace IntegrationTests.Setup;
 
-public class Fixture : IAsyncLifetime
+public class WiremockFixture : IAsyncLifetime
 {
     private readonly IContainer? _wireMockContainer;
 
-    public Fixture()
+    public WiremockFixture()
     {
         DotNetEnv.Env.TraversePath().Load();
 
