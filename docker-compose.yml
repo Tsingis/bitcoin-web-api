@@ -32,3 +32,12 @@ services:
     privileged: true
     volumes:
       - ./wiremock:/home/wiremock/mappings
+  playwright:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+      no_cache: false
+    container_name: playwright
+    read_only: false
+    privileged: true
+    command: dotnet test --project tests/E2ETests -c Release --no-restore

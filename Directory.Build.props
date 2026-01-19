@@ -28,7 +28,7 @@
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <NoWarn>$(NoWarn);CA5394;CA1707</NoWarn>
+    <NoWarn>$(NoWarn);CA5394;CA1707;CA2007</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.18.0.131500">
