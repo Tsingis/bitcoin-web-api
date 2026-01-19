@@ -110,6 +110,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
+    container:
+      image: mcr.microsoft.com/playwright/dotnet:v1.57.0-noble
+      options: --init --ipc=host
     strategy:
       matrix:
         os: ["ubuntu-latest"]
@@ -123,13 +126,8 @@ jobs:
           cache-dependency-path: "**/packages.lock.json"
       - name: Restore
         run: dotnet restore --locked-mode
-      - name: Build
-        run: dotnet build tests/E2ETests -c Release --no-restore
-      - name: Setup playwright
-        shell: pwsh
-        run: ./tests/E2ETests/bin/Release/net10.0/playwright.ps1 install chromium --with-deps
       - name: Test
-        run: dotnet test --project tests/E2ETests -c Release --no-restore --no-build
+        run: dotnet test --project tests/E2ETests -c Release --no-restore
   coverage:
     runs-on: ubuntu-latest
     needs: [unit-test, integration-test]
