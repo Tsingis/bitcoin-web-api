@@ -26,6 +26,19 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  playwright-image:
+    runs-on: ubuntu-latest
+    outputs:
+      base-image: ${{ steps.get-base-image.outputs.base-image }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Get base image
+        id: get-base-image
+        run: |
+          IMAGE=$(sed -n 's/^FROM[[:space:]]\+\(.*\)/\1/p' tests/Dockerfile | head -n 1)
+          echo "base-image=$IMAGE" >> $GITHUB_OUTPUT
   unit-test:
     runs-on: ${{ matrix.os }}
     permissions:
@@ -108,10 +121,11 @@ jobs:
         run: dotnet test --project tests/ArchitectureTests -c Release --no-restore
   e2e-test:
     runs-on: ${{ matrix.os }}
+    needs: playwright-image
     permissions:
       contents: write
     container:
-      image: mcr.microsoft.com/playwright/dotnet:v1.57.0-noble
+      image: ${{ needs.playwright-image.outputs.base-image }}
       options: --init --ipc=host
     strategy:
       matrix:
