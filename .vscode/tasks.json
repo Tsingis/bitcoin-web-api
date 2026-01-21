@@ -70,6 +70,13 @@
             "group": "build"
         },
         {
+            "label": "add cerfiticate",
+            "type": "shell",
+            "command": "dotnet dev-certs https --trust",
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
             "label": "remove bin/obj",
             "type": "shell",
             "command": "for /d /r . %d in (bin obj) do @if exist \"%d\" rmdir /s /q \"%d\"",
