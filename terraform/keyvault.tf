@@ -13,9 +13,11 @@ resource "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_key_vault_secret" "ai_connection_string" {
-  name         = "ApplicationInsights--ConnectionString"
-  value        = azurerm_application_insights.ai.connection_string
-  key_vault_id = azurerm_key_vault.kv.id
+  name            = "ApplicationInsights--ConnectionString"
+  value           = azurerm_application_insights.ai.connection_string
+  key_vault_id    = azurerm_key_vault.kv.id
+  content_type    = "connection_string"
+  expiration_date = "2030-12-30T00:00:00Z"
 
   lifecycle {
     prevent_destroy = true
@@ -23,9 +25,11 @@ resource "azurerm_key_vault_secret" "ai_connection_string" {
 }
 
 resource "azurerm_key_vault_secret" "api_key" {
-  name         = "api-key"
-  value        = var.api_key
-  key_vault_id = azurerm_key_vault.kv.id
+  name            = "api-key"
+  value           = var.api_key
+  key_vault_id    = azurerm_key_vault.kv.id
+  content_type    = "secret"
+  expiration_date = "2030-12-30T00:00:00Z"
 
   lifecycle {
     prevent_destroy = true
