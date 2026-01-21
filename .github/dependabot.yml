@@ -53,6 +53,13 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
+  - package-ecosystem: "pip"
+    directory: "/terraform"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "21:00"
+      timezone: "Europe/Helsinki"
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:

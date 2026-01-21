@@ -25,6 +25,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+        with:
+          python-version: "3.14"
+          architecture: "x64"
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@4cb9feea73331a35b422df102992a03a44a3bb33 # v6.2.1
         with:
@@ -38,4 +42,10 @@ jobs:
       - name: Terraform linting
         id: tflint
         run: tflint -f compact --minimum-failure-severity notice
+        working-directory: ./terraform
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        working-directory: ./terraform
+      - name: Terraform analysis
+        run: checkov --quiet --compact
         working-directory: ./terraform
