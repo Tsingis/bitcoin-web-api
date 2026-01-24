@@ -18,15 +18,19 @@ public class MarketClient(ILogger<MarketClient> logger, IConfiguration configura
 
     public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(DateOnly fromDate, DateOnly toDate)
     {
-        const string baseUrl = "/api/v3/coins/bitcoin/market_chart/range";
+        var url = configuration.GetValue<string>(EnvVarKeys.ApiUrl);
+        if (string.IsNullOrEmpty(url))
+        {
+            throw new InvalidOperationException($"Environment variable {EnvVarKeys.ApiUrl} is not set");
+        }
+
         var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, "eur");
-        var url = QueryHelpers.AddQueryString(baseUrl, parameters);
-        using var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var queryUrl = QueryHelpers.AddQueryString(url, parameters);
+        using var request = new HttpRequestMessage(HttpMethod.Get, queryUrl);
         request.Headers.Add("x-cg-demo-api-key", configuration.GetValue("api-key", string.Empty));
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
-            httpClient.BaseAddress = new Uri(configuration.GetValue(EnvVarKeys.MarketClientUrl, "https://api.coingecko.com"));
             var response = await httpClient.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {

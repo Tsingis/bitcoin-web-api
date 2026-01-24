@@ -21,7 +21,7 @@ public sealed class TestFactory(WiremockFixture wiremock, bool useOutputCache, b
         {
             var settings = new Dictionary<string, string?>
             {
-                { EnvVarKeys.MarketClientUrl, $"http://localhost:{wiremock.GetPort()}" },
+                { EnvVarKeys.ApiUrl, $"http://localhost:{wiremock.GetPort()}" },
                 { EnvVarKeys.UseOutputCache, useOutputCache.ToString() },
                 { EnvVarKeys.UseRateLimiter, useRateLimiter.ToString() }
             };

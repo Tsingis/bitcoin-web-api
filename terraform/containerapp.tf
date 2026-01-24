@@ -56,6 +56,11 @@ resource "azurerm_container_app" "ca_app" {
         value = var.kv_name
       }
 
+      env {
+        name  = "API_URL"
+        value = var.api_url
+      }
+
       liveness_probe {
         transport               = "HTTP"
         port                    = var.container_port

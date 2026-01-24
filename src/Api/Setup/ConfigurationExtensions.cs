@@ -15,12 +15,11 @@ internal static class ConfigurationExtensions
 
         configManager.AddConfiguration(config);
 
-        var marketClientUrl = configManager.GetValue<string>(EnvVarKeys.MarketClientUrl);
-        if (environment.IsDevelopment() && string.IsNullOrEmpty(marketClientUrl))
+        if (environment.IsDevelopment() && EnvVarUtils.HasNoApiUrl())
         {
             var settings = new Dictionary<string, string?>
             {
-                [EnvVarKeys.MarketClientUrl] = "http://localhost:9091"
+                [EnvVarKeys.ApiUrl] = "http://localhost:9091"
             };
             configManager.AddInMemoryCollection(settings);
         }

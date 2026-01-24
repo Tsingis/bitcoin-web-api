@@ -66,3 +66,8 @@ variable "api_key" {
   sensitive = true
 }
 
+variable "api_url" {
+  type    = string
+  default = "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range"
+}
+

@@ -17,7 +17,7 @@ services:
       USE_RATE_LIMITER: $USE_RATE_LIMITER
       SHOW_MOCK_SERVER_LOGS: false
       TESTING_LOG_LEVEL: Warning
-      MARKET_CLIENT_URL: http://wiremock:8080
+      API_URL: http://wiremock:8080
     user: app
     read_only: true
     privileged: false

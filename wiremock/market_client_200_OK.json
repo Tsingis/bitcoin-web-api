@@ -2,7 +2,7 @@
   "priority": 2,
   "request": {
     "method": "GET",
-    "urlPath": "/api/v3/coins/bitcoin/market_chart/range",
+    "urlPath": "/",
     "queryParameters": {
       "vs_currency": { "equalTo": "eur"},
       "from": { "equalTo": "1756512000" },

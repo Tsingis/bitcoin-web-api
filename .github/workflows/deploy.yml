@@ -51,3 +51,4 @@ jobs:
           environmentVariables: >
             ASPNETCORE_ENVIRONMENT=Production
             KEY_VAULT_NAME=${{ secrets.KEY_VAULT_NAME }}
+            API_URL=${{ vars.API_URL }}
