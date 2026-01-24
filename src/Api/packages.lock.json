@@ -42,16 +42,6 @@
           "Sprache": "2.3.1"
         }
       },
-      "MartinCostello.OpenApi.Extensions": {
-        "type": "Direct",
-        "requested": "[2.0.0, )",
-        "resolved": "2.0.0",
-        "contentHash": "XAsZnbRmOzqsa75EptWXCoHPMZwIcw1AYz07gSGNxdRoPD8XbTkg1M8xwd4KD3+2ARdXW5N3kaTFV2S0c0qxgw==",
-        "dependencies": {
-          "Microsoft.AspNetCore.OpenApi": "10.0.0",
-          "Microsoft.OpenApi": "2.0.0"
-        }
-      },
       "Microsoft.ApplicationInsights.AspNetCore": {
         "type": "Direct",
         "requested": "[2.23.0, )",

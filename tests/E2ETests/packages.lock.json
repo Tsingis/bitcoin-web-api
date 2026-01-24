@@ -137,15 +137,6 @@
           "Sprache": "2.3.1"
         }
       },
-      "MartinCostello.OpenApi.Extensions": {
-        "type": "Transitive",
-        "resolved": "2.0.0",
-        "contentHash": "XAsZnbRmOzqsa75EptWXCoHPMZwIcw1AYz07gSGNxdRoPD8XbTkg1M8xwd4KD3+2ARdXW5N3kaTFV2S0c0qxgw==",
-        "dependencies": {
-          "Microsoft.AspNetCore.OpenApi": "10.0.0",
-          "Microsoft.OpenApi": "2.0.0"
-        }
-      },
       "Microsoft.ApplicationInsights": {
         "type": "Transitive",
         "resolved": "2.23.0",
@@ -989,7 +980,7 @@
           "Azure.Identity": "[1.17.1, )",
           "Common": "[1.0.0, )",
           "DotNetEnv": "[3.1.1, )",
-          "MartinCostello.OpenApi.Extensions": "[2.0.0, )",
+          "MartinCostello.OpenApi.Extensions": "(, )",
           "Microsoft.ApplicationInsights.AspNetCore": "[2.23.0, )",
           "Microsoft.AspNetCore.OpenApi": "[10.0.2, 11.0.0)",
           "Microsoft.Extensions.Logging.ApplicationInsights": "[2.23.0, )",

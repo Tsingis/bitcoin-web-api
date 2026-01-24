@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
-using MartinCostello.OpenApi;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Serilog;
@@ -46,15 +45,9 @@ internal static class ServiceConfigurationExtensions
                 return Task.CompletedTask;
             });
 
-            opt.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
-        });
+            opt.AddOperationTransformer<DateOnlyExampleTransformer>();
 
-        services.AddOpenApiExtensions(opt =>
-        {
-            opt.AddServerUrls = false;
-            opt.AddExamples = true;
-            opt.SerializationContexts.Add(DateOnlyJsonSerializerContext.Default);
-            opt.AddExample<DateOnly, DateOnlyExampleProvider>();
+            opt.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
         });
 
         services.Configure<JsonOptions>(opt =>
