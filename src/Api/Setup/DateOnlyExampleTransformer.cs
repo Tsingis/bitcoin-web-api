@@ -11,6 +11,16 @@ public sealed class DateOnlyExampleTransformer
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(operation);
+        ArgumentNullException.ThrowIfNull(context);
+
+        var usesDateExample = context.Description.ActionDescriptor.EndpointMetadata
+            .OfType<UseDateExamplesAttribute>()
+            .Any();
+
+        if (!usesDateExample)
+        {
+            return Task.CompletedTask;
+        }
 
         const string DateFormat = "yyyy-MM-dd";
 

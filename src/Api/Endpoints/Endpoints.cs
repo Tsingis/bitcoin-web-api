@@ -1,4 +1,5 @@
 using System.Net;
+using Api.Setup;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Services;
@@ -32,6 +33,7 @@ internal static class Endpoints
                 return TypedResults.Ok(new LongestDownwardTrendResponse(result.Value));
             })
             .WithDescription("Get longest downward trend in days between given dates")
+            .WithMetadata(new UseDateExamplesAttribute())
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
@@ -54,6 +56,7 @@ internal static class Endpoints
                 ));
             })
             .WithDescription("Get the date with the highest trading volume between given dates")
+            .WithMetadata(new UseDateExamplesAttribute())
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
@@ -76,6 +79,7 @@ internal static class Endpoints
                 ));
             })
             .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
+            .WithMetadata(new UseDateExamplesAttribute())
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
