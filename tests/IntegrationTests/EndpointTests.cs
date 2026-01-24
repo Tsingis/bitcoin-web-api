@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Json;
-using Api.Endpoints;
+using Api.Endpoints.Bitcoin;
 using Common;
 using IntegrationTests.Setup;
 using Shouldly;
