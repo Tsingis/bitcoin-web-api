@@ -13,7 +13,7 @@ public class SwaggerTests(TestFactory factory) : TestBase(factory)
 
         await page.GotoAsync("/swagger");
 
-        await Assertions.Expect(page).ToHaveTitleAsync("Swagger UI");
+        await Assertions.Expect(page).ToHaveTitleAsync("Bitcoin Web API v1");
     }
 
     [Fact]

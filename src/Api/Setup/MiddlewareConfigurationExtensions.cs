@@ -24,6 +24,7 @@ internal static class MiddlewareConfigurationExtensions
         app.UseSwaggerUI(opt =>
         {
             opt.RoutePrefix = "swagger";
+            opt.DocumentTitle = apiName;
             opt.SwaggerEndpoint(documentName, apiName);
         });
 
