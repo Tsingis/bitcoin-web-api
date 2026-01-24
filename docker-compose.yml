@@ -23,6 +23,8 @@ services:
     privileged: false
     tmpfs:
       - /tmp:rw
+    depends_on:
+      - wiremock
   wiremock:
     image: wiremock/wiremock:3.13.2-alpine
     container_name: wiremock
