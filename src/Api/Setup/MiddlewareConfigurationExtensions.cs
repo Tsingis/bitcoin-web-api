@@ -5,7 +5,7 @@ namespace Api.Setup;
 
 internal static class MiddlewareConfigurationExtensions
 {
-    public static void AddMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
+    internal static void AddMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
         app.UseExceptionHandler();
 

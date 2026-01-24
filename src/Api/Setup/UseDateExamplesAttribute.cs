@@ -1,4 +1,4 @@
 namespace Api.Setup;
 
 [AttributeUsage(AttributeTargets.Method)]
-public sealed class UseDateExamplesAttribute : Attribute;
+internal sealed class UseDateExamplesAttribute : Attribute;

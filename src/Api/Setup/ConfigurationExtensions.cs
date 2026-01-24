@@ -3,9 +3,9 @@ using Common;
 
 namespace Api.Setup;
 
-public static class ConfigurationExtensions
+internal static class ConfigurationExtensions
 {
-    public static void AddConfiguration(this ConfigurationManager configManager, IWebHostEnvironment environment)
+    internal static void AddConfiguration(this ConfigurationManager configManager, IWebHostEnvironment environment)
     {
         var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())

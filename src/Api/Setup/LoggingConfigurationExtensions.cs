@@ -9,11 +9,11 @@ using Serilog.Formatting.Display;
 
 namespace Api.Setup;
 
-public static class LoggingConfigurationExtensions
+internal static class LoggingConfigurationExtensions
 {
     const string LogFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}";
 
-    public static ReloadableLogger CreateBootstrapLogger()
+    internal static ReloadableLogger CreateBootstrapLogger()
     {
         var logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -23,7 +23,7 @@ public static class LoggingConfigurationExtensions
         return logger;
     }
 
-    public static void AddLoggingConfiguration(this LoggerConfiguration loggerConfig, IConfiguration config, IWebHostEnvironment environment)
+    internal static void AddLoggingConfiguration(this LoggerConfiguration loggerConfig, IConfiguration config, IWebHostEnvironment environment)
     {
         ITextFormatter formatter = new MessageTemplateTextFormatter(outputTemplate: LogFormat, formatProvider: CultureInfo.InvariantCulture);
 

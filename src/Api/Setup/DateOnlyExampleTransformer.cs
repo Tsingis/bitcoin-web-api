@@ -5,8 +5,7 @@ using Microsoft.OpenApi;
 
 namespace Api.Setup;
 
-public sealed class DateOnlyExampleTransformer
-    : IOpenApiOperationTransformer
+public sealed class DateOnlyExampleTransformer : IOpenApiOperationTransformer
 {
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {

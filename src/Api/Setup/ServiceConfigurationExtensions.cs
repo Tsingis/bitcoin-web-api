@@ -10,7 +10,7 @@ using Services;
 
 namespace Api.Setup;
 
-internal static class ServiceConfigurationExtensions
+public static class ServiceConfigurationExtensions
 {
     public static void AddServices(this IServiceCollection services, IWebHostEnvironment environment)
     {

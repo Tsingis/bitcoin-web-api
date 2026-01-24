@@ -8,7 +8,7 @@ namespace Api.Endpoints;
 
 internal static class Endpoints
 {
-    public static void MapEndpoints(this WebApplication app)
+    internal static void MapEndpoints(this WebApplication app)
     {
         var apiVersionSet = app.NewApiVersionSet()
             .HasApiVersion(new ApiVersion(1))
