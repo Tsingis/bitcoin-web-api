@@ -17,71 +17,68 @@ internal static class Endpoints
 
         var group = app
             .MapGroup("api/v{version:apiVersion}")
-            .WithApiVersionSet(apiVersionSet);
-
-        group.MapGet("/longestdownwardtrend",
-            async Task<Results<Ok<LongestDownwardTrendResponse>, NoContent, BadRequest>>
-            (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
-            {
-                var result = await service.GetLongestDownwardTrend(fromDate, toDate).ConfigureAwait(false);
-
-                if (result is null)
-                {
-                    return TypedResults.NoContent();
-                }
-
-                return TypedResults.Ok(new LongestDownwardTrendResponse(result.Value));
-            })
-            .WithDescription("Get longest downward trend in days between given dates")
+            .WithApiVersionSet(apiVersionSet)
             .WithMetadata(new UseDateExamplesAttribute())
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
-        group.MapGet("/highestradingvolume",
-            async Task<Results<Ok<HighestTradingVolumeResponse>, NoContent, BadRequest>>
-            (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
-            {
-                var result = await service.GetHighestTradingVolume(fromDate, toDate).ConfigureAwait(false);
+        group.MapGet("/longestdownwardtrend", GetLongestDownwardTrend)
+            .WithDescription("Get longest downward trend in days between given dates");
 
-                if (result is null)
-                {
-                    return TypedResults.NoContent();
-                }
+        group.MapGet("/highestradingvolume", GetHighestTradingVolume)
+            .WithDescription("Get the date with the highest trading volume between given dates");
 
-                return TypedResults.Ok(new HighestTradingVolumeResponse
-                (
-                    result.Value.Date,
-                    result.Value.Volume
-                ));
-            })
-            .WithDescription("Get the date with the highest trading volume between given dates")
-            .WithMetadata(new UseDateExamplesAttribute())
-            .ProducesProblem((int)HttpStatusCode.TooManyRequests)
-            .ProducesProblem((int)HttpStatusCode.Unauthorized)
-            .ProducesProblem((int)HttpStatusCode.InternalServerError);
+        group.MapGet("/buyandsell", GetBuyAndSell)
+            .WithDescription("Get pair of dates when it is best to buy and sell between given dates");
+    }
 
-        group.MapGet("/buyandsell",
-            async Task<Results<Ok<BuyAndSellResponse>, NoContent, BadRequest>>
-            (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
-            {
-                var result = await service.GetBestBuyAndSellDates(fromDate, toDate).ConfigureAwait(false);
+    private static async Task<Results<Ok<LongestDownwardTrendResponse>, NoContent, BadRequest>>
+        GetLongestDownwardTrend(IMarketService service, DateOnly fromDate, DateOnly toDate)
+    {
+        var result = await service
+            .GetLongestDownwardTrend(fromDate, toDate)
+            .ConfigureAwait(false);
 
-                if (result is null)
-                {
-                    return TypedResults.NoContent();
-                }
+        if (result is null)
+        {
+            return TypedResults.NoContent();
+        }
 
-                return TypedResults.Ok(new BuyAndSellResponse
-                (
-                    result.Value.BuyDate,
-                    result.Value.SellDate
-                ));
-            })
-            .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
-            .WithMetadata(new UseDateExamplesAttribute())
-            .ProducesProblem((int)HttpStatusCode.TooManyRequests)
-            .ProducesProblem((int)HttpStatusCode.Unauthorized)
-            .ProducesProblem((int)HttpStatusCode.InternalServerError);
+        return TypedResults.Ok(new LongestDownwardTrendResponse(result.Value));
+    }
+
+    private static async Task<Results<Ok<HighestTradingVolumeResponse>, NoContent, BadRequest>>
+        GetHighestTradingVolume(IMarketService service, DateOnly fromDate, DateOnly toDate)
+    {
+        var result = await service
+            .GetHighestTradingVolume(fromDate, toDate)
+            .ConfigureAwait(false);
+
+        if (result is null)
+        {
+            return TypedResults.NoContent();
+        }
+
+        return TypedResults.Ok(new HighestTradingVolumeResponse(
+            result.Value.Date,
+            result.Value.Volume));
+    }
+
+    private static async Task<Results<Ok<BuyAndSellResponse>, NoContent, BadRequest>>
+        GetBuyAndSell(IMarketService service, DateOnly fromDate, DateOnly toDate)
+    {
+        var result = await service
+            .GetBestBuyAndSellDates(fromDate, toDate)
+            .ConfigureAwait(false);
+
+        if (result is null)
+        {
+            return TypedResults.NoContent();
+        }
+
+        return TypedResults.Ok(new BuyAndSellResponse(
+            result.Value.BuyDate,
+            result.Value.SellDate));
     }
 }
