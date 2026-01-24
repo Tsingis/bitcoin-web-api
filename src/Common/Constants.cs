@@ -2,7 +2,7 @@ namespace Common;
 
 public static class Constants
 {
-    public const string BaseUrl = "/api/v1";
+    public const string BaseUrl = "/api/v1/bitcoin";
     public const string DateFormat = "yyyy-MM-dd";
 
     public static readonly DateOnly Today = DateOnly.FromDateTime(DateTime.UtcNow);

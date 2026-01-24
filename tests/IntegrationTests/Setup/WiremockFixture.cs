@@ -49,7 +49,7 @@ public class WiremockFixture : IAsyncLifetime
             TestContext.Current.SendDiagnosticMessage("Starting Wiremock container");
             await _wireMockContainer.StartAsync(ct).ConfigureAwait(false);
 
-            if (EnvVarAccessors.ShowMockServerLogs)
+            if (EnvVarUtils.ShowMockServerLogs)
             {
                 var (Stdout, _) = await _wireMockContainer.GetLogsAsync(ct: ct).ConfigureAwait(false);
                 TestContext.Current.SendDiagnosticMessage($"[WireMock] {Stdout}");

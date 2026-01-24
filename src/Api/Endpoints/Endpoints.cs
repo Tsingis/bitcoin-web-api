@@ -15,21 +15,25 @@ internal static class Endpoints
             .ReportApiVersions()
             .Build();
 
-        var group = app
+        var api = app
             .MapGroup("api/v{version:apiVersion}")
-            .WithApiVersionSet(apiVersionSet)
+            .WithApiVersionSet(apiVersionSet);
+
+        var bitcoin = api
+            .MapGroup("/bitcoin")
+            .WithTags("Bitcoin")
             .WithMetadata(new UseDateExamplesAttribute())
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.Unauthorized)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
-        group.MapGet("/longestdownwardtrend", GetLongestDownwardTrend)
+        bitcoin.MapGet("/longestdownwardtrend", GetLongestDownwardTrend)
             .WithDescription("Get longest downward trend in days between given dates");
 
-        group.MapGet("/highestradingvolume", GetHighestTradingVolume)
+        bitcoin.MapGet("/highestradingvolume", GetHighestTradingVolume)
             .WithDescription("Get the date with the highest trading volume between given dates");
 
-        group.MapGet("/buyandsell", GetBuyAndSell)
+        bitcoin.MapGet("/buyandsell", GetBuyAndSell)
             .WithDescription("Get pair of dates when it is best to buy and sell between given dates");
     }
 

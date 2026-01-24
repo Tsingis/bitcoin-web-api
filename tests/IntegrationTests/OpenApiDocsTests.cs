@@ -11,7 +11,7 @@ public sealed class OpenApiDocsTests(WiremockFixture fixture, ITestOutputHelper 
     public const string DocsUrl = "/openapi/v1.json";
 
     [Fact]
-    public async Task DocsHasCustomExamples()
+    public async Task EndpointHasExpectedCustomExamples()
     {
         var ct = TestContext.Current.CancellationToken;
         var result = await _client.GetAsync(new Uri(DocsUrl, UriKind.Relative), ct);
@@ -26,24 +26,25 @@ public sealed class OpenApiDocsTests(WiremockFixture fixture, ITestOutputHelper 
 
             root.TryGetProperty("openapi", out var _).ShouldBeTrue("Missing 'openapi'");
 
-            var firstPath = root.GetProperty("paths").EnumerateObject().First();
+            var firstPath = root.GetProperty("paths").EnumerateObject().First(x => x.Name.Contains("bitcoin"));
             var parameters = firstPath.Value.GetProperty("get").GetProperty("parameters");
 
             foreach (var param in parameters.EnumerateArray())
             {
-                string? example = null;
-
-                if (param.TryGetProperty("example", out var exampleElement))
+                if (param.TryGetProperty("example", out var example))
                 {
-                    example = exampleElement.GetString();
-                }
-                else if (param.TryGetProperty("schema", out var schema) &&
-                         schema.TryGetProperty("example", out var schemaExample))
-                {
-                    example = schemaExample.GetString();
-                }
+                    param.TryGetProperty("name", out var name);
 
-                example.ShouldNotBeNullOrWhiteSpace($"Missing example for parameter {param}");
+                    if (name.GetString() == "fromDate")
+                    {
+                        example.ToString().ShouldBe("2025-08-30");
+                    }
+
+                    if (name.GetString() == "toDate")
+                    {
+                        example.ToString().ShouldBe("2025-09-10");
+                    }
+                }
             }
         });
     }

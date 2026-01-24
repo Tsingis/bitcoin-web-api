@@ -14,7 +14,6 @@ services:
       KEY_VAULT_NAME: $KEY_VAULT_NAME
       USE_JSON_FORMATTING: true
       USE_OUTPUT_CACHE: true
-      USE_MOCK_SERVER: true
       SHOW_MOCK_SERVER_LOGS: false
       TESTING_LOG_LEVEL: Warning
       MARKET_CLIENT_URL: http://wiremock:8080

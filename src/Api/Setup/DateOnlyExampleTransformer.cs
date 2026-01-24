@@ -21,13 +21,13 @@ public sealed class DateOnlyExampleTransformer : IOpenApiOperationTransformer
             return Task.CompletedTask;
         }
 
-        var fromDate = EnvVarAccessors.UseMockServer
+        var fromDate = EnvVarUtils.UseMockServer
             ? Constants.StartMockDate
             : Constants.Today.AddDays(-1);
 
         ReplaceDateExample(operation, "fromDate", fromDate.ToString(Constants.DateFormat));
 
-        var toDate = EnvVarAccessors.UseMockServer
+        var toDate = EnvVarUtils.UseMockServer
             ? Constants.EndMockDate
             : Constants.Today;
 

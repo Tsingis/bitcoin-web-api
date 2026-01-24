@@ -27,7 +27,7 @@ internal static class LoggingConfigurationExtensions
     {
         ITextFormatter formatter = new MessageTemplateTextFormatter(outputTemplate: LogFormat, formatProvider: CultureInfo.InvariantCulture);
 
-        if (EnvVarAccessors.UseJsonFormatting)
+        if (EnvVarUtils.UseJsonFormatting)
         {
             formatter = new CompactJsonFormatter();
         }
