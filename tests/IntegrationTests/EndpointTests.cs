@@ -31,8 +31,9 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
 
         if (result.StatusCode == HttpStatusCode.OK)
         {
-            var data = await result.Content.ReadFromJsonAsync<LongestDownwardTrendResponse>(cancellationToken: ct);
+            var data = await result.Content.ReadFromJsonAsync<LongestDownwardTrendResponse>(ct);
             data.ShouldNotBeNull();
+            data.Days.ShouldBe(3);
         }
     }
 
@@ -47,8 +48,10 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
 
         if (result.StatusCode == HttpStatusCode.OK)
         {
-            var data = await result.Content.ReadFromJsonAsync<HighestTradingVolumeResponse>(cancellationToken: ct);
+            var data = await result.Content.ReadFromJsonAsync<HighestTradingVolumeResponse>(ct);
             data.ShouldNotBeNull();
+            data.Date.ShouldBe(new DateOnly(2025, 9, 6));
+            data.Volume.ShouldBe(48013311912.10m, 0.01m);
         }
     }
 
@@ -63,8 +66,10 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
 
         if (result.StatusCode == HttpStatusCode.OK)
         {
-            var data = await result.Content.ReadFromJsonAsync<BuyAndSellResponse>(cancellationToken: ct);
+            var data = await result.Content.ReadFromJsonAsync<BuyAndSellResponse>(ct);
             data.ShouldNotBeNull();
+            data.BuyDate.ShouldBe(new DateOnly(2025, 9, 1));
+            data.SellDate.ShouldBe(new DateOnly(2025, 9, 4));
         }
     }
 
@@ -72,7 +77,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     public async Task Health()
     {
         var ct = TestContext.Current.CancellationToken;
-        var result = await _client.GetAsync(new Uri("/health", UriKind.Relative), cancellationToken: ct);
+        var result = await _client.GetAsync(new Uri("/health", UriKind.Relative), ct);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }
