@@ -9,11 +9,13 @@ namespace IntegrationTests;
 public sealed class InfraBehaviorTests(WiremockFixture fixture)
 {
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, true)]
-    public async Task Hits_Cache(bool useOutputCache, bool expectedCacheHit)
+    [InlineData(false, false, false)]
+    [InlineData(false, true, false)]
+    [InlineData(true, false, true)]
+    [InlineData(true, true, true)]
+    public async Task Hits_Cache(bool useOutputCache, bool useRateLimiter, bool expectedCacheHit)
     {
-        using var factory = new TestFactory(fixture, useOutputCache);
+        using var factory = new TestFactory(fixture, useOutputCache, useRateLimiter);
         var client = factory.CreateClient();
 
         var ct = TestContext.Current.CancellationToken;
@@ -26,11 +28,13 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
     }
 
     [Theory]
-    [InlineData(false, HttpStatusCode.TooManyRequests)]
-    [InlineData(true, HttpStatusCode.OK)]
-    public async Task Hits_RateLimit(bool useOutputCache, HttpStatusCode expectedStatusCode)
+    [InlineData(false, false, HttpStatusCode.OK)]
+    [InlineData(false, true, HttpStatusCode.TooManyRequests)]
+    [InlineData(true, false, HttpStatusCode.OK)]
+    [InlineData(true, true, HttpStatusCode.OK)]
+    public async Task Hits_RateLimit(bool useOutputCache, bool useRateLimiter, HttpStatusCode expectedStatusCode)
     {
-        using var factory = new TestFactory(fixture, useOutputCache);
+        using var factory = new TestFactory(fixture, useOutputCache, useRateLimiter);
         var client = factory.CreateClient();
 
         var ct = TestContext.Current.CancellationToken;

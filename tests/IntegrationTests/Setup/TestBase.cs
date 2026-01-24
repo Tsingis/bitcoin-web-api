@@ -7,9 +7,10 @@ public abstract class TestBase : IAsyncLifetime
     internal readonly TestFactory _factory;
     internal readonly HttpClient _client;
 
-    protected TestBase(WiremockFixture wiremock, ITestOutputHelper outputHelper, bool useOutputCache = true)
+    protected TestBase(WiremockFixture wiremock, ITestOutputHelper outputHelper,
+        bool useOutputCache = true, bool useRateLimiter = true)
     {
-        _factory = new TestFactory(wiremock, useOutputCache);
+        _factory = new TestFactory(wiremock, useOutputCache, useRateLimiter);
         _factory.SetTestOutputHelper(outputHelper);
         _client = _factory.CreateClient();
     }

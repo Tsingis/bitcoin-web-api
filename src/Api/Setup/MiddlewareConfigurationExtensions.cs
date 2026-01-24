@@ -51,6 +51,9 @@ internal static class MiddlewareConfigurationExtensions
             await next().ConfigureAwait(false);
         });
 
-        app.UseRateLimiter();
+        if (configuration.GetValue(EnvVarKeys.UseRateLimiter, true))
+        {
+            app.UseRateLimiter();
+        }
     }
 }
