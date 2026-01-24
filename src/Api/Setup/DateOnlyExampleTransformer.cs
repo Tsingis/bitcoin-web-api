@@ -21,19 +21,17 @@ public sealed class DateOnlyExampleTransformer : IOpenApiOperationTransformer
             return Task.CompletedTask;
         }
 
-        const string DateFormat = "yyyy-MM-dd";
-
         var fromDate = EnvVarAccessors.UseMockServer
-                ? new DateOnly(2025, 8, 30)
-                : DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-1));
+            ? Constants.StartMockDate
+            : Constants.Today.AddDays(-1);
 
-        ReplaceDateExample(operation, "fromDate", fromDate.ToString(DateFormat));
+        ReplaceDateExample(operation, "fromDate", fromDate.ToString(Constants.DateFormat));
 
         var toDate = EnvVarAccessors.UseMockServer
-                        ? new DateOnly(2025, 9, 10)
-                        : DateOnly.FromDateTime(DateTime.UtcNow);
+            ? Constants.EndMockDate
+            : Constants.Today;
 
-        ReplaceDateExample(operation, "toDate", toDate.ToString(DateFormat));
+        ReplaceDateExample(operation, "toDate", toDate.ToString(Constants.DateFormat));
 
         return Task.CompletedTask;
     }

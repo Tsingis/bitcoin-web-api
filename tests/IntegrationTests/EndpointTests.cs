@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http.Json;
 using Api.Endpoints;
+using Common;
 using IntegrationTests.Setup;
 using Shouldly;
 using Xunit;
@@ -13,9 +14,9 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new()
     {
-        {Constants.s_today.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.s_today.AddMonths(1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.NoContent},
-        {Constants.s_mockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.s_mockDate.AddDays(11).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
-        {Constants.s_mockDate.AddYears(-1).AddDays(-1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.s_mockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+        {Constants.Today.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.Today.AddMonths(1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.NoContent},
+        {Constants.StartMockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.EndMockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.OK},
+        {Constants.StartMockDate.AddYears(-1).AddDays(-1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture), Constants.StartMockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
         {"", null, HttpStatusCode.BadRequest},
     };
 

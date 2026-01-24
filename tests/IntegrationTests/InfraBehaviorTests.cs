@@ -1,4 +1,5 @@
 using System.Net;
+using Common;
 using IntegrationTests.Setup;
 using Shouldly;
 using Xunit;
@@ -16,7 +17,7 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
         var client = factory.CreateClient();
 
         var ct = TestContext.Current.CancellationToken;
-        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={Constants.s_mockDate}&toDate={Constants.s_mockDate.AddDays(11)}", UriKind.Relative);
+        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={Constants.StartMockDate}&toDate={Constants.EndMockDate}", UriKind.Relative);
         var first = await client.GetAsync(url, cancellationToken: ct);
         var second = await client.GetAsync(url, cancellationToken: ct);
 
@@ -33,7 +34,7 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
         var client = factory.CreateClient();
 
         var ct = TestContext.Current.CancellationToken;
-        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={Constants.s_mockDate}&toDate={Constants.s_mockDate.AddDays(11)}", UriKind.Relative);
+        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={Constants.StartMockDate}&toDate={Constants.EndMockDate}", UriKind.Relative);
 
         HttpResponseMessage? result = null;
         for (var i = 0; i < 10; i++)
