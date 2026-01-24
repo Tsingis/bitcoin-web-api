@@ -38,10 +38,10 @@ internal static class Endpoints
     }
 
     private static async Task<Results<Ok<LongestDownwardTrendResponse>, NoContent, BadRequest>>
-        GetLongestDownwardTrend(IMarketService service, DateOnly fromDate, DateOnly toDate)
+        GetLongestDownwardTrend(IMarketService service, [AsParameters] DateRangeRequest request)
     {
         var result = await service
-            .GetLongestDownwardTrend(fromDate, toDate)
+            .GetLongestDownwardTrend(request.FromDate, request.ToDate)
             .ConfigureAwait(false);
 
         if (result is null)
@@ -53,10 +53,10 @@ internal static class Endpoints
     }
 
     private static async Task<Results<Ok<HighestTradingVolumeResponse>, NoContent, BadRequest>>
-        GetHighestTradingVolume(IMarketService service, DateOnly fromDate, DateOnly toDate)
+        GetHighestTradingVolume(IMarketService service, [AsParameters] DateRangeRequest request)
     {
         var result = await service
-            .GetHighestTradingVolume(fromDate, toDate)
+            .GetHighestTradingVolume(request.FromDate, request.ToDate)
             .ConfigureAwait(false);
 
         if (result is null)
@@ -70,10 +70,10 @@ internal static class Endpoints
     }
 
     private static async Task<Results<Ok<BuyAndSellResponse>, NoContent, BadRequest>>
-        GetBuyAndSell(IMarketService service, DateOnly fromDate, DateOnly toDate)
+        GetBuyAndSell(IMarketService service, [AsParameters] DateRangeRequest request)
     {
         var result = await service
-            .GetBestBuyAndSellDates(fromDate, toDate)
+            .GetBestBuyAndSellDates(request.FromDate, request.ToDate)
             .ConfigureAwait(false);
 
         if (result is null)
