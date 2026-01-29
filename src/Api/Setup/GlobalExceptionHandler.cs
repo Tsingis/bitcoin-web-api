@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Api.Setup;
 
-public sealed class GlobalExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IWebHostEnvironment environment) : IExceptionHandler
+public sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, ProblemDetailsFactory problemDetailsFactory, IWebHostEnvironment environment) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -15,7 +15,7 @@ public sealed class GlobalExceptionHandler(ProblemDetailsFactory problemDetailsF
 
         var statusCode = (int)HttpStatusCode.InternalServerError;
         var title = "Unexpected Error";
-        var detail = "An unhandled exception occurred.";
+        var detail = "Unhandled exception while processing request";
 
         switch (exception)
         {
@@ -28,7 +28,7 @@ public sealed class GlobalExceptionHandler(ProblemDetailsFactory problemDetailsF
             case HttpRequestException httpEx when httpEx.StatusCode == HttpStatusCode.TooManyRequests:
                 statusCode = (int)httpEx.StatusCode;
                 title = "Too Many Requests";
-                detail = "The external service rate-limited your request.";
+                detail = "Your hit request rate limit. Try again soon";
                 break;
 
             case HttpRequestException httpEx when httpEx.StatusCode == HttpStatusCode.Unauthorized:
@@ -38,11 +38,13 @@ public sealed class GlobalExceptionHandler(ProblemDetailsFactory problemDetailsF
                 break;
         }
 
-        var problemDetails = problemDetailsFactory.CreateProblemDetails(
-            httpContext,
-            statusCode,
-            title: title,
-            detail: detail);
+        if (statusCode >= 500)
+        {
+            logger.LogError(exception, "Unhandled exception while processing request {Method} {Path}",
+                httpContext.Request.Method, httpContext.Request.Path);
+        }
+
+        var problemDetails = problemDetailsFactory.CreateProblemDetails(httpContext, statusCode, title, detail);
 
         if (environment.IsDevelopment())
         {
