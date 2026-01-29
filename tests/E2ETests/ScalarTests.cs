@@ -13,7 +13,7 @@ public class ScalarTests(TestFactory factory) : TestBase(factory)
 
         await page.GotoAsync("/scalar");
 
-        await Assertions.Expect(page).ToHaveTitleAsync("Bitcoin Web API v1");
+        await Assertions.Expect(page).ToHaveTitleAsync("Bitcoin Web API");
     }
 
     [Fact]
