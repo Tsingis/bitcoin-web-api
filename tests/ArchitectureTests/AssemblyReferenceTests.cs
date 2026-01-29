@@ -6,7 +6,7 @@ public class AssemblyReferenceTests
 {
 
     [Fact]
-    public void Common_HasNoUnexpectedAssemblyReferences()
+    public void Common_NoUnexpectedAssemblyReferences()
     {
         var commonAssembly = typeof(Common.EnvVarKeys).Assembly;
 

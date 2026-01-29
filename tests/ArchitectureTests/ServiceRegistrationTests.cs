@@ -9,7 +9,7 @@ namespace ArchitectureTests;
 public class ServiceRegistrationTests
 {
     [Fact]
-    public void ShouldHave_Scoped_MarketClient()
+    public void Scoped_MarketClient()
     {
         var builder = WebApplication.CreateBuilder();
         builder.Services.AddServices(builder.Environment);
@@ -21,7 +21,7 @@ public class ServiceRegistrationTests
     }
 
     [Fact]
-    public void ShouldHave_Scoped_MarketService()
+    public void Scoped_MarketService()
     {
         var builder = WebApplication.CreateBuilder();
         builder.Services.AddServices(builder.Environment);

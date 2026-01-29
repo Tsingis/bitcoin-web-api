@@ -22,7 +22,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
 
     [Theory]
     [MemberData(nameof(OkCases))]
-    public async Task LongestDownwardTrendReturnsOK(string fromDate, string toDate)
+    public async Task LongestDownwardTrend_OK(string fromDate, string toDate)
     {
         var url = new Uri($"{Constants.BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
 
@@ -38,7 +38,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
 
     [Theory]
     [MemberData(nameof(OkCases))]
-    public async Task HighestTradingVolumeReturnsOK(string fromDate, string toDate)
+    public async Task HighestTradingVolume_OK(string fromDate, string toDate)
     {
         var url = new Uri($"{Constants.BaseUrl}/highesttradingvolume?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
 
@@ -55,7 +55,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
 
     [Theory]
     [MemberData(nameof(OkCases))]
-    public async Task BuyAndSellReturnsOK(string fromDate, string toDate)
+    public async Task BuyAndSell_OK(string fromDate, string toDate)
     {
         var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
 
@@ -75,7 +75,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     [InlineData("longestdownwardtrend")]
     [InlineData("highesttradingvolume")]
     [InlineData("buyandsell")]
-    public async Task EndpointsReturnNoContent(string endpoint)
+    public async Task Endpoints_NoContent(string endpoint)
     {
         var fromDate = Constants.Today.ToString(Constants.DateFormat, CultureInfo.InvariantCulture);
         var toDate = Constants.Today.AddMonths(1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture);
@@ -91,7 +91,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     [InlineData("longestdownwardtrend")]
     [InlineData("highesttradingvolume")]
     [InlineData("buyandsell")]
-    public async Task EndpointsReturnUnauthorized(string endpoint)
+    public async Task Endpoints_Unauthorized(string endpoint)
     {
         var fromDate = Constants.StartMockDate.AddYears(-1).AddDays(-1).ToString(Constants.DateFormat, CultureInfo.InvariantCulture);
         var toDate = Constants.StartMockDate.ToString(Constants.DateFormat, CultureInfo.InvariantCulture);
@@ -107,7 +107,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     [InlineData("longestdownwardtrend")]
     [InlineData("highesttradingvolume")]
     [InlineData("buyandsell")]
-    public async Task EndpointsReturnBadRequest(string endpoint)
+    public async Task Endpoints_BadRequest(string endpoint)
     {
         var fromDate = string.Empty;
         string? toDate = null;

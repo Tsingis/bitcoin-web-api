@@ -13,7 +13,7 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
     [InlineData(false, true, false)]
     [InlineData(true, false, true)]
     [InlineData(true, true, true)]
-    public async Task Hits_Cache(bool useOutputCache, bool useRateLimiter, bool expectedCacheHit)
+    public async Task HitsCache(bool useOutputCache, bool useRateLimiter, bool expectedCacheHit)
     {
         using var factory = new TestFactory(fixture, useOutputCache, useRateLimiter);
         var client = factory.CreateClient();
@@ -32,7 +32,7 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
     [InlineData(false, true, HttpStatusCode.TooManyRequests)]
     [InlineData(true, false, HttpStatusCode.OK)]
     [InlineData(true, true, HttpStatusCode.OK)]
-    public async Task Hits_RateLimit(bool useOutputCache, bool useRateLimiter, HttpStatusCode expectedStatusCode)
+    public async Task HitsRateLimit(bool useOutputCache, bool useRateLimiter, HttpStatusCode expectedStatusCode)
     {
         using var factory = new TestFactory(fixture, useOutputCache, useRateLimiter);
         var client = factory.CreateClient();
