@@ -40,8 +40,7 @@ public sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logge
 
         if (statusCode >= 500)
         {
-            logger.LogError(exception, "Unhandled exception while processing request {Method} {Path}",
-                httpContext.Request.Method, httpContext.Request.Path);
+            logger.LogError(exception, "Unhandled exception while processing request");
         }
 
         var problemDetails = problemDetailsFactory.CreateProblemDetails(httpContext, statusCode, title, detail);

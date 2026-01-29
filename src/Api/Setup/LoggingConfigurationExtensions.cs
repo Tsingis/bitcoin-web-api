@@ -36,6 +36,15 @@ internal static class LoggingConfigurationExtensions
             .ReadFrom.Configuration(config)
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
+            .Filter.ByExcluding(x =>
+                x.Properties.TryGetValue("RequestPath", out var path) &&
+                (
+                    path.ToString().Contains("/swagger") ||
+                    path.ToString().Contains("/openapi") ||
+                    path.ToString().Contains("/scalar") ||
+                    path.ToString().Contains("well-known")
+                )
+            )
             .WriteTo.Async(x => x.Console(formatter));
 
         if (environment.IsProduction())

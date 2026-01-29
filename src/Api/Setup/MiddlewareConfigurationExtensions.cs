@@ -1,5 +1,6 @@
 using Common;
 using Scalar.AspNetCore;
+using Serilog;
 
 namespace Api.Setup;
 
@@ -8,6 +9,8 @@ internal static class MiddlewareConfigurationExtensions
     internal static void AddMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
         app.UseExceptionHandler();
+
+        app.UseSerilogRequestLogging();
 
         app.UseRouting();
 
