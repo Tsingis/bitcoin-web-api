@@ -19,7 +19,7 @@ internal static class BitcoinEndpoints
         group.MapGet("/longestdownwardtrend", GetLongestDownwardTrend)
             .WithDescription("Get longest downward trend in days between given dates");
 
-        group.MapGet("/highestradingvolume", GetHighestTradingVolume)
+        group.MapGet("/highesttradingvolume", GetHighestTradingVolume)
             .WithDescription("Get the date with the highest trading volume between given dates");
 
         group.MapGet("/buyandsell", GetBuyAndSell)

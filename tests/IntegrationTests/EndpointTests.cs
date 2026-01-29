@@ -42,7 +42,7 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var ct = TestContext.Current.CancellationToken;
-        var url = new Uri($"{Constants.BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
+        var url = new Uri($"{Constants.BaseUrl}/highesttradingvolume?fromDate={fromDate}&toDate={toDate}", UriKind.Relative);
         var result = await _client.GetAsync(url, cancellationToken: ct);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
