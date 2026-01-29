@@ -1,3 +1,4 @@
+using Shouldly;
 using Xunit;
 
 namespace ArchitectureTests;
@@ -29,6 +30,6 @@ public class AssemblyReferenceTests
             .Where(x => !allowed.Any(y => x?.StartsWith(y, StringComparison.InvariantCulture) ?? false))
             .ToList();
 
-        Assert.Empty(forbidden);
+        forbidden.ShouldBeEmpty();
     }
 }

@@ -18,66 +18,7 @@ public class MarketServiceTests
 
     public MarketServiceTests()
     {
-        var date = new DateTimeOffset(2021, 1, 1, 12, 0, 0, 0, new TimeSpan(0, 0, 0));
-
-        var marketChartPoints = new List<MarketChartPoint> {
-        new() {
-            Date = date,
-            Price = 100m,
-            MarketCap = 100m,
-            TotalVolume = 100m,
-        },
-        new() {
-            Date = date.AddDays(1),
-            Price = 90m,
-            MarketCap = 100m,
-            TotalVolume = 200m,
-        },
-        new()
-        {
-            Date = date.AddDays(2),
-            Price = 80m,
-            MarketCap = 100m,
-            TotalVolume = 300m,
-        },
-        new() {
-            Date = date.AddDays(3),
-            Price = 70m,
-            MarketCap = 100m,
-            TotalVolume = 400m,
-        },
-        new() {
-            Date = date.AddDays(4),
-            Price = 500m,
-            MarketCap = 100m,
-            TotalVolume = 500m,
-        },
-    };
-
-        var marketChartPointsExtension = new List<MarketChartPoint> {
-        new() {
-            Date = date.AddDays(5),
-            Price = 50m,
-            MarketCap = 100m,
-            TotalVolume = 50m,
-        },
-        new() {
-            Date = date.AddDays(6),
-            Price = 40m,
-            MarketCap = 100m,
-            TotalVolume = 40m,
-        },
-        new() {
-            Date = date.AddDays(7),
-            Price = 30m,
-            MarketCap = 100m,
-            TotalVolume = 30m,
-        },
-    };
-
-        List<MarketChartPoint>? marketChartPointsNullExtension = null;
-
-        var logger = new NullLogger<MarketService>();
+        var date = new DateTimeOffset(2021, 1, 1, 12, 0, 0, TimeSpan.Zero);
 
         FromDate = date.ToDateOnly();
         ToDate = date.AddDays(4).ToDateOnly();
@@ -85,14 +26,40 @@ public class MarketServiceTests
         ToDateNullExtension = date.AddDays(10).ToDateOnly();
 
         var marketClient = Substitute.For<IMarketClient>();
-        marketClient.GetMarketChartByDateRange(FromDate, ToDate)!
-            .Returns(Task.FromResult(marketChartPoints));
-        marketClient.GetMarketChartByDateRange(ToDate, ToDateExtension)!
-            .Returns(Task.FromResult(marketChartPointsExtension));
-        marketClient.GetMarketChartByDateRange(ToDateExtension, ToDateNullExtension)
-            .Returns(Task.FromResult(marketChartPointsNullExtension));
 
-        _marketService = new MarketService(logger, marketClient);
+        marketClient.GetMarketChartByDateRange(FromDate, ToDate)
+            .Returns(CreateMarketChartPoints(date));
+
+        marketClient.GetMarketChartByDateRange(ToDate, ToDateExtension)
+            .Returns(CreateExtensionPoints(date));
+
+        marketClient.GetMarketChartByDateRange(ToDateExtension, ToDateNullExtension)
+            .Returns((List<MarketChartPoint>?)null);
+
+        _marketService = new MarketService(
+            new NullLogger<MarketService>(),
+            marketClient
+        );
+    }
+
+    private static List<MarketChartPoint> CreateMarketChartPoints(DateTimeOffset start)
+    {
+        return [
+            new() { Date = start, Price = 100, MarketCap = 100, TotalVolume = 100 },
+            new() { Date = start.AddDays(1), Price = 90, MarketCap = 100, TotalVolume = 200 },
+            new() { Date = start.AddDays(2), Price = 80, MarketCap = 100, TotalVolume = 300 },
+            new() { Date = start.AddDays(3), Price = 70, MarketCap = 100, TotalVolume = 400 },
+            new() { Date = start.AddDays(4), Price = 500, MarketCap = 100, TotalVolume = 500 },
+        ];
+    }
+
+    private static List<MarketChartPoint> CreateExtensionPoints(DateTimeOffset start)
+    {
+        return [
+            new() { Date = start.AddDays(5), Price = 50, MarketCap = 100, TotalVolume = 50 },
+            new() { Date = start.AddDays(6), Price = 40, MarketCap = 100, TotalVolume = 40 },
+            new() { Date = start.AddDays(7), Price = 30, MarketCap = 100, TotalVolume = 30 },
+        ];
     }
 
     [Fact]

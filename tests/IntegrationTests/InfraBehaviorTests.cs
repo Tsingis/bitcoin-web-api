@@ -15,11 +15,12 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
     [InlineData(true, true, true)]
     public async Task HitsCache(bool useOutputCache, bool useRateLimiter, bool expectedCacheHit)
     {
+        var ct = TestContext.Current.CancellationToken;
         using var factory = new TestFactory(fixture, useOutputCache, useRateLimiter);
         var client = factory.CreateClient();
 
-        var ct = TestContext.Current.CancellationToken;
-        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={Constants.StartMockDate}&toDate={Constants.EndMockDate}", UriKind.Relative);
+        var url = Utility.BuildUri("buyandsell", Constants.StartMockDate, Constants.EndMockDate);
+
         var first = await client.GetAsync(url, cancellationToken: ct);
         var second = await client.GetAsync(url, cancellationToken: ct);
 
@@ -34,11 +35,11 @@ public sealed class InfraBehaviorTests(WiremockFixture fixture)
     [InlineData(true, true, HttpStatusCode.OK)]
     public async Task HitsRateLimit(bool useOutputCache, bool useRateLimiter, HttpStatusCode expectedStatusCode)
     {
+        var ct = TestContext.Current.CancellationToken;
         using var factory = new TestFactory(fixture, useOutputCache, useRateLimiter);
         var client = factory.CreateClient();
 
-        var ct = TestContext.Current.CancellationToken;
-        var url = new Uri($"{Constants.BaseUrl}/buyandsell?fromDate={Constants.StartMockDate}&toDate={Constants.EndMockDate}", UriKind.Relative);
+        var url = Utility.BuildUri("buyandsell", Constants.StartMockDate, Constants.EndMockDate);
 
         HttpResponseMessage? result = null;
         for (var i = 0; i < 10; i++)

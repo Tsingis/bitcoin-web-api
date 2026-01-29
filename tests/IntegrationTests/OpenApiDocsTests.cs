@@ -15,6 +15,7 @@ public sealed class OpenApiDocsTests(WiremockFixture fixture, ITestOutputHelper 
     {
         var ct = TestContext.Current.CancellationToken;
         var result = await _client.GetAsync(new Uri(DocsUrl, UriKind.Relative), ct);
+
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         var data = await result.Content.ReadAsStringAsync(ct);
@@ -54,6 +55,7 @@ public sealed class OpenApiDocsTests(WiremockFixture fixture, ITestOutputHelper 
     {
         var ct = TestContext.Current.CancellationToken;
         var result = await _client.GetAsync(new Uri(DocsUrl, UriKind.Relative), ct);
+
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
 
         var data = await result.Content.ReadAsStringAsync(ct);

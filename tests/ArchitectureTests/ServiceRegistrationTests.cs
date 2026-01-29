@@ -2,6 +2,7 @@ using Api.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
+using Shouldly;
 using Xunit;
 
 namespace ArchitectureTests;
@@ -16,8 +17,8 @@ public class ServiceRegistrationTests
 
         var marketClient = builder.Services.SingleOrDefault(x => x.ServiceType == typeof(IMarketClient));
 
-        Assert.NotNull(marketClient);
-        Assert.Equal(ServiceLifetime.Scoped, marketClient.Lifetime);
+        marketClient.ShouldNotBeNull("Service is not registered");
+        marketClient.Lifetime.ShouldBe(ServiceLifetime.Scoped);
     }
 
     [Fact]
@@ -28,7 +29,7 @@ public class ServiceRegistrationTests
 
         var marketService = builder.Services.SingleOrDefault(x => x.ServiceType == typeof(IMarketService));
 
-        Assert.NotNull(marketService);
-        Assert.Equal(ServiceLifetime.Scoped, marketService.Lifetime);
+        marketService.ShouldNotBeNull("Service is not registered");
+        marketService.Lifetime.ShouldBe(ServiceLifetime.Scoped);
     }
 }
