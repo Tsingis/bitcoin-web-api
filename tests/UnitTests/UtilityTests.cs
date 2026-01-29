@@ -108,6 +108,7 @@ public class UtilityTests
 
         var result = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
 
+        result.ShouldNotBeNull();
         result.Count.ShouldBe(2);
 
         result[0].Date.ShouldBe(DateTimeOffset.FromUnixTimeMilliseconds(1629811200000));
@@ -122,7 +123,7 @@ public class UtilityTests
     }
 
     [Fact]
-    public void MapMarketChartToMarketChartPoints_ShouldThrowException_WhenPricesAreNull()
+    public void MapMarketChartToMarketChartPoints_Null_WhenPricesAreNull()
     {
         var marketChart = new MarketChart
         {
@@ -131,14 +132,13 @@ public class UtilityTests
             TotalVolumes = []
         };
 
-        var exception = Should.Throw<MarketChartException>(() =>
-            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var result = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
 
-        exception.Message.ShouldBe("Prices is null");
+        result.ShouldBeNull();
     }
 
     [Fact]
-    public void MapMarketChartToMarketChartPoints_ShouldThrowException_WhenMarketCapsAreNull()
+    public void MapMarketChartToMarketChartPoints_Null_WhenMarketCapsAreNull()
     {
         var marketChart = new MarketChart
         {
@@ -147,14 +147,13 @@ public class UtilityTests
             TotalVolumes = []
         };
 
-        var exception = Should.Throw<MarketChartException>(() =>
-            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var result = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
 
-        exception.Message.ShouldBe("MarketCaps is null");
+        result.ShouldBeNull();
     }
 
     [Fact]
-    public void MapMarketChartToMarketChartPoints_ShouldThrowException_WhenTotalVolumesAreNull()
+    public void MapMarketChartToMarketChartPoints_Null_WhenTotalVolumesAreNull()
     {
         var marketChart = new MarketChart
         {
@@ -163,10 +162,9 @@ public class UtilityTests
             TotalVolumes = null
         };
 
-        var exception = Should.Throw<MarketChartException>(() =>
-            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var result = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
 
-        exception.Message.ShouldBe("TotalVolumes is null");
+        result.ShouldBeNull();
     }
 
     [Fact]
@@ -181,7 +179,7 @@ public class UtilityTests
             MarketCaps =
             [
                 [1629811200000, 850000000000],
-            [1629897600000, 860000000000]
+                [1629897600000, 860000000000]
             ],
             TotalVolumes =
             [

@@ -5,21 +5,16 @@ namespace Services.Utility;
 
 public static class MarketChartHelper
 {
-    public static List<MarketChartPoint> MapMarketChartToMarketChartPoints(MarketChart marketChart)
+    public static List<MarketChartPoint>? MapMarketChartToMarketChartPoints(MarketChart? marketChart)
     {
-        if (marketChart?.Prices is null)
+        if (marketChart?.Prices is null || marketChart?.MarketCaps is null || marketChart?.TotalVolumes is null)
         {
-            throw new MarketChartException($"{nameof(marketChart.Prices)} is null");
+            return null;
         }
 
-        if (marketChart.MarketCaps is null)
+        if (marketChart.Prices.Count == 0 || marketChart.MarketCaps.Count == 0 || marketChart.TotalVolumes.Count == 0)
         {
-            throw new MarketChartException($"{nameof(marketChart.MarketCaps)} is null");
-        }
-
-        if (marketChart.TotalVolumes is null)
-        {
-            throw new MarketChartException($"{nameof(marketChart.TotalVolumes)} is null");
+            return null;
         }
 
         if (marketChart.Prices.Count != marketChart.MarketCaps.Count ||

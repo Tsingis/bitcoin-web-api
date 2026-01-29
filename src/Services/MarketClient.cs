@@ -18,38 +18,36 @@ public class MarketClient(ILogger<MarketClient> logger, IConfiguration configura
 
     public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(DateOnly fromDate, DateOnly toDate)
     {
-        var url = configuration.GetValue<string>(EnvVarKeys.ApiUrl);
+        string? url = configuration.GetValue<string>(EnvVarKeys.ApiUrl);
         if (string.IsNullOrEmpty(url))
         {
             throw new InvalidOperationException($"Environment variable {EnvVarKeys.ApiUrl} is not set");
         }
 
-        var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, "eur");
-        var queryUrl = QueryHelpers.AddQueryString(url, parameters);
+        Dictionary<string, string?> parameters = QueryHelper.CreateQueryParams(fromDate, toDate, "eur");
+        string queryUrl = QueryHelpers.AddQueryString(url, parameters);
         using var request = new HttpRequestMessage(HttpMethod.Get, queryUrl);
         request.Headers.Add("x-cg-demo-api-key", configuration.GetValue("api-key", string.Empty));
 
         using (var httpClient = _httpClientFactory.CreateClient())
         {
-            var response = await httpClient.SendAsync(request).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
+            HttpResponseMessage response = await httpClient.SendAsync(request).ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+
+            string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var marketChart = JsonSerializer.Deserialize<MarketChart>(json, _options);
+
+            var points = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
+
+            if (points is null)
             {
-                var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var marketChart = JsonSerializer.Deserialize<MarketChart>(json, _options);
-
-                if (marketChart is null || marketChart.Prices.IsNullOrEmpty())
-                {
-                    _logger.LogInformation("Market chart data not found.");
-                    return null;
-                }
-
-                var points = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
-                var data = MarketChartHelper.GetEarliestMarketChartPointsByDate(points);
-                return data;
+                _logger.LogWarning("Market chart data not found");
+                return null;
             }
 
-            var message = $"Error getting market chart data. Response code: {response.StatusCode}";
-            throw new HttpRequestException(message, null, response.StatusCode);
+            var data = MarketChartHelper.GetEarliestMarketChartPointsByDate(points);
+            return data;
         }
     }
 }
