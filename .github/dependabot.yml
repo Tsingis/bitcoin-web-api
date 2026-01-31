@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
@@ -56,7 +56,7 @@ updates:
   - package-ecosystem: "pip"
     directory: "/terraform"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
