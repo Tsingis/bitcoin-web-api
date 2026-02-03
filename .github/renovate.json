@@ -4,5 +4,33 @@
   "timezone": "Europe/Helsinki",
   "schedule": ["* 21-22 * * 3"],
   "rebaseWhen": "conflicted",
-  "enabledManagers": ["tflint-plugin"]
+  "enabledManagers": ["tflint-plugin", "nuget", "dockerfile"],
+  "packageRules": [
+    {
+      "matchDepTypes": ["packageManager"],
+      "enabled": true
+    },
+    {
+      "matchManagers": ["nuget"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "excludePackageNames": ["mcr.microsoft.com/playwright"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["nuget", "dockerfile"],
+      "matchPackageNames": [
+        "Microsoft.Playwright",
+        "mcr.microsoft.com/playwright"
+      ],
+      "rangeStrategy": "bump",
+      "commitMessageAction": "Update",
+      "commitMessageTopic": "playwright",
+      "commitMessageExtra": "to {{{prettyNewVersion}}}",
+      "groupName": "playwright",
+      "enabled": true
+    }
+  ]
 }

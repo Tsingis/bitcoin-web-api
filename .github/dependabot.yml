@@ -20,6 +20,8 @@ updates:
       default-days: 1
       exclude:
         - "Microsoft.*"
+    ignore:
+      - dependency-name: "Microsoft.Playwright"
     groups:
       asp:
         patterns:
@@ -45,6 +47,7 @@ updates:
       - "/"
       - "/tests"
     ignore:
+      - dependency-name: "mcr.microsoft.com/playwright"
       - dependency-name: "*dotnet*"
         update-types:
           - "version-update:semver-major"
