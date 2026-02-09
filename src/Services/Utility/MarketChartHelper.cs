@@ -7,7 +7,7 @@ public static class MarketChartHelper
 {
     public static List<MarketChartPoint>? MapMarketChartToMarketChartPoints(MarketChart? marketChart)
     {
-        if (marketChart?.Prices is null || marketChart?.MarketCaps is null || marketChart?.TotalVolumes is null)
+        if (marketChart?.Prices is null || marketChart.MarketCaps is null || marketChart.TotalVolumes is null)
         {
             return null;
         }
