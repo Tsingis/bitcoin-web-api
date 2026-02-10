@@ -5,10 +5,10 @@
     <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.1" />
     <PackageVersion Include="DotNetEnv" Version="3.1.1" />
     <PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="3.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="[10.0.2, 11.0.0)" />
-    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="[10.0.2, 11.0.0)" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="[10.0.2, 11.0.0)" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="[10.0.2, 11.0.0)" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="[10.0.3, 11.0.0)" />
+    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="[10.0.3, 11.0.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="[10.0.3, 11.0.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="[10.0.3, 11.0.0)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.ApplicationInsights" Version="2.23.0" />
     <PackageVersion Include="Scalar.AspNetCore" Version="2.12.32" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
