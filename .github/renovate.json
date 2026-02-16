@@ -5,7 +5,6 @@
   "schedule": ["* 21-22 * * 3"],
   "rebaseWhen": "conflicted",
   "enabledManagers": ["tflint-plugin", "nuget", "dockerfile"],
-  "ignorePaths": ["!tests/Dockerfile"],
   "dockerfile": {
     "fileMatch": [
       "^tests/Dockerfile$"
@@ -18,11 +17,12 @@
     },
     {
       "matchManagers": ["nuget"],
+      "matchDepTypes": ["dependencies", "devDependencies"],
       "enabled": false
     },
     {
       "matchManagers": ["dockerfile"],
-      "excludePackageNames": ["mcr.microsoft.com/playwright/dotnet"],
+      "matchPackageNames": ["!mcr.microsoft.com/playwright/dotnet"],
       "enabled": false
     },
     {
