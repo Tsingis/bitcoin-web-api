@@ -3,30 +3,35 @@
   "extends": ["config:recommended"],
   "timezone": "Europe/Helsinki",
   "schedule": ["* 21-22 * * 3"],
+  "ignorePresets": [
+    ":ignoreModulesAndTests"
+  ],
   "rebaseWhen": "conflicted",
-  "enabledManagers": ["tflint-plugin", "nuget", "dockerfile"],
-  "ignorePaths": ["!tests/Dockerfile"],
-  "dockerfile": {
-    "fileMatch": [
-      "^tests/Dockerfile$"
-    ]
-  },
+  "enabledManagers": [
+    "tflint-plugin",
+    "nuget",
+    "dockerfile"
+  ],
   "packageRules": [
     {
       "matchManagers": ["tflint-plugin"],
       "enabled": true
     },
     {
-      "matchManagers": ["nuget"],
+      "matchManagers": [
+        "nuget",
+        "dockerfile"
+      ],
+      "matchPackageNames": [
+        "!mcr.microsoft.com/playwright/dotnet"
+      ],
       "enabled": false
     },
     {
-      "matchManagers": ["dockerfile"],
-      "excludePackageNames": ["mcr.microsoft.com/playwright/dotnet"],
-      "enabled": false
-    },
-    {
-      "matchManagers": ["nuget", "dockerfile"],
+      "matchManagers": [
+        "nuget",
+        "dockerfile"
+      ],
       "matchPackageNames": [
         "Microsoft.Playwright",
         "mcr.microsoft.com/playwright/dotnet"
