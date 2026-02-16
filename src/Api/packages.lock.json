@@ -175,9 +175,9 @@
       },
       "Swashbuckle.AspNetCore.SwaggerUI": {
         "type": "Direct",
-        "requested": "[10.1.2, )",
-        "resolved": "10.1.2",
-        "contentHash": "Zzam+F/g3jpGvSLhqdtOoBe+GEABk+oi9LJxun1wrz52/254sSGWkz1P+U1dDifsXJWVdZusiRuDWLXkJW+7Eg=="
+        "requested": "[10.1.3, )",
+        "resolved": "10.1.3",
+        "contentHash": "vraEBz1/68+DTd0utiGvjYt1BqCoSY0RqFk0jJaxvrFwO/alL9VlsYOgNNGnbFH8fJksPfVdNvm1qJ4A+qBSvQ=="
       },
       "Asp.Versioning.Abstractions": {
         "type": "Transitive",
