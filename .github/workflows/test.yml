@@ -63,7 +63,7 @@ jobs:
           --results-directory ${{ runner.temp }}/test-results/unit \
           --coverage --coverage-output-format cobertura --coverage-output coverage-unit.cobertura.xml
       - name: Upload coverage report
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: coverage-report-unit
           path: ${{ runner.temp }}/test-results/unit
@@ -95,7 +95,7 @@ jobs:
           SHOW_MOCK_SERVER_LOGS: ${{ vars.SHOW_MOCK_SERVER_LOGS }}
           TESTING_LOG_LEVEL: ${{ vars.TESTING_LOG_LEVEL }}
       - name: Upload coverage report
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: coverage-report-integration
           path: ${{ runner.temp }}/test-results/integration
