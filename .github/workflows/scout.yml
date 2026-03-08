@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           logout: true
       - name: Image CVEs
-        uses: docker/scout-action@f8c776824083494ab0d56b8105ba2ca85c86e4de # v1.18.2
+        uses: docker/scout-action@75ec1d410792f411fb41df7ab69a62d14d9b6884 # v1.20.1
         with:
           command: cves
           image: ${{ vars.IMAGE }}
@@ -38,7 +38,7 @@ jobs:
           exit-code: true
       - name: Image recommendations
         continue-on-error: true
-        uses: docker/scout-action@f8c776824083494ab0d56b8105ba2ca85c86e4de # v1.18.2
+        uses: docker/scout-action@75ec1d410792f411fb41df7ab69a62d14d9b6884 # v1.20.1
         with:
           command: recommendations
           image: ${{ vars.IMAGE }}
