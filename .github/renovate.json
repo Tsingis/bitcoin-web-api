@@ -38,7 +38,7 @@
         "mcr.microsoft.com/playwright/dotnet"
       ],
       "rangeStrategy": "bump",
-      "commitMessageAction": "Update",
+      "commitMessageAction": "Bump",
       "commitMessageTopic": "playwright",
       "commitMessageExtra": "to {{{prettyNewVersion}}}",
       "groupName": "playwright",
