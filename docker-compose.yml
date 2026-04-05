@@ -26,7 +26,7 @@ services:
     depends_on:
       - wiremock
   wiremock:
-    image: wiremock/wiremock:3.13.2-alpine
+    image: wiremock/wiremock:4.0.0-beta.29-alpine
     container_name: wiremock
     ports:
       - 9091:8080
