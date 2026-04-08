@@ -8,6 +8,7 @@ tfplan
 *.rsuser
 *.suo
 *.user
+*.csproj.lscache
 
 # Build results
 [Dd]ebug/
