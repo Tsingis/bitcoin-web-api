@@ -31,7 +31,7 @@
     <NoWarn>$(NoWarn);CA5394;CA1707;CA2007</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.22.0.136894">
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.23.0.137933">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </GlobalPackageReference>
