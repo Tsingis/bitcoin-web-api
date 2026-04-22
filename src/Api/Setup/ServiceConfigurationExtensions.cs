@@ -14,6 +14,8 @@ public static class ServiceConfigurationExtensions
 {
     public static void AddServices(this IServiceCollection services, IWebHostEnvironment environment)
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
