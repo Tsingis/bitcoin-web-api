@@ -309,11 +309,6 @@
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
-      "OpenTelemetry.Api": {
-        "type": "Transitive",
-        "resolved": "1.15.3",
-        "contentHash": "fX+fkCysfPut+qCcT3bKqyX4QN9Saf4CgX8HLOHywEVD+Xr7sULtfuypITpoDysjx8R59dn/3mWhgimMH8cm/g=="
-      },
       "System.CodeDom": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -390,10 +385,7 @@
         }
       },
       "common": {
-        "type": "Project",
-        "dependencies": {
-          "OpenTelemetry.Api": "[1.15.3, )"
-        }
+        "type": "Project"
       },
       "services": {
         "type": "Project",
@@ -401,8 +393,7 @@
           "Common": "[1.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[10.0.7, 11.0.0)",
           "Microsoft.Extensions.Http": "[10.0.7, 11.0.0)",
-          "Microsoft.Extensions.Logging": "[10.0.7, 11.0.0)",
-          "OpenTelemetry.Api": "[1.15.3, )"
+          "Microsoft.Extensions.Logging": "[10.0.7, 11.0.0)"
         }
       }
     }

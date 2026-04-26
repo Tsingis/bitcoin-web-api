@@ -470,11 +470,6 @@
           "OpenTelemetry.Api.ProviderBuilderExtensions": "1.15.1"
         }
       },
-      "OpenTelemetry.Api": {
-        "type": "Transitive",
-        "resolved": "1.15.3",
-        "contentHash": "fX+fkCysfPut+qCcT3bKqyX4QN9Saf4CgX8HLOHywEVD+Xr7sULtfuypITpoDysjx8R59dn/3mWhgimMH8cm/g=="
-      },
       "OpenTelemetry.Api.ProviderBuilderExtensions": {
         "type": "Transitive",
         "resolved": "1.15.1",
@@ -764,7 +759,6 @@
           "Microsoft.ApplicationInsights.AspNetCore": "[3.1.0, )",
           "Microsoft.AspNetCore.OpenApi": "[10.0.7, 11.0.0)",
           "Microsoft.Extensions.Logging.ApplicationInsights": "[2.23.0, )",
-          "OpenTelemetry.Api": "[1.15.3, )",
           "Scalar.AspNetCore": "[2.13.22, )",
           "Serilog": "[4.3.1, )",
           "Serilog.AspNetCore": "[10.0.0, )",
@@ -780,10 +774,7 @@
         }
       },
       "common": {
-        "type": "Project",
-        "dependencies": {
-          "OpenTelemetry.Api": "[1.15.3, )"
-        }
+        "type": "Project"
       },
       "services": {
         "type": "Project",
@@ -791,8 +782,7 @@
           "Common": "[1.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[10.0.7, 11.0.0)",
           "Microsoft.Extensions.Http": "[10.0.7, 11.0.0)",
-          "Microsoft.Extensions.Logging": "[10.0.7, 11.0.0)",
-          "OpenTelemetry.Api": "[1.15.3, )"
+          "Microsoft.Extensions.Logging": "[10.0.7, 11.0.0)"
         }
       },
       "Microsoft.OpenApi": {
@@ -800,6 +790,12 @@
         "requested": "[2.7.3, 3.0.0)",
         "resolved": "2.7.3",
         "contentHash": "riS56czrBUgnvTmJqgXXiKUuTZisnvFfi4BzW9vGcjvTMUPsbCrdG5Nohwsx7G+pVwXgZIQOM+MnT/xgT7bisA=="
+      },
+      "OpenTelemetry.Api": {
+        "type": "CentralTransitive",
+        "requested": "[1.15.3, )",
+        "resolved": "1.15.3",
+        "contentHash": "fX+fkCysfPut+qCcT3bKqyX4QN9Saf4CgX8HLOHywEVD+Xr7sULtfuypITpoDysjx8R59dn/3mWhgimMH8cm/g=="
       }
     }
   }
