@@ -24,9 +24,9 @@
       },
       "SonarAnalyzer.CSharp": {
         "type": "Direct",
-        "requested": "[10.23.0.137933, )",
-        "resolved": "10.23.0.137933",
-        "contentHash": "K8CwUkB4PlUcMfLqGCj1aviVfW9AufZH2K/TjgPGYdj4gosV/kcyxpBR0jaCG8argC6dfxJBbSS6xXJ59lFWgA=="
+        "requested": "[10.24.0.138807, )",
+        "resolved": "10.24.0.138807",
+        "contentHash": "+ZEa1+KhNSulMSatpffgHnovbLGtYL9oukMh8uQp8RBDnPOjEFzvECSa4kfu1D4PJxErksiGOQQ+kDeao1x9jQ=="
       },
       "xunit.runner.visualstudio": {
         "type": "Direct",
@@ -472,8 +472,8 @@
       },
       "OpenTelemetry.Api": {
         "type": "Transitive",
-        "resolved": "1.15.1",
-        "contentHash": "+LJP0YBrysh4kPCRZhEyTUTcd+FFP0NPDvV4AzULBmiInGt6fp+RgBieRhUzVX/yyVEyshg3s82RWFYZJIkeGQ=="
+        "resolved": "1.15.3",
+        "contentHash": "fX+fkCysfPut+qCcT3bKqyX4QN9Saf4CgX8HLOHywEVD+Xr7sULtfuypITpoDysjx8R59dn/3mWhgimMH8cm/g=="
       },
       "OpenTelemetry.Api.ProviderBuilderExtensions": {
         "type": "Transitive",
@@ -764,6 +764,7 @@
           "Microsoft.ApplicationInsights.AspNetCore": "[3.1.0, )",
           "Microsoft.AspNetCore.OpenApi": "[10.0.7, 11.0.0)",
           "Microsoft.Extensions.Logging.ApplicationInsights": "[2.23.0, )",
+          "OpenTelemetry.Api": "[1.15.3, )",
           "Scalar.AspNetCore": "[2.13.22, )",
           "Serilog": "[4.3.1, )",
           "Serilog.AspNetCore": "[10.0.0, )",
@@ -779,7 +780,10 @@
         }
       },
       "common": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "OpenTelemetry.Api": "[1.15.3, )"
+        }
       },
       "services": {
         "type": "Project",
@@ -787,7 +791,8 @@
           "Common": "[1.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[10.0.7, 11.0.0)",
           "Microsoft.Extensions.Http": "[10.0.7, 11.0.0)",
-          "Microsoft.Extensions.Logging": "[10.0.7, 11.0.0)"
+          "Microsoft.Extensions.Logging": "[10.0.7, 11.0.0)",
+          "OpenTelemetry.Api": "[1.15.3, )"
         }
       },
       "Microsoft.OpenApi": {
