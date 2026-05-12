@@ -1,127 +1,127 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "run",
-            "type": "shell",
-            "command": "dotnet run --launch-profile dev --project src/Api/Api.csproj",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "watch",
-            "type": "shell",
-            "command": "dotnet watch run --launch-profile dev --project src/Api/Api.csproj",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "run: wiremock",
-            "type": "shell",
-            "command": "docker compose up --build wiremock",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "build solution",
-            "type": "shell",
-            "command": "dotnet build",
-            "problemMatcher": "$msCompile",
-            "presentation": {
-              "echo": true,
-              "reveal": "always",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "close": true,
-            },
-            "group": "build"
-        },
-        {
-            "label": "list outdated",
-            "type": "shell",
-            "command": "dotnet list package --outdated",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "list vulnerable",
-            "type": "shell",
-            "command": "dotnet list package --vulnerable --include-transitive",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "show coverage",
-            "type": "shell",
-            "command": "./coverage.ps1",
-            "problemMatcher": "$msCompile",
-            "dependsOn": ["build solution"],
-            "presentation": {
-                "close": true,
-                "reveal": "always"
-            },
-            "options": {
-                "shell": {
-                    "executable": "powershell.exe"
-                }
-            },
-            "group": "build"
-        },
-        {
-            "label": "add cerfiticate",
-            "type": "shell",
-            "command": "dotnet dev-certs https --trust",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "remove bin/obj",
-            "type": "shell",
-            "command": "for /d /r . %d in (bin obj) do @if exist \"%d\" rmdir /s /q \"%d\"",
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "terraform init",
-            "type": "shell",
-            "command": "terraform init",
-            "problemMatcher": "$msCompile",
-            "options": {
-                "cwd": "${workspaceFolder}/terraform"
-            },
-            "group": "build"
-        },
-        {
-            "label": "terraform format",
-            "type": "shell",
-            "command": "terraform fmt",
-            "problemMatcher": "$msCompile",
-            "options": {
-                "cwd": "${workspaceFolder}/terraform"
-            },
-            "group": "build"
-        },
-        {
-            "label": "terraform plan",
-            "type": "shell",
-            "command": "terraform plan -out=tfplan",
-            "problemMatcher": "$msCompile",
-            "options": {
-                "cwd": "${workspaceFolder}/terraform"
-            },
-            "group": "build"
-        },
-        {
-            "label": "terraform apply",
-            "type": "shell",
-            "command": "terraform apply tfplan",
-            "problemMatcher": "$msCompile",
-            "options": {
-                "cwd": "${workspaceFolder}/terraform"
-            },
-            "group": "build"
-        },
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "dotnet run --launch-profile dev --project src/Api/Api.csproj",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "watch",
+      "type": "shell",
+      "command": "dotnet watch run --launch-profile dev --project src/Api/Api.csproj",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "run: wiremock",
+      "type": "shell",
+      "command": "docker compose up --build wiremock",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "build solution",
+      "type": "shell",
+      "command": "dotnet build",
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false,
+        "close": true,
+      },
+      "group": "build"
+    },
+    {
+      "label": "list outdated",
+      "type": "shell",
+      "command": "dotnet list package --outdated",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "list vulnerable",
+      "type": "shell",
+      "command": "dotnet list package --vulnerable --include-transitive",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "show coverage",
+      "type": "shell",
+      "command": "./coverage.ps1",
+      "problemMatcher": "$msCompile",
+      "dependsOn": ["build solution"],
+      "presentation": {
+        "close": true,
+        "reveal": "always"
+      },
+      "options": {
+        "shell": {
+          "executable": "powershell.exe"
+        }
+      },
+      "group": "build"
+    },
+    {
+      "label": "add certificate",
+      "type": "shell",
+      "command": "dotnet dev-certs https --trust",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "remove bin/obj",
+      "type": "shell",
+      "command": "for /d /r . %d in (bin obj) do @if exist \"%d\" rmdir /s /q \"%d\"",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "terraform init",
+      "type": "shell",
+      "command": "terraform init",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/terraform"
+      },
+      "group": "build"
+    },
+    {
+      "label": "terraform format",
+      "type": "shell",
+      "command": "terraform fmt",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/terraform"
+      },
+      "group": "build"
+    },
+    {
+      "label": "terraform plan",
+      "type": "shell",
+      "command": "terraform plan -out=tfplan",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/terraform"
+      },
+      "group": "build"
+    },
+    {
+      "label": "terraform apply",
+      "type": "shell",
+      "command": "terraform apply tfplan",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/terraform"
+      },
+      "group": "build"
+    },
+  ]
 }
