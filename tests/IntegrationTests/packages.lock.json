@@ -1066,9 +1066,9 @@
       },
       "Microsoft.OpenApi": {
         "type": "CentralTransitive",
-        "requested": "[2.7.4, 3.0.0)",
-        "resolved": "2.7.4",
-        "contentHash": "PnvyLnsjmlRuBSzw5RRPiMmouAPgNWsmodErI/fwa+xPXc34MZJY15hnHYcmxUnnEh6ZQcnqWrFftd5SODPsTA=="
+        "requested": "[2.7.6, 3.0.0)",
+        "resolved": "2.7.6",
+        "contentHash": "suM/dwWsQC8DEOcTeLQvKpXP0c2j/hllKD++IqCavZENr8Df1IgVDMCJRMZd2pGI1NSxMDWrhuPQXG+ZMRrSZA=="
       }
     }
   }
