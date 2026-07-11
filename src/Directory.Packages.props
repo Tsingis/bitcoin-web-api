@@ -23,6 +23,6 @@
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
   </ItemGroup>
   <ItemGroup Label="Transitives">
-    <PackageVersion Include="Microsoft.OpenApi" Version="[2.9.0,3.0.0)" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="[2.10.0,3.0.0)" />
   </ItemGroup>
 </Project>
