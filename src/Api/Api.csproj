@@ -23,4 +23,9 @@
     <PackageReference Include="Serilog.Sinks.Console" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="ArchitectureTests" />
+    <InternalsVisibleTo Include="IntegrationTests" />
+    <InternalsVisibleTo Include="E2ETests" />
+  </ItemGroup>
 </Project>
