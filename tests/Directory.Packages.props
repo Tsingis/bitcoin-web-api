@@ -10,8 +10,8 @@
     <PackageVersion Include="Serilog.Sinks.XUnit3" Version="1.2.0" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
     <PackageVersion Include="Testcontainers" Version="4.13.0" />
-    <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.2" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="xunit.v3" Version="4.0.0-pre.154" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0-pre.5" />
     <PackageVersion Include="YamlDotNet" Version="18.1.0" />
   </ItemGroup>
   <ItemGroup Label="Transitives">
