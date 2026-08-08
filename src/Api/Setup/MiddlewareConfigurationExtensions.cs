@@ -16,7 +16,15 @@ internal static class MiddlewareConfigurationExtensions
 
         if (configuration.GetValue(EnvVarKeys.UseOutputCache, true))
         {
-            app.UseOutputCache();
+            app.UseWhen(
+                context =>
+                {
+                    var path = context.Request.Path.Value ?? string.Empty;
+                    return !path.StartsWith("/openapi", StringComparison.OrdinalIgnoreCase)
+                        && !path.StartsWith("/scalar", StringComparison.OrdinalIgnoreCase)
+                        && !path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase);
+                },
+                branch => branch.UseOutputCache());
         }
 
         const string documentName = "/openapi/v1.json";
