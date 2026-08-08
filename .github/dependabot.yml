@@ -27,6 +27,9 @@ updates:
     ignore:
       - dependency-name: "Microsoft.Playwright"
     groups:
+      asp:
+        patterns:
+          - "Asp.Versioning.*"
       microsoft:
         patterns:
           - "Microsoft.AspNetCore.*"
