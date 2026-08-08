@@ -37,19 +37,17 @@ public static class ServiceConfigurationExtensions
         {
             opt.GroupNameFormat = "'v'VVV";
             opt.SubstituteApiVersionInUrl = true;
-        });
-
-        services.AddOpenApi(opt =>
+        }).AddOpenApi(opt =>
         {
-            opt.AddDocumentTransformer((document, _, _) =>
+            opt.Document.AddDocumentTransformer((document, _, _) =>
             {
                 document.Servers = [];
                 return Task.CompletedTask;
             });
 
-            opt.AddOperationTransformer<DateOnlyExampleTransformer>();
+            opt.Document.AddOperationTransformer<DateOnlyExampleTransformer>();
 
-            opt.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
+            opt.Document.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
         });
 
         services.Configure<JsonOptions>(opt =>

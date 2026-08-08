@@ -22,7 +22,7 @@ internal static class MiddlewareConfigurationExtensions
         const string documentName = "/openapi/v1.json";
         const string apiName = "Bitcoin Web API";
 
-        app.MapOpenApi(documentName);
+        app.MapOpenApi(documentName).WithDocumentPerVersion();
 
         app.UseSwaggerUI(opt =>
         {
