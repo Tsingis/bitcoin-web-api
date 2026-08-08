@@ -5,7 +5,7 @@
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "scalar",
+      "launchUrl": "scalar"
     }
   }
 }
