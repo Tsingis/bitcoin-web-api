@@ -41,6 +41,8 @@ updates:
           - "Serilog*"
   - package-ecosystem: "dotnet-sdk"
     directory: "/"
+    cooldown:
+      default-days: 0
     schedule:
       interval: "monthly"
       day: "wednesday"
