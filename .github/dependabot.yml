@@ -54,6 +54,7 @@ updates:
       default-days: 0
     ignore:
       - dependency-name: "mcr.microsoft.com/playwright/dotnet"
+      - dependency-name: "playwright/dotnet"
       - dependency-name: "*dotnet*"
         update-types:
           - "version-update:semver-major"
