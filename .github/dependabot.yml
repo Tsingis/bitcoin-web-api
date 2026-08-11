@@ -50,6 +50,8 @@ updates:
     directories:
       - "/"
       - "/tests"
+    cooldown:
+      default-days: 0
     ignore:
       - dependency-name: "mcr.microsoft.com/playwright/dotnet"
       - dependency-name: "*dotnet*"
