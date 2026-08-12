@@ -58,7 +58,7 @@ jobs:
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Check formatting
-        run: dotnet format --verify-no-changes
+        run: dotnet format --no-restore --verify-no-changes
   unit-test:
     runs-on: ${{ matrix.os }}
     permissions:
