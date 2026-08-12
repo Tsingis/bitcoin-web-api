@@ -26,8 +26,6 @@ public static class ServiceConfigurationExtensions
 
         services.AddSerilog();
 
-        services.AddEndpointsApiExplorer();
-
         services.AddApiVersioning(opt =>
         {
             opt.DefaultApiVersion = new ApiVersion(1);
