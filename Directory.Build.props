@@ -16,6 +16,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnableCodeAnalysis>true</EnableCodeAnalysis>
     <NoWarn>S125;CA1848;CA1002;CA1515;CA1873;S1118</NoWarn>
+    <WarningsNotAsErrors>NU1903</WarningsNotAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
