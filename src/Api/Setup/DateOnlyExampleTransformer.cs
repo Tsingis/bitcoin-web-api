@@ -66,7 +66,6 @@ public sealed class DateOnlyExampleTransformer : IOpenApiOperationTransformer
                 Example = JsonValue.Create(value),
                 Content = old.Content,
                 Extensions = old.Extensions,
-                AllowEmptyValue = old.AllowEmptyValue,
                 Deprecated = old.Deprecated,
             };
         }
