@@ -62,9 +62,9 @@
       },
       "xunit.runner.visualstudio": {
         "type": "Direct",
-        "requested": "[4.0.0-pre.5, )",
-        "resolved": "4.0.0-pre.5",
-        "contentHash": "XBiNb6zMYIsw+DHl5IyHyzeCDeFvCwPErzgtjOSIjSumXZyctoL9NMcSBzPfRnZLqAef3M+c72JrMRWazpEkXw=="
+        "requested": "[4.0.0, )",
+        "resolved": "4.0.0",
+        "contentHash": "kzLFyBYUnoidpGOXvpNOfIo8C92gVgVR6X8ncHwhcrDYugiOut5rrhDkr0L3cWHd7J2pKXf6LgaeXoBBDlx1ag=="
       },
       "xunit.v3": {
         "type": "Direct",
