@@ -88,8 +88,8 @@
       },
       "Asp.Versioning.OpenApi": {
         "type": "Transitive",
-        "resolved": "10.2.2",
-        "contentHash": "pY5nhVFGuMBBbzN3v0oW6Pn4NQR8AxZuuWWkDxkWOxHp5rtCSvpphaWDgWeZ59z3yuTI45pPHit1+0d8oDcRsg==",
+        "resolved": "10.2.3",
+        "contentHash": "wi5rcQc7YjO6q/3RAvrhQ/bceBGAKImBU1DKF1OvSvX3mLOgXu3GyxBcYB+aJMupc1Th4r2Sb9ggCptUe6JUBQ==",
         "dependencies": {
           "Asp.Versioning.Mvc.ApiExplorer": "10.2.1",
           "Microsoft.AspNetCore.OpenApi": "10.0.10",
@@ -901,7 +901,7 @@
         "type": "Project",
         "dependencies": {
           "Asp.Versioning.Mvc.ApiExplorer": "[10.2.1, )",
-          "Asp.Versioning.OpenApi": "[10.2.2, )",
+          "Asp.Versioning.OpenApi": "[10.2.3, )",
           "Azure.Extensions.AspNetCore.Configuration.Secrets": "[1.5.2, )",
           "Azure.Identity": "[1.21.0, )",
           "Common": "[1.0.0, )",
