@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0.400-alpine3.24 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.401-alpine3.24 AS build
 
 WORKDIR /app
 
