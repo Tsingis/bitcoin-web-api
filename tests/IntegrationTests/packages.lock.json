@@ -36,12 +36,12 @@
       },
       "Serilog.Sinks.XUnit3": {
         "type": "Direct",
-        "requested": "[2.1.0, )",
-        "resolved": "2.1.0",
-        "contentHash": "8rNk23Juh6s1qJNHc+ZfrJ33S2Tz7mcPcjlIxzBqM7jW3qh8n4NLeVkvToLXz8CgbYzxKd77UXUtyZVdNTEj5A==",
+        "requested": "[2.1.1, )",
+        "resolved": "2.1.1",
+        "contentHash": "M/1/8vzpggunsupsfga3Ms2J1poUgLkMpdeadbolzxEz0cRhLtaXe5ddRB7ScSktxuEblmmKQxFytTtu0bzvSg==",
         "dependencies": {
           "Serilog": "4.4.0",
-          "xunit.v3.extensibility.core": "4.0.0"
+          "xunit.v3.extensibility.core": "4.0.1"
         }
       },
       "Shouldly": {
