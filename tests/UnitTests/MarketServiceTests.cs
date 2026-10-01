@@ -15,6 +15,7 @@ public class MarketServiceTests
     public DateOnly ToDateExtension { get; }
     public DateOnly ToDateNullExtension { get; }
     private readonly MarketService _marketService;
+    private readonly IMarketClient _marketClient;
 
     public MarketServiceTests()
     {
@@ -26,6 +27,7 @@ public class MarketServiceTests
         ToDateNullExtension = date.AddDays(10).ToDateOnly();
 
         var marketClient = Substitute.For<IMarketClient>();
+        _marketClient = marketClient;
 
         marketClient.GetMarketChartByDateRange(FromDate, ToDate)
             .Returns(CreateMarketChartPoints(date));
@@ -60,6 +62,20 @@ public class MarketServiceTests
             new() { Date = start.AddDays(6), Price = 40, MarketCap = 100, TotalVolume = 40 },
             new() { Date = start.AddDays(7), Price = 30, MarketCap = 100, TotalVolume = 30 },
         ];
+    }
+
+    [Fact]
+    public async Task MarketAnalysis_ReturnsAllMetricsWithSingleMarketClientRequest()
+    {
+        var result = await _marketService.GetMarketAnalysis(FromDate, ToDate);
+
+        result.ShouldNotBeNull();
+        result.LongestDownwardTrendDays.ShouldBe(3);
+        result.HighestTradingVolumeDate.ShouldBe(new DateOnly(2021, 1, 5));
+        result.HighestTradingVolume.ShouldBe(500m);
+        result.BestBuyDate.ShouldBe(new DateOnly(2021, 1, 4));
+        result.BestSellDate.ShouldBe(new DateOnly(2021, 1, 5));
+        await _marketClient.Received(1).GetMarketChartByDateRange(FromDate, ToDate);
     }
 
     [Fact]

@@ -1,5 +1,6 @@
 using Api.Endpoints.Bitcoin;
 using Asp.Versioning;
+using ModelContextProtocol.AspNetCore;
 
 namespace Api.Endpoints;
 
@@ -16,5 +17,6 @@ internal static class Endpoints
             .WithApiVersionSet(apiVersionSet);
 
         api.MapBitcoinGroup();
+        app.MapMcp("/mcp");
     }
 }
