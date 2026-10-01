@@ -2,9 +2,11 @@ using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using Api.Mcp;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using ModelContextProtocol.AspNetCore;
 using Serilog;
 using Services;
 
@@ -77,6 +79,10 @@ public static class ServiceConfigurationExtensions
         });
 
         services.AddHealthChecks();
+
+        services.AddMcpServer()
+            .WithHttpTransport(options => options.SessionMode = HttpServerSessionMode.Stateless)
+            .WithTools<BitcoinMarketTools>();
 
         services.AddHttpClient();
 

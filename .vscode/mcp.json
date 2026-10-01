@@ -1,0 +1,8 @@
+{
+  "servers": {
+		"bitcoin-web-api": {
+			"type": "http",
+			"url": "http://localhost:8080/mcp"
+		}
+  }
+}

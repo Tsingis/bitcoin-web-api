@@ -13,7 +13,13 @@ API documentation
 - Swagger [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/swagger)
 - Scalar [here](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/scalar)
 
-Tools used:
+## MCP
+
+Streamable [HTTP](https://ca-bitcoin-web-api.salmonflower-f146d48d.northeurope.azurecontainerapps.io/mcp)
+
+Tool: `analyzeBitcoinMarket(fromDate, toDate)` returns the price trend, highest-volume day, and best buy/sell dates.
+
+## Tools used:
 
 - .NET SDK
 - Docker
