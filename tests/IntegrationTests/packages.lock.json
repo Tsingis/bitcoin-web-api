@@ -839,8 +839,8 @@
       },
       "Scalar.AspNetCore": {
         "type": "Transitive",
-        "resolved": "2.17.14",
-        "contentHash": "wkZQbMQPSgU1w9BciBCe2Gh7l8hI9mSe+B1FRGC6zbPE2cD7YH3BDxwKWGzlJwuXAxgbfzK4UzQTnTDIgP6XFw=="
+        "resolved": "2.18.0",
+        "contentHash": "wwI3khcYNM7oL6axr4a41G29fJYOS3ckusgYZ4NiIccL8Amh2LOeu4HSK1SrQWiMJNrgoFqyWfDkOkunQCiRDw=="
       },
       "Serilog": {
         "type": "Transitive",
@@ -1104,7 +1104,7 @@
           "Microsoft.AspNetCore.OpenApi": "[10.0.13, 11.0.0)",
           "Microsoft.Extensions.Logging.ApplicationInsights": "[2.23.0, )",
           "ModelContextProtocol.AspNetCore": "[2.2.0, )",
-          "Scalar.AspNetCore": "[2.17.14, )",
+          "Scalar.AspNetCore": "[2.18.0, )",
           "Serilog": "[4.4.0, )",
           "Serilog.AspNetCore": "[10.0.0, )",
           "Serilog.Exceptions": "[8.4.0, )",
