@@ -27,6 +27,12 @@ updates:
         - "Asp.*"
     ignore:
       - dependency-name: "Microsoft.Playwright"
+      - dependency-name: "Microsoft.AspNetCore.*"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "Microsoft.Extensions.*"
+        update-types:
+          - "version-update:semver-major"
     groups:
       asp:
         patterns:
