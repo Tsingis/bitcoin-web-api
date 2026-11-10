@@ -10,7 +10,7 @@ RUN dotnet restore --locked-mode ./Api/Api.csproj
 
 RUN dotnet publish ./Api/Api.csproj -c Release --no-restore -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:11.0.0-azurelinux3.0-distroless
+FROM mcr.microsoft.com/dotnet/aspnet:11.0.0-azurelinux4.0-distroless
 
 COPY --from=build /app/publish .
 
