@@ -47,7 +47,7 @@ public static class ServiceConfigurationExtensions
 
             opt.Document.AddOperationTransformer<DateOnlyExampleTransformer>();
 
-            opt.Document.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
+            opt.Document.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_1;
         });
 
         services.Configure<JsonOptions>(opt =>
