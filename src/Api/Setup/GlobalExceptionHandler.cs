@@ -36,6 +36,8 @@ public sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logge
                 title = "Unauthorized";
                 detail = "Query spanning over 365 days is not allowed.";
                 break;
+            default:
+                break;
         }
 
         if (statusCode >= 500)
