@@ -26,6 +26,11 @@ dotnet_diagnostic.CA2007.severity = none
 
 # C# files
 [*.cs]
+dotnet_diagnostic.IDE0022.severity = none
+dotnet_diagnostic.IDE0046.severity = none
+dotnet_diagnostic.IDE0058.severity = none
+dotnet_diagnostic.IDE0160.severity = none
+
 # New line preferences
 csharp_new_line_before_open_brace = all
 csharp_new_line_before_else = true
