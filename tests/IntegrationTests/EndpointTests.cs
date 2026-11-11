@@ -1,5 +1,4 @@
 using System.Net;
-using System.Net.Http.Json;
 using Api.Endpoints.Bitcoin;
 using Common;
 using IntegrationTests.Setup;
