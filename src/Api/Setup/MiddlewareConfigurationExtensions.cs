@@ -1,6 +1,7 @@
 using Common;
 using Scalar.AspNetCore;
 using Serilog;
+using Serilog.Events;
 
 namespace Api.Setup;
 
@@ -8,9 +9,25 @@ internal static class MiddlewareConfigurationExtensions
 {
     internal static void AddMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
-        app.UseExceptionHandler();
+        app.UseSerilogRequestLogging(options =>
+        {
+            options.GetLevel = (context, _, exception) =>
+            {
+                if (exception is not null || context.Response.StatusCode >= StatusCodes.Status500InternalServerError)
+                {
+                    return LogEventLevel.Error;
+                }
 
-        app.UseSerilogRequestLogging();
+                if (context.Response.StatusCode >= StatusCodes.Status400BadRequest)
+                {
+                    return LogEventLevel.Debug;
+                }
+
+                return LogEventLevel.Information;
+            };
+        });
+
+        app.UseExceptionHandler();
 
         app.UseRouting();
 
