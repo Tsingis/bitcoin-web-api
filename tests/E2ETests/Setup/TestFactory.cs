@@ -40,7 +40,7 @@ public sealed class TestFactory : WebApplicationFactory<Program>, IAsyncLifetime
         return base.CreateHost(builder);
     }
 
-    public async ValueTask InitializeAsync()
+    public ValueTask InitializeAsync()
     {
         UseKestrel(options =>
         {
@@ -57,5 +57,6 @@ public sealed class TestFactory : WebApplicationFactory<Program>, IAsyncLifetime
         ArgumentNullException.ThrowIfNull(address);
 
         BaseAddress = new Uri(address);
+        return ValueTask.CompletedTask;
     }
 }
