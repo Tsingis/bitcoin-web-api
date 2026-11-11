@@ -1,3 +1,4 @@
+using Common;
 using E2ETests.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -24,7 +25,14 @@ public sealed class TestFactory : WebApplicationFactory<Program>, IAsyncLifetime
     protected override IHost CreateHost(IHostBuilder builder)
     {
         builder.UseSerilog((ctx, sp, config) =>
-            config.MinimumLevel.Error().WriteTo.Console(),
+        {
+            config.MinimumLevel.Error();
+
+            if (EnvVarUtils.EnableTestAppLogging)
+            {
+                config.WriteTo.Console();
+            }
+        },
             preserveStaticLogger: true,
             writeToProviders: false
             );

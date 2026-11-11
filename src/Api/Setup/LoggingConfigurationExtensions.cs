@@ -15,12 +15,15 @@ internal static class LoggingConfigurationExtensions
 
     internal static ReloadableLogger CreateBootstrapLogger()
     {
-        var logger = new LoggerConfiguration()
-            .MinimumLevel.Information()
-            .WriteTo.Console(outputTemplate: LogFormat, formatProvider: CultureInfo.InvariantCulture)
-            .CreateBootstrapLogger();
+        var loggerConfiguration = new LoggerConfiguration()
+            .MinimumLevel.Information();
 
-        return logger;
+        if (EnvVarUtils.EnableTestAppLogging)
+        {
+            loggerConfiguration.WriteTo.Console(outputTemplate: LogFormat, formatProvider: CultureInfo.InvariantCulture);
+        }
+
+        return loggerConfiguration.CreateBootstrapLogger();
     }
 
     internal static void AddLoggingConfiguration(this LoggerConfiguration loggerConfig, IConfiguration config, IWebHostEnvironment environment)
@@ -44,8 +47,12 @@ internal static class LoggingConfigurationExtensions
                     path.ToString().Contains("/scalar") ||
                     path.ToString().Contains("well-known")
                 )
-            )
-            .WriteTo.Async(x => x.Console(formatter));
+            );
+
+        if (EnvVarUtils.EnableTestAppLogging)
+        {
+            loggerConfig?.WriteTo.Async(x => x.Console(formatter));
+        }
 
         if (environment.IsProduction())
         {

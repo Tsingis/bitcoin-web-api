@@ -38,10 +38,16 @@ public sealed class TestFactory(WiremockFixture wiremock, bool useOutputCache, b
         });
 
         builder.UseSerilog((ctx, sp, config) =>
+        {
             config.MinimumLevel.Is(GetLogEventLevel())
                 .MinimumLevel.Override("System", LogEventLevel.Error)
-                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Error)
-                .WriteTo.XUnit3TestOutput(sp.GetRequiredService<XUnit3TestOutputSink>()),
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Error);
+
+            if (EnvVarUtils.EnableTestAppLogging)
+            {
+                config.WriteTo.XUnit3TestOutput(sp.GetRequiredService<XUnit3TestOutputSink>());
+            }
+        },
             preserveStaticLogger: true,
             writeToProviders: false
             );

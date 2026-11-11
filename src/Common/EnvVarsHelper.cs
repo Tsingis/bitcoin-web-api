@@ -9,6 +9,7 @@ public static class EnvVarKeys
     public const string ApiUrl = "API_URL";
     public const string ShowMockServerLogs = "SHOW_MOCK_SERVER_LOGS";
     public const string TestingLogLevel = "TESTING_LOG_LEVEL";
+    public const string EnableTestAppLogging = "ENABLE_TEST_APP_LOGGING";
 }
 
 public static class EnvVarUtils
@@ -17,6 +18,9 @@ public static class EnvVarUtils
 
     public static bool ShowMockServerLogs =>
         bool.TryParse(Environment.GetEnvironmentVariable(EnvVarKeys.ShowMockServerLogs), out var value) && value;
+
+    public static bool EnableTestAppLogging =>
+        bool.TryParse(Environment.GetEnvironmentVariable(EnvVarKeys.EnableTestAppLogging), out var value) && value;
 
     public static bool UseJsonFormatting =>
         bool.TryParse(Environment.GetEnvironmentVariable(EnvVarKeys.UseJsonFormatting), out var value) && value;
