@@ -3,6 +3,7 @@ using Common;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using IntegrationTests.Setup;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 using YamlDotNet.RepresentationModel;
 
@@ -21,10 +22,12 @@ public class WiremockFixture : IAsyncLifetime
         var image = GetImage("wiremock", Path.Join(AppContext.BaseDirectory, "docker-compose.yml"));
 
         var network = new NetworkBuilder()
+            .WithLogger(NullLogger.Instance)
             .WithName(Guid.NewGuid().ToString("N"))
             .Build();
 
         _wireMockContainer = new ContainerBuilder(image)
+            .WithLogger(NullLogger.Instance)
             .WithName("wiremock")
             .WithCleanUp(true)
             .WithAutoRemove(true)
