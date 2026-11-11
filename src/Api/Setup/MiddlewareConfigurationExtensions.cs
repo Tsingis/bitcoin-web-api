@@ -9,23 +9,26 @@ internal static class MiddlewareConfigurationExtensions
 {
     internal static void AddMiddleware(this WebApplication app, IWebHostEnvironment environment, IConfiguration configuration)
     {
-        app.UseSerilogRequestLogging(options =>
+        if (configuration.GetValue("AppLogging:ConsoleEnabled", true))
         {
-            options.GetLevel = (context, _, exception) =>
+            app.UseSerilogRequestLogging(options =>
             {
-                if (exception is not null || context.Response.StatusCode >= StatusCodes.Status500InternalServerError)
+                options.GetLevel = (context, _, exception) =>
                 {
-                    return LogEventLevel.Error;
-                }
+                    if (exception is not null || context.Response.StatusCode >= StatusCodes.Status500InternalServerError)
+                    {
+                        return LogEventLevel.Error;
+                    }
 
-                if (context.Response.StatusCode >= StatusCodes.Status400BadRequest)
-                {
-                    return LogEventLevel.Debug;
-                }
+                    if (context.Response.StatusCode >= StatusCodes.Status400BadRequest)
+                    {
+                        return LogEventLevel.Information;
+                    }
 
-                return LogEventLevel.Information;
-            };
-        });
+                    return LogEventLevel.Information;
+                };
+            });
+        }
 
         app.UseExceptionHandler();
 

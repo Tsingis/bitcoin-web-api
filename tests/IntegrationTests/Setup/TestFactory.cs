@@ -16,14 +16,17 @@ public sealed class TestFactory(WiremockFixture wiremock, bool useOutputCache, b
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        ArgumentNullException.ThrowIfNull(builder);
+
         builder.UseEnvironment(Environments.Development);
-        builder?.ConfigureAppConfiguration((context, builder) =>
+        builder.ConfigureAppConfiguration((_, builder) =>
         {
             var settings = new Dictionary<string, string?>
             {
                 { EnvVarKeys.ApiUrl, $"http://localhost:{wiremock.GetPort()}" },
                 { EnvVarKeys.UseOutputCache, useOutputCache.ToString() },
-                { EnvVarKeys.UseRateLimiter, useRateLimiter.ToString() }
+                { EnvVarKeys.UseRateLimiter, useRateLimiter.ToString() },
+                { "AppLogging:ConsoleEnabled", EnvVarUtils.EnableTestAppLogging.ToString() }
             };
             builder.AddInMemoryCollection(settings);
         });

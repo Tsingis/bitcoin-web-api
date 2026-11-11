@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -19,7 +20,17 @@ public sealed class TestFactory : WebApplicationFactory<Program>, IAsyncLifetime
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        ArgumentNullException.ThrowIfNull(builder);
+
         builder.UseEnvironment(Environments.Development);
+        builder.ConfigureAppConfiguration((_, builder) =>
+        {
+            var settings = new Dictionary<string, string?>
+            {
+                { "AppLogging:ConsoleEnabled", EnvVarUtils.EnableTestAppLogging.ToString() }
+            };
+            builder.AddInMemoryCollection(settings);
+        });
     }
 
     protected override IHost CreateHost(IHostBuilder builder)
