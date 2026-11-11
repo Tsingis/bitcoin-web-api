@@ -11,7 +11,7 @@ namespace Api.Setup;
 
 internal static class LoggingConfigurationExtensions
 {
-    const string LogFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}";
+    private const string LogFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] {Message:lj}{NewLine}{Exception}";
 
     internal static ReloadableLogger CreateBootstrapLogger()
     {
