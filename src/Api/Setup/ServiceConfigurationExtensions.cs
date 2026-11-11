@@ -18,6 +18,7 @@ public static class ServiceConfigurationExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        services.AddValidation();
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
 

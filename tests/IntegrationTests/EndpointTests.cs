@@ -80,6 +80,34 @@ public sealed class EndpointsTests(WiremockFixture fixture, ITestOutputHelper ou
     [InlineData("longestdownwardtrend")]
     [InlineData("highesttradingvolume")]
     [InlineData("buyandsell")]
+    public async Task Endpoints_RejectReversedDateRanges(string endpoint)
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var url = Utility.BuildUri(endpoint, Constants.EndMockDate, Constants.StartMockDate);
+
+        var result = await _client.GetAsync(url, cancellationToken: ct);
+
+        result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+    }
+
+    [Theory]
+    [InlineData("longestdownwardtrend")]
+    [InlineData("highesttradingvolume")]
+    [InlineData("buyandsell")]
+    public async Task Endpoints_RejectSameDayDateRanges(string endpoint)
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var url = Utility.BuildUri(endpoint, Constants.StartMockDate, Constants.StartMockDate);
+
+        var result = await _client.GetAsync(url, cancellationToken: ct);
+
+        result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+    }
+
+    [Theory]
+    [InlineData("longestdownwardtrend")]
+    [InlineData("highesttradingvolume")]
+    [InlineData("buyandsell")]
     public async Task Endpoints_Unauthorized(string endpoint)
     {
         var ct = TestContext.Current.CancellationToken;
