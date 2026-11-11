@@ -16,6 +16,13 @@
       "group": "build"
     },
     {
+      "label": "tests",
+      "type": "shell",
+      "command": "dotnet test --output Detailed",
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
       "label": "run: wiremock",
       "type": "shell",
       "command": "docker compose up --build wiremock",
