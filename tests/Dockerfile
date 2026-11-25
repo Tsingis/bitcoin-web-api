@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/dotnet:v1.65.0-noble
+FROM mcr.microsoft.com/playwright/dotnet:v1.65.1-noble
 
 WORKDIR /app
 
